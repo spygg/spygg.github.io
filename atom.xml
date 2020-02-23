@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://spygg.github.io/"/>
-  <updated>2020-02-23T10:15:28.898Z</updated>
+  <updated>2020-02-23T14:56:35.601Z</updated>
   <id>https://spygg.github.io/</id>
   
   <author>
@@ -15,6 +15,38 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>netlify镜像本网站</title>
+    <link href="https://spygg.github.io/2020/02/23/netlify%E9%95%9C%E5%83%8F%E6%9C%AC%E7%BD%91%E7%AB%99/"/>
+    <id>https://spygg.github.io/2020/02/23/netlify镜像本网站/</id>
+    <published>2020-02-23T14:42:28.000Z</published>
+    <updated>2020-02-23T14:56:35.601Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p>由于众所周知的原因,github 经常抽风,偶尔了解到 netlify 可以镜像本网站,于是特记录之….</p></blockquote><h2 id="注册账号"><a href="#注册账号" class="headerlink" title="注册账号"></a>注册账号</h2><p><a href="https://www.cnblogs.com/codernie/p/9062104.html" target="_blank" rel="noopener">Netlify 官网网站</a>然后使用 github 账号登录</p><h2 id="创建网站"><a href="#创建网站" class="headerlink" title="创建网站"></a>创建网站</h2><ul><li>点击 New site from Git 按钮</li><li>选择你需要部署的仓库(就是那个 username.github.io )</li><li>完成之后点击途中 deploy site 按钮</li></ul><h2 id="设置域名，绑定域名"><a href="#设置域名，绑定域名" class="headerlink" title="设置域名，绑定域名"></a>设置域名，绑定域名</h2><ul><li><p>可以看到 netlify 为我们随机生成了一个 netlify 下的域名，这里我们可以更改其前缀，并绑定到我们自己的域名下：</p></li><li><p>更改 netlify 域名前缀：点击上图中 Site settings 按钮，然后在下方点击 Change site name 按钮，然后在弹出框中输入自己需要更改的前缀名，点击保存即可，如下图所示：</p></li></ul><p><img src="/photos/netlify镜像本网站/更改名称.png" alt="图片"></p><ul><li>如果有自定义域名可以使用 https 加密之类的,本屌就到这里就行…</li></ul><h2 id="参考教程"><a href="#参考教程" class="headerlink" title="参考教程"></a>参考教程</h2><p><a href="https://www.cnblogs.com/codernie/p/9062104.html" target="_blank" rel="noopener">手把手教你使用 netlify 实现前端的 自动部署 + HTTPS</a></p><h2 id="PS"><a href="#PS" class="headerlink" title="PS"></a>PS</h2><p>最牛逼的是在 github 上部署完毕后,netlify 会<strong>自动更新同步</strong>….</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;blockquote&gt;
+&lt;p&gt;由于众所周知的原因,github 经常抽风,偶尔了解到 netlify 可以镜像本网站,于是特记录之….&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&quot;注册账号&quot;&gt;&lt;a href=&quot;#注册账号&quot; class=&quot;headerlink&quot; titl
+      
+    
+    </summary>
+    
+      <category term="杂谈" scheme="https://spygg.github.io/categories/%E6%9D%82%E8%B0%88/"/>
+    
+    
+      <category term="netlify" scheme="https://spygg.github.io/tags/netlify/"/>
+    
+      <category term="镜像" scheme="https://spygg.github.io/tags/%E9%95%9C%E5%83%8F/"/>
+    
+      <category term="加速" scheme="https://spygg.github.io/tags/%E5%8A%A0%E9%80%9F/"/>
+    
+  </entry>
   
   <entry>
     <title>Qt中的矩阵计算库eigen</title>
