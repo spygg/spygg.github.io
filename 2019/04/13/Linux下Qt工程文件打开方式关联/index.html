@@ -1,0 +1,588 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="LiusBlog">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="google-site-verification" content="Ib3TgmBWfq5KtJE24-Dg_CaJRazvNc0JjfEdPPJf_mQ">
+    <meta name="msvalidate.01" content="9C33A26895A2A8B80CEE60CD519D1095">
+    
+    <link rel="dns-prefetch" href="https://spygg.github.io">
+    <!--SEO-->
+
+    <meta name="keywords" content="Qt,软件使用">
+
+
+    <meta name="description" content="
+亲测可用!!!! 记住一点:技术问题千万不要百度,最好google起码必应www.bing.com
+
+效果图按照惯例先上效果图
+在linux安装Qt后默认的工程文件.pro是用gedit打开的...">
+
+
+
+<meta name="robots" content="all">
+<meta name="google" content="all">
+<meta name="googlebot" content="all">
+<meta name="verify" content="all">
+
+    <!--Title-->
+
+
+<title>Linux下Qt工程文件打开方式关联 | LiusBlog</title>
+
+
+    <link rel="alternate" href="/atom.xml" title="LiusBlog" type="application/atom+xml">
+
+
+    <link rel="icon" href="/favicon.ico">
+
+    
+
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.5.0">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash">
+
+
+
+
+    
+
+
+
+
+
+    
+
+    <script>
+        (function(){
+            var bp = document.createElement('script');
+            var curProtocol = window.location.protocol.split(':')[0];
+            if (curProtocol === 'https') {
+                bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+            }
+            else {
+                bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+            }
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(bp, s);
+        })();
+    </script>
+
+
+<!--     <script type="text/javascript">
+        function IsPC() {
+          var userAgentInfo = navigator.userAgent;
+          var Agents = ["Android", "iPhone"];
+          var flag = true;
+          for (var v = 0; v < Agents.length; v++) {
+            if (userAgentInfo.indexOf(Agents[v]) > 0) {
+              flag = false;
+              break;
+            }
+          }
+          return flag;
+        }
+    </script> -->
+
+<!-- 	<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+	<script>
+	  (adsbygoogle = window.adsbygoogle || []).push({
+	    google_ad_client: "ca-pub-7854187021513757",
+	    enable_page_level_ads: IsPC()
+	  });
+	</script> -->
+
+
+	
+    <script type="text/javascript">
+        function hasClass(obj, cls) {
+            return obj.className.match(new RegExp('(\\s|^)' + cls + '(\\s|$)'));
+        }
+         
+        function addClass(obj, cls) {
+            if (!this.hasClass(obj, cls)) obj.className += " " + cls;
+        }
+         
+        function removeClass(obj, cls) {
+            if (hasClass(obj, cls)) {
+                var reg = new RegExp('(\\s|^)' + cls + '(\\s|$)');
+                obj.className = obj.className.replace(reg, ' ');
+            }
+        }
+
+
+        window.addEventListener('load', function () {
+            // 谷歌广告
+            // if(IsPC()){
+            //     var googleAds = document.getElementsByClassName('googleAd');
+            //     if(googleAds != undefined){
+            //         for (var i = 0; i < googleAds.length; i++) {
+            //             googleAds[i].innerHTML = '<ins class="adsbygoogle"\
+            //                  style="display:block; text-align:center;"\
+            //                  data-ad-layout="in-article"\
+            //                  data-ad-format="fluid"\
+            //                  data-ad-client="ca-pub-7854187021513757"\
+            //                  data-ad-slot="4637472251">\
+            //             </ins>'
+
+            //             var scriptFun = document.createElement("script");
+            //             scriptFun.text = "(adsbygoogle = window.adsbygoogle || []).push({});";
+            //             googleAds[i].appendChild(scriptFun);
+            //             // end
+            //         }
+            //     }
+           
+            // }
+
+            var imgAll = document.getElementsByClassName('post-body')[0];
+            if(imgAll == undefined){
+                return;
+            }
+            
+            var imgs = imgAll.getElementsByTagName('img')
+            for(var i=0;i<imgs.length;i++){
+                if(hasClass(imgs[i],'class_no_full_screen')){
+                    continue;
+                }
+
+                // imgs[i].setAttribute('data-background', 'rgba(10, 10, 10, .6)');
+                // imgs[i].setAttribute('data-lightense-padding', "0");
+                imgs[i].setAttribute('style', "cursor: zoom-in");
+                imgs[i].onclick=function(){
+                
+                    var section=document.getElementsByTagName("section")[0];
+
+                    var imgView = document.getElementById('imgViewDom');
+                    if(imgView == undefined){
+                        imgView=document.createElement("div");
+                        imgView.id = "imgViewDom";
+
+                        section.appendChild(imgView)
+
+
+                        imgView.onclick = function(){
+                            addClass(imgView, "disnone");
+                            imgView.innerHTML="";
+                        }
+
+                    }
+            
+                    imgView.innerHTML="<img id = 'jackslowfuck' src=" + this.src + " style='cursor: zoom-out; max-width: 100%;'" + ">";
+                    removeClass(imgView, "disnone");
+
+                    var jackslowfuck = document.getElementById('jackslowfuck');
+                    jackslowfuck.onclick=function(){
+                        addClass(imgView, "disnone");
+                        imgView.innerHTML="";
+                    }
+
+                }
+            }
+            
+        }, false);
+    </script>
+
+    <style type="text/css">
+        #imgViewDom {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            z-index: 99999999;
+            background: rgba(0, 0, 0,0.7);
+            overflow: auto;
+            display: -webkit-box;
+            -webkit-box-align: center;
+            -webkit-box-pack: center;
+            display: -moz-box;
+            -moz-box-align: center;
+            -moz-box-pack: center;
+            display: -o-box;
+            -o-box-align: center;
+            -o-box-pack: center;
+            display: -ms-box;
+            -ms-box-align: center;
+            -ms-box-pack: center;
+            display: box;
+            box-align: center;
+            box-pack: center;
+            cursor: zoom-out;
+        }
+
+        .disnone{
+            display: none !important;
+        }
+    </style>
+
+</head>
+
+</html>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+
+<body>
+    <header class="main-header" style="background-image:url(/img/banner.jpg)">
+    <div class="main-header-box">
+        <a class="header-avatar" href="/about" title="spygg">
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+        	<!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+                <h2> 技术引领生活! </h2>
+            
+    	</div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                    <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="https://spygg.github.io">LiusBlog</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/"><i class="fa fa-home"></i>首页</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/Qt"><i class="fa "></i>Qt</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/Python"><i class="fa "></i>Python</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/Linux"><i class="fa "></i>Linux</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/音视频"><i class="fa "></i>音视频</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/杂谈"><i class="fa "></i>杂谈</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/archives/"><i class="fa "></i>时间轴</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/about/"><i class="fa "></i>关于</a>
+                            </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="Linux下Qt工程文件打开方式关联">
+            
+	            Linux下Qt工程文件打开方式关联
+            
+        </h1>
+        <div class="post-meta">
+    
+        <span class="categories-meta fa-wrap">
+            <i class="fa fa-folder-open-o"></i>
+            <a class="category-link" href="/categories/Linux/">Linux</a>
+        </span>
+    
+
+    
+        <span class="fa-wrap">
+            <i class="fa fa-tags"></i>
+            <span class="tags-meta">
+                
+                    <a class="tag-link" href="/tags/Qt/">Qt</a> <a class="tag-link" href="/tags/软件使用/">软件使用</a>
+                
+            </span>
+        </span>
+    
+
+    
+        
+        <span class="fa-wrap">
+            <i class="fa fa-clock-o"></i>
+            <span class="date-meta">2019/04/13</span>
+        </span>
+        
+            <span class="fa-wrap">
+                <i class="fa fa-eye"></i>
+                <span id="busuanzi_value_page_pv"></span>
+            </span>
+        
+    
+</div>
+            
+            
+            <p class="fa fa-exclamation-triangle warning">
+                本文于<strong>315</strong>天之前发表，文中内容可能已经过时。
+            </p>
+        
+    </div>
+
+    
+    
+    <!-- google广告 -->
+    <!--
+    <div class="googleAd">
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    </div>
+    -->
+
+    <div class="post-body post-content">
+        <blockquote>
+<p>亲测可用!!!! 记住一点:技术问题千万不要百度,最好google起码必应<a href="http://www.bing.com" target="_blank" rel="noopener">www.bing.com</a></p>
+</blockquote>
+<h2 id="效果图"><a href="#效果图" class="headerlink" title="效果图"></a>效果图</h2><p>按照惯例先上效果图<br><img src="/photos/Linux下Qt工程文件打开方式关联/效果图.png" alt="效果图"></p>
+<p>在linux安装Qt后默认的工程文件.pro是用gedit打开的,而且比较恶心的是右键打开后还选择不了,网上的不少方法要么设置后影响到一般文本文件的打开,要不没有用,根本原因是:linux将.pro文件作为一般的text/plain来处理了</p>
+<h2 id="设置步骤"><a href="#设置步骤" class="headerlink" title="设置步骤"></a>设置步骤</h2><ol>
+<li>建立一个.xml文件,文件名格式必须为xxx-xxx.xml如 <em>DigiaQt-QtProject.xml</em>,内容如下:</li>
+</ol>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version='1.0'?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">mime-info</span> <span class="attr">xmlns</span>=<span class="string">'http://www.freedesktop.org/standards/shared-mime-info'</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">mime-type</span> <span class="attr">type</span>=<span class="string">"text/qt"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">comment</span>&gt;</span>Qt Project Files<span class="tag">&lt;/<span class="name">comment</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">glob</span> <span class="attr">pattern</span>=<span class="string">"*.pro"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">mime-type</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">mime-info</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>命令行输入 <figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo xdg-mime install DigiaQt-<span class="module-access"><span class="module"><span class="identifier">QtProject</span>.</span></span>xml</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>其中install 为第一步中的文件名</p>
+<ol start="3">
+<li>编辑/usr/share/applications/defaults.list 文件,添加以下内容 </li>
+</ol>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">text/<span class="attribute">qt</span>=DigiaQt-qtcreator-community.desktop</span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li><p>修改默认pro图标,不然在一堆文件中很难找到</p>
+<p> 4.1 拷贝图片 QT安装路径/Docs/Qt-5.9.1/qtdoc/images/icon_QtCreator_78x78px.png图片到桌面</p>
+<p> 4.2 用图片编辑器另存为text-qt.svg  文件名必须和第一步中的mime-type type一致</p>
+<p> 4.3 拷贝图片到目录</p>
+ <figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo cp text-qt.svg <span class="meta-keyword">/usr/</span>share<span class="meta-keyword">/icons/</span>Humanity<span class="meta-keyword">/mimes/</span><span class="number">64</span>/    </span><br><span class="line">sudo cp text-qt.svg <span class="meta-keyword">/usr/</span>share<span class="meta-keyword">/icons/</span>Humanity<span class="meta-keyword">/mimes/</span><span class="number">48</span>/ </span><br><span class="line">sudo cp text-qt.svg <span class="meta-keyword">/usr/</span>share<span class="meta-keyword">/icons/</span>Humanity<span class="meta-keyword">/mimes/</span><span class="number">128</span>/</span><br></pre></td></tr></table></figure>
+<p> 4.4 更新图标缓存</p>
+ <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo gtk-<span class="keyword">update</span>-icon-<span class="keyword">cache</span> /usr/<span class="keyword">share</span>/icons/Humanity</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>其中第一步和第二步必须有,第三步如果还是双击后不是QtCreator打开.pro文件在执行吧</p>
+<p>这里解释下DigiaQt-qtcreator-community.desktop 在/usr/share/applications/目录下,为Qt安装时候自动生成的,如果没有请自行建立该文件</p>
+<p>我的内容如下:<br><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[Desktop Entry]</span></span><br><span class="line"><span class="attr">Type</span>=Application</span><br><span class="line"><span class="attr">Exec</span>=/opt/Qt5.<span class="number">9.1</span>/Tools/QtCreator/bin/qtcreator</span><br><span class="line"><span class="attr">Name</span>=Qt Creator (Community)</span><br><span class="line"><span class="attr">GenericName</span>=The IDE of choice for Qt development.</span><br><span class="line"><span class="attr">Icon</span>=QtProject-qtcreator</span><br><span class="line"><span class="attr">StartupWMClass</span>=qtcreator</span><br><span class="line"><span class="attr">Terminal</span>=<span class="literal">false</span></span><br><span class="line"><span class="attr">Categories</span>=Development<span class="comment">;IDE;Qt;</span></span><br><span class="line"><span class="attr">MimeType</span>=text/x-c++src<span class="comment">;text/x-c++hdr;text/x-xsrc;application/x-designer;application/vnd.qt.qmakeprofile;application/vnd.qt.xml.resource;text/x-qml;text/x-qt.qml;text/x-qt.qbs;</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="文章参考链接"><a href="#文章参考链接" class="headerlink" title="文章参考链接"></a>文章参考链接</h2><ol>
+<li><p><a href="https://linux.die.net/man/1/xdg-mime" target="_blank" rel="noopener">xdg-mime</a></p>
+</li>
+<li><p><a href="https://askubuntu.com/questions/183089/default-program-for-opening-pro-qt-project-files" target="_blank" rel="noopener">default-program-for-opening-pro-qt-project-files</a></p>
+</li>
+</ol>
+<blockquote>
+<p>Linux自定义文件打开方式也可参照文本</p>
+</blockquote>
+
+    </div>
+    
+        <div class="reward" ontouchstart>
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+                <span class="reward-type">
+                    <img class="alipay" src="/img/zhifubaocode.jpg"><b>支付宝打赏</b>
+                </span>
+            
+            
+                <span class="reward-type">
+                    <img class="wechat" src="/img/weixincode.jpg"><b>微信打赏</b>
+                </span>
+            
+        </div>
+    </div>
+    <p class="reward-tip">您的支持是我前行的动力!</p>
+</div>
+
+
+    
+    <div class="post-footer">
+        <div>
+            
+                转载声明：商业转载请联系作者获得授权,非商业转载请注明出处 © <a href target="_blank">spygg</a>
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+        <a href="/2019/04/14/Ubuntu触摸板调教/" class="pre-post btn btn-default" title="Ubuntu触摸板调教">
+            <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+            <span class="hidden-xs">Ubuntu触摸板调教</span>
+        </a>
+    
+    
+        <a href="/2019/04/13/基于snippet主题在github上搭建博客/" class="next-post btn btn-default" title="基于snippet主题在github上搭建博客">
+            <span class="hidden-lg">下一篇</span>
+            <span class="hidden-xs">基于snippet主题在github上搭建博客</span><i class="fa fa-angle-right fa-fw"></i>
+        </a>
+    
+</div>
+
+<!-- google广告 -->
+<!-- 
+<div class="googleAd">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+</div>
+-->
+
+
+    <div id="comments">
+        
+	<link rel="stylesheet" href="https://cdn.bootcss.com/gitalk/1.5.0/gitalk.min.css">
+<script src="https://cdn.bootcss.com/gitalk/1.5.0/gitalk.min.js"></script>
+<script src="https://cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
+
+<div id="gitalk-container"></div>
+<script type="text/javascript">
+    var gitalk = new Gitalk({
+        // Gitalk配置
+        clientID: "6c31603d4df9afc8351b",
+        clientSecret: "c9e81f3ac1492550170fccb28c0f8bb16e3b7ed1",
+        repo: "blogcomment",
+        owner: "spygg",
+        admin: ["spygg"],
+        id: md5(window.location.pathname),
+        distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+</script>
+
+
+    </div>
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">文章目录</h3>
+        
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#效果图"><span class="toc-text">效果图</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#设置步骤"><span class="toc-text">设置步骤</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#文章参考链接"><span class="toc-text">文章参考链接</span></a></li></ol>
+        
+    </div>
+</aside>
+
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+
+<a id="back-to-top" class="icon-btn hide">
+	<i class="fa fa-chevron-up"></i>
+</a>
+
+
+
+
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+        访问量:
+        <strong id="busuanzi_value_site_pv">
+            <i class="fa fa-spinner fa-spin"></i>
+        </strong>
+        &nbsp; | &nbsp;
+        访客数:
+        <strong id="busuanzi_value_site_uv">
+            <i class="fa fa-spinner fa-spin"></i>
+        </strong>
+    
+</div>
+
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy; 2019
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+    <script src="/assets/tagcanvas.min.js?rev=2.9"></script>
+    <script>
+        var tagOption = {
+            textColour: '#444', // 字体颜色
+            outlineMethod: 'block', // 选中模式
+            outlineColour: '#FFDAB9', // 选中模式的颜色
+            interval: 30 || 30, // 动画帧之间的时间间隔，值越大，转动幅度越大
+            textHeight: 13,
+            outlineRadius: 3,
+            freezeActive: true || '', // 选中的标签是否继续滚动
+            frontSelect: true || '', // 不选标签云后部的标签
+            initial: [0.1, -0.1],
+            depth: 0.5,
+            decel: 0.95,
+            maxSpeed: 0.03,
+            reverse: true || '', // 是否反向触发
+            fadeIn: 500, // 进入动画时间
+            wheelZoom: false || '' // 是否启用鼠标滚轮
+        }
+        TagCanvas.Start('tag-cloud-3d','',tagOption);
+    </script>
+
+
+
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<script src="/js/app.js?rev=@@hash"></script>
+
+</body>
+</html>

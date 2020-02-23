@@ -1,0 +1,551 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="LiusBlog">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="google-site-verification" content="Ib3TgmBWfq5KtJE24-Dg_CaJRazvNc0JjfEdPPJf_mQ">
+    <meta name="msvalidate.01" content="9C33A26895A2A8B80CEE60CD519D1095">
+    
+    <link rel="dns-prefetch" href="https://spygg.github.io">
+    <!--SEO-->
+
+    <meta name="keywords" content="心情">
+
+
+    <meta name="description" content="
+众生皆苦…..
+
+生而为人,已属不易,何苦要相互折磨?纵使有千般不舍,万分难离亦不如,彼此放手各自前行…
+        Your user agent does not support th...">
+
+
+
+<meta name="robots" content="all">
+<meta name="google" content="all">
+<meta name="googlebot" content="all">
+<meta name="verify" content="all">
+
+    <!--Title-->
+
+
+<title>分开旅行 | LiusBlog</title>
+
+
+    <link rel="alternate" href="/atom.xml" title="LiusBlog" type="application/atom+xml">
+
+
+    <link rel="icon" href="/favicon.ico">
+
+    
+
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.5.0">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash">
+
+
+
+
+    
+
+
+
+
+
+    
+
+    <script>
+        (function(){
+            var bp = document.createElement('script');
+            var curProtocol = window.location.protocol.split(':')[0];
+            if (curProtocol === 'https') {
+                bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+            }
+            else {
+                bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+            }
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(bp, s);
+        })();
+    </script>
+
+
+<!--     <script type="text/javascript">
+        function IsPC() {
+          var userAgentInfo = navigator.userAgent;
+          var Agents = ["Android", "iPhone"];
+          var flag = true;
+          for (var v = 0; v < Agents.length; v++) {
+            if (userAgentInfo.indexOf(Agents[v]) > 0) {
+              flag = false;
+              break;
+            }
+          }
+          return flag;
+        }
+    </script> -->
+
+<!-- 	<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+	<script>
+	  (adsbygoogle = window.adsbygoogle || []).push({
+	    google_ad_client: "ca-pub-7854187021513757",
+	    enable_page_level_ads: IsPC()
+	  });
+	</script> -->
+
+
+	
+    <script type="text/javascript">
+        function hasClass(obj, cls) {
+            return obj.className.match(new RegExp('(\\s|^)' + cls + '(\\s|$)'));
+        }
+         
+        function addClass(obj, cls) {
+            if (!this.hasClass(obj, cls)) obj.className += " " + cls;
+        }
+         
+        function removeClass(obj, cls) {
+            if (hasClass(obj, cls)) {
+                var reg = new RegExp('(\\s|^)' + cls + '(\\s|$)');
+                obj.className = obj.className.replace(reg, ' ');
+            }
+        }
+
+
+        window.addEventListener('load', function () {
+            // 谷歌广告
+            // if(IsPC()){
+            //     var googleAds = document.getElementsByClassName('googleAd');
+            //     if(googleAds != undefined){
+            //         for (var i = 0; i < googleAds.length; i++) {
+            //             googleAds[i].innerHTML = '<ins class="adsbygoogle"\
+            //                  style="display:block; text-align:center;"\
+            //                  data-ad-layout="in-article"\
+            //                  data-ad-format="fluid"\
+            //                  data-ad-client="ca-pub-7854187021513757"\
+            //                  data-ad-slot="4637472251">\
+            //             </ins>'
+
+            //             var scriptFun = document.createElement("script");
+            //             scriptFun.text = "(adsbygoogle = window.adsbygoogle || []).push({});";
+            //             googleAds[i].appendChild(scriptFun);
+            //             // end
+            //         }
+            //     }
+           
+            // }
+
+            var imgAll = document.getElementsByClassName('post-body')[0];
+            if(imgAll == undefined){
+                return;
+            }
+            
+            var imgs = imgAll.getElementsByTagName('img')
+            for(var i=0;i<imgs.length;i++){
+                if(hasClass(imgs[i],'class_no_full_screen')){
+                    continue;
+                }
+
+                // imgs[i].setAttribute('data-background', 'rgba(10, 10, 10, .6)');
+                // imgs[i].setAttribute('data-lightense-padding', "0");
+                imgs[i].setAttribute('style', "cursor: zoom-in");
+                imgs[i].onclick=function(){
+                
+                    var section=document.getElementsByTagName("section")[0];
+
+                    var imgView = document.getElementById('imgViewDom');
+                    if(imgView == undefined){
+                        imgView=document.createElement("div");
+                        imgView.id = "imgViewDom";
+
+                        section.appendChild(imgView)
+
+
+                        imgView.onclick = function(){
+                            addClass(imgView, "disnone");
+                            imgView.innerHTML="";
+                        }
+
+                    }
+            
+                    imgView.innerHTML="<img id = 'jackslowfuck' src=" + this.src + " style='cursor: zoom-out; max-width: 100%;'" + ">";
+                    removeClass(imgView, "disnone");
+
+                    var jackslowfuck = document.getElementById('jackslowfuck');
+                    jackslowfuck.onclick=function(){
+                        addClass(imgView, "disnone");
+                        imgView.innerHTML="";
+                    }
+
+                }
+            }
+            
+        }, false);
+    </script>
+
+    <style type="text/css">
+        #imgViewDom {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            z-index: 99999999;
+            background: rgba(0, 0, 0,0.7);
+            overflow: auto;
+            display: -webkit-box;
+            -webkit-box-align: center;
+            -webkit-box-pack: center;
+            display: -moz-box;
+            -moz-box-align: center;
+            -moz-box-pack: center;
+            display: -o-box;
+            -o-box-align: center;
+            -o-box-pack: center;
+            display: -ms-box;
+            -ms-box-align: center;
+            -ms-box-pack: center;
+            display: box;
+            box-align: center;
+            box-pack: center;
+            cursor: zoom-out;
+        }
+
+        .disnone{
+            display: none !important;
+        }
+    </style>
+
+</head>
+
+</html>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+
+<body>
+    <header class="main-header" style="background-image:url(/img/banner.jpg)">
+    <div class="main-header-box">
+        <a class="header-avatar" href="/about" title="spygg">
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+        	<!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+                <h2> 技术引领生活! </h2>
+            
+    	</div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                    <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="https://spygg.github.io">LiusBlog</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/"><i class="fa fa-home"></i>首页</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/Qt"><i class="fa "></i>Qt</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/Python"><i class="fa "></i>Python</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/Linux"><i class="fa "></i>Linux</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/音视频"><i class="fa "></i>音视频</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/杂谈"><i class="fa "></i>杂谈</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/archives/"><i class="fa "></i>时间轴</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/about/"><i class="fa "></i>关于</a>
+                            </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="分开旅行">
+            
+	            分开旅行
+            
+        </h1>
+        <div class="post-meta">
+    
+        <span class="categories-meta fa-wrap">
+            <i class="fa fa-folder-open-o"></i>
+            <a class="category-link" href="/categories/杂谈/">杂谈</a>
+        </span>
+    
+
+    
+        <span class="fa-wrap">
+            <i class="fa fa-tags"></i>
+            <span class="tags-meta">
+                
+                    <a class="tag-link" href="/tags/心情/">心情</a>
+                
+            </span>
+        </span>
+    
+
+    
+        
+        <span class="fa-wrap">
+            <i class="fa fa-clock-o"></i>
+            <span class="date-meta">2019/06/21</span>
+        </span>
+        
+            <span class="fa-wrap">
+                <i class="fa fa-eye"></i>
+                <span id="busuanzi_value_page_pv"></span>
+            </span>
+        
+    
+</div>
+            
+            
+    </div>
+
+    
+    
+    <!-- google广告 -->
+    <!--
+    <div class="googleAd">
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    </div>
+    -->
+
+    <div class="post-body post-content">
+        <blockquote>
+<p>众生皆苦…..</p>
+</blockquote>
+<h2 id="生而为人-已属不易-何苦要相互折磨"><a href="#生而为人-已属不易-何苦要相互折磨" class="headerlink" title="生而为人,已属不易,何苦要相互折磨?"></a>生而为人,已属不易,何苦要相互折磨?</h2><h2 id="纵使有千般不舍-万分难离"><a href="#纵使有千般不舍-万分难离" class="headerlink" title="纵使有千般不舍,万分难离"></a>纵使有千般不舍,万分难离</h2><h2 id="亦不如-彼此放手各自前行…"><a href="#亦不如-彼此放手各自前行…" class="headerlink" title="亦不如,彼此放手各自前行…"></a>亦不如,彼此放手各自前行…</h2><p><img src="/photos/分开旅行/分开旅行.jpg" alt="分开旅行"></p>
+<audio id="video" controls="controls" preload="auto"><br>    <source src="/media/分开旅行/分开旅行.mp3" type="audio/mpeg"><br>    <p>Your user agent does not support the HTML5 Video element.</p><br></audio>
+
+
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line">我选择去洛杉矶</span><br><span class="line">你 一个人要飞向巴黎</span><br><span class="line">尊重各自的决定</span><br><span class="line">维持和平的爱情</span><br><span class="line">相爱是一种习题</span><br><span class="line">在自由和亲密中游移</span><br><span class="line">你问过太多次我爱不爱你</span><br><span class="line"><span class="keyword">Black </span><span class="keyword">Black </span>Heart</span><br><span class="line"><span class="symbol">Send</span>给你我的心</span><br><span class="line">计划是分开旅行啊</span><br><span class="line">为何像结局</span><br><span class="line">我明白 停在你的怀里</span><br><span class="line">却不一定在你心里</span><br><span class="line">巴黎下了一整天雨</span><br><span class="line">我不想要去证明</span><br><span class="line">也不知道怎样证明</span><br><span class="line">相爱是两人事情</span><br><span class="line">我不喜欢你怀疑</span><br><span class="line">怀疑爱是可怕的武器</span><br><span class="line">谋杀了爱情</span><br><span class="line">我在这里 本来是晴朗好天气</span><br><span class="line"><span class="keyword">Black </span><span class="keyword">Black </span>Heart</span><br><span class="line"><span class="symbol">Send</span>给你我的心</span><br><span class="line">计划是分开旅行啊</span><br><span class="line">为何像结局</span><br><span class="line">我明白 停在你的怀里</span><br><span class="line">却不一定在你心里</span><br><span class="line">巴黎下了一整天雨</span><br><span class="line"><span class="keyword">Black </span><span class="keyword">Black </span>Heart</span><br><span class="line"><span class="symbol">Send</span>给你我的心</span><br><span class="line">计划是分开旅行啊</span><br><span class="line">为何像结局</span><br><span class="line">我明白 停在你的怀里</span><br><span class="line">却不一定在你心里</span><br><span class="line">巴黎下了一整天雨</span><br><span class="line"><span class="keyword">Black </span><span class="keyword">Black </span>Heart</span><br><span class="line"><span class="symbol">Send</span>给你我的心</span><br><span class="line">计划是分开旅行啊</span><br><span class="line">为何像结局</span><br><span class="line">我明白 停在你的怀里</span><br><span class="line">却不一定在你心里</span><br><span class="line">巴黎下了一整天雨</span><br><span class="line">休息一下 不需要那么的密集</span><br><span class="line">不必每一秒钟都黏在一起</span><br><span class="line">你问我爱不爱你</span><br><span class="line">这个不是个问题</span><br><span class="line">早就说过需要空间才能继续</span><br><span class="line">我也真的不希望你离去</span><br><span class="line">我们就试试看各走各的路</span><br><span class="line">嘘 别哭</span><br><span class="line">这个只是个短短的度假</span><br><span class="line">别搞得那么复杂</span><br><span class="line">你不是一直说要去巴黎吗</span><br></pre></td></tr></table></figure>
+    </div>
+    
+        <div class="reward" ontouchstart>
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+                <span class="reward-type">
+                    <img class="alipay" src="/img/zhifubaocode.jpg"><b>支付宝打赏</b>
+                </span>
+            
+            
+                <span class="reward-type">
+                    <img class="wechat" src="/img/weixincode.jpg"><b>微信打赏</b>
+                </span>
+            
+        </div>
+    </div>
+    <p class="reward-tip">您的支持是我前行的动力!</p>
+</div>
+
+
+    
+    <div class="post-footer">
+        <div>
+            
+                转载声明：商业转载请联系作者获得授权,非商业转载请注明出处 © <a href target="_blank">spygg</a>
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+        <a href="/2019/06/24/跟随Designer源码学Qt/" class="pre-post btn btn-default" title="跟随Designer源码学Qt">
+            <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+            <span class="hidden-xs">跟随Designer源码学Qt</span>
+        </a>
+    
+    
+        <a href="/2019/06/20/Qt数据库removeDatabase注意事项/" class="next-post btn btn-default" title="Qt数据库removeDatabase注意事项">
+            <span class="hidden-lg">下一篇</span>
+            <span class="hidden-xs">Qt数据库removeDatabase注意事项</span><i class="fa fa-angle-right fa-fw"></i>
+        </a>
+    
+</div>
+
+<!-- google广告 -->
+<!-- 
+<div class="googleAd">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+</div>
+-->
+
+
+    <div id="comments">
+        
+	<link rel="stylesheet" href="https://cdn.bootcss.com/gitalk/1.5.0/gitalk.min.css">
+<script src="https://cdn.bootcss.com/gitalk/1.5.0/gitalk.min.js"></script>
+<script src="https://cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
+
+<div id="gitalk-container"></div>
+<script type="text/javascript">
+    var gitalk = new Gitalk({
+        // Gitalk配置
+        clientID: "6c31603d4df9afc8351b",
+        clientSecret: "c9e81f3ac1492550170fccb28c0f8bb16e3b7ed1",
+        repo: "blogcomment",
+        owner: "spygg",
+        admin: ["spygg"],
+        id: md5(window.location.pathname),
+        distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+</script>
+
+
+    </div>
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">文章目录</h3>
+        
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#生而为人-已属不易-何苦要相互折磨"><span class="toc-text">生而为人,已属不易,何苦要相互折磨?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#纵使有千般不舍-万分难离"><span class="toc-text">纵使有千般不舍,万分难离</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#亦不如-彼此放手各自前行…"><span class="toc-text">亦不如,彼此放手各自前行…</span></a></li></ol>
+        
+    </div>
+</aside>
+
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+
+<a id="back-to-top" class="icon-btn hide">
+	<i class="fa fa-chevron-up"></i>
+</a>
+
+
+
+
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+        访问量:
+        <strong id="busuanzi_value_site_pv">
+            <i class="fa fa-spinner fa-spin"></i>
+        </strong>
+        &nbsp; | &nbsp;
+        访客数:
+        <strong id="busuanzi_value_site_uv">
+            <i class="fa fa-spinner fa-spin"></i>
+        </strong>
+    
+</div>
+
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy; 2019
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+    <script src="/assets/tagcanvas.min.js?rev=2.9"></script>
+    <script>
+        var tagOption = {
+            textColour: '#444', // 字体颜色
+            outlineMethod: 'block', // 选中模式
+            outlineColour: '#FFDAB9', // 选中模式的颜色
+            interval: 30 || 30, // 动画帧之间的时间间隔，值越大，转动幅度越大
+            textHeight: 13,
+            outlineRadius: 3,
+            freezeActive: true || '', // 选中的标签是否继续滚动
+            frontSelect: true || '', // 不选标签云后部的标签
+            initial: [0.1, -0.1],
+            depth: 0.5,
+            decel: 0.95,
+            maxSpeed: 0.03,
+            reverse: true || '', // 是否反向触发
+            fadeIn: 500, // 进入动画时间
+            wheelZoom: false || '' // 是否启用鼠标滚轮
+        }
+        TagCanvas.Start('tag-cloud-3d','',tagOption);
+    </script>
+
+
+
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<script src="/js/app.js?rev=@@hash"></script>
+
+</body>
+</html>

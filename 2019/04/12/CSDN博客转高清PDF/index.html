@@ -1,0 +1,589 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="LiusBlog">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="google-site-verification" content="Ib3TgmBWfq5KtJE24-Dg_CaJRazvNc0JjfEdPPJf_mQ">
+    <meta name="msvalidate.01" content="9C33A26895A2A8B80CEE60CD519D1095">
+    
+    <link rel="dns-prefetch" href="https://spygg.github.io">
+    <!--SEO-->
+
+    <meta name="keywords" content="爬虫">
+
+
+    <meta name="description" content="
+起源:主要是为了学习ffmpeg,然后看到雷神大人的博客太好了(但是CSDN广告太多了….),就爬取下来了,理论上可以爬取所有的csdn
+
+
+效果:先看疗效—–雷神高清无码博客图
+用法:1$ ...">
+
+
+
+<meta name="robots" content="all">
+<meta name="google" content="all">
+<meta name="googlebot" content="all">
+<meta name="verify" content="all">
+
+    <!--Title-->
+
+
+<title>CSDN博客转高清PDF | LiusBlog</title>
+
+
+    <link rel="alternate" href="/atom.xml" title="LiusBlog" type="application/atom+xml">
+
+
+    <link rel="icon" href="/favicon.ico">
+
+    
+
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.5.0">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash">
+
+
+
+
+    
+
+
+
+
+
+    
+
+    <script>
+        (function(){
+            var bp = document.createElement('script');
+            var curProtocol = window.location.protocol.split(':')[0];
+            if (curProtocol === 'https') {
+                bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+            }
+            else {
+                bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+            }
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(bp, s);
+        })();
+    </script>
+
+
+<!--     <script type="text/javascript">
+        function IsPC() {
+          var userAgentInfo = navigator.userAgent;
+          var Agents = ["Android", "iPhone"];
+          var flag = true;
+          for (var v = 0; v < Agents.length; v++) {
+            if (userAgentInfo.indexOf(Agents[v]) > 0) {
+              flag = false;
+              break;
+            }
+          }
+          return flag;
+        }
+    </script> -->
+
+<!-- 	<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+	<script>
+	  (adsbygoogle = window.adsbygoogle || []).push({
+	    google_ad_client: "ca-pub-7854187021513757",
+	    enable_page_level_ads: IsPC()
+	  });
+	</script> -->
+
+
+	
+    <script type="text/javascript">
+        function hasClass(obj, cls) {
+            return obj.className.match(new RegExp('(\\s|^)' + cls + '(\\s|$)'));
+        }
+         
+        function addClass(obj, cls) {
+            if (!this.hasClass(obj, cls)) obj.className += " " + cls;
+        }
+         
+        function removeClass(obj, cls) {
+            if (hasClass(obj, cls)) {
+                var reg = new RegExp('(\\s|^)' + cls + '(\\s|$)');
+                obj.className = obj.className.replace(reg, ' ');
+            }
+        }
+
+
+        window.addEventListener('load', function () {
+            // 谷歌广告
+            // if(IsPC()){
+            //     var googleAds = document.getElementsByClassName('googleAd');
+            //     if(googleAds != undefined){
+            //         for (var i = 0; i < googleAds.length; i++) {
+            //             googleAds[i].innerHTML = '<ins class="adsbygoogle"\
+            //                  style="display:block; text-align:center;"\
+            //                  data-ad-layout="in-article"\
+            //                  data-ad-format="fluid"\
+            //                  data-ad-client="ca-pub-7854187021513757"\
+            //                  data-ad-slot="4637472251">\
+            //             </ins>'
+
+            //             var scriptFun = document.createElement("script");
+            //             scriptFun.text = "(adsbygoogle = window.adsbygoogle || []).push({});";
+            //             googleAds[i].appendChild(scriptFun);
+            //             // end
+            //         }
+            //     }
+           
+            // }
+
+            var imgAll = document.getElementsByClassName('post-body')[0];
+            if(imgAll == undefined){
+                return;
+            }
+            
+            var imgs = imgAll.getElementsByTagName('img')
+            for(var i=0;i<imgs.length;i++){
+                if(hasClass(imgs[i],'class_no_full_screen')){
+                    continue;
+                }
+
+                // imgs[i].setAttribute('data-background', 'rgba(10, 10, 10, .6)');
+                // imgs[i].setAttribute('data-lightense-padding', "0");
+                imgs[i].setAttribute('style', "cursor: zoom-in");
+                imgs[i].onclick=function(){
+                
+                    var section=document.getElementsByTagName("section")[0];
+
+                    var imgView = document.getElementById('imgViewDom');
+                    if(imgView == undefined){
+                        imgView=document.createElement("div");
+                        imgView.id = "imgViewDom";
+
+                        section.appendChild(imgView)
+
+
+                        imgView.onclick = function(){
+                            addClass(imgView, "disnone");
+                            imgView.innerHTML="";
+                        }
+
+                    }
+            
+                    imgView.innerHTML="<img id = 'jackslowfuck' src=" + this.src + " style='cursor: zoom-out; max-width: 100%;'" + ">";
+                    removeClass(imgView, "disnone");
+
+                    var jackslowfuck = document.getElementById('jackslowfuck');
+                    jackslowfuck.onclick=function(){
+                        addClass(imgView, "disnone");
+                        imgView.innerHTML="";
+                    }
+
+                }
+            }
+            
+        }, false);
+    </script>
+
+    <style type="text/css">
+        #imgViewDom {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            z-index: 99999999;
+            background: rgba(0, 0, 0,0.7);
+            overflow: auto;
+            display: -webkit-box;
+            -webkit-box-align: center;
+            -webkit-box-pack: center;
+            display: -moz-box;
+            -moz-box-align: center;
+            -moz-box-pack: center;
+            display: -o-box;
+            -o-box-align: center;
+            -o-box-pack: center;
+            display: -ms-box;
+            -ms-box-align: center;
+            -ms-box-pack: center;
+            display: box;
+            box-align: center;
+            box-pack: center;
+            cursor: zoom-out;
+        }
+
+        .disnone{
+            display: none !important;
+        }
+    </style>
+
+</head>
+
+</html>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+
+<body>
+    <header class="main-header" style="background-image:url(/img/banner.jpg)">
+    <div class="main-header-box">
+        <a class="header-avatar" href="/about" title="spygg">
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+        	<!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+                <h2> 技术引领生活! </h2>
+            
+    	</div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                    <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="https://spygg.github.io">LiusBlog</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/"><i class="fa fa-home"></i>首页</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/Qt"><i class="fa "></i>Qt</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/Python"><i class="fa "></i>Python</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/Linux"><i class="fa "></i>Linux</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/音视频"><i class="fa "></i>音视频</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/杂谈"><i class="fa "></i>杂谈</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/archives/"><i class="fa "></i>时间轴</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/about/"><i class="fa "></i>关于</a>
+                            </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="CSDN博客转高清PDF">
+            
+	            CSDN博客转高清PDF
+            
+        </h1>
+        <div class="post-meta">
+    
+        <span class="categories-meta fa-wrap">
+            <i class="fa fa-folder-open-o"></i>
+            <a class="category-link" href="/categories/Python/">Python</a>
+        </span>
+    
+
+    
+        <span class="fa-wrap">
+            <i class="fa fa-tags"></i>
+            <span class="tags-meta">
+                
+                    <a class="tag-link" href="/tags/爬虫/">爬虫</a>
+                
+            </span>
+        </span>
+    
+
+    
+        
+        <span class="fa-wrap">
+            <i class="fa fa-clock-o"></i>
+            <span class="date-meta">2019/04/12</span>
+        </span>
+        
+            <span class="fa-wrap">
+                <i class="fa fa-eye"></i>
+                <span id="busuanzi_value_page_pv"></span>
+            </span>
+        
+    
+</div>
+            
+            
+            <p class="fa fa-exclamation-triangle warning">
+                本文于<strong>316</strong>天之前发表，文中内容可能已经过时。
+            </p>
+        
+    </div>
+
+    
+    
+    <!-- google广告 -->
+    <!--
+    <div class="googleAd">
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    </div>
+    -->
+
+    <div class="post-body post-content">
+        <blockquote>
+<p>起源:主要是为了学习ffmpeg,然后看到雷神大人的<a href="https://blog.csdn.net/leixiaohua1020" target="_blank" rel="noopener">博客</a>太好了(但是CSDN广告太多了….),就爬取下来了,理论上可以爬取所有的csdn</p>
+</blockquote>
+<a id="more"></a>
+<h2 id="效果"><a href="#效果" class="headerlink" title="效果:"></a>效果:</h2><p>先看疗效—–雷神高清无码博客图<br><img src="/photos/CSDN博客转高清PDF/成果.png" alt="图片"></p>
+<h2 id="用法"><a href="#用法" class="headerlink" title="用法:"></a>用法:</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ python csdn.py</span><br></pre></td></tr></table></figure>
+<h2 id="所需库-标注库除外"><a href="#所需库-标注库除外" class="headerlink" title="所需库:(标注库除外)"></a>所需库:(标注库除外)</h2><ul>
+<li>pdfkit </li>
+<li>PyPDF2 </li>
+<li>bs4</li>
+</ul>
+<p><strong>致敬雷神大人!!!!</strong></p>
+<h2 id="实现步骤"><a href="#实现步骤" class="headerlink" title="实现步骤:"></a>实现步骤:</h2><ol>
+<li><p>获取目标用户名:<br>找到目标博客地址,得到用户名如: <a href="https://blog.csdn.net/leixiaohua1020" target="_blank" rel="noopener">https://blog.csdn.net/leixiaohua1020</a> 的用户名为<em>leixiaohua1020</em></p>
+</li>
+<li><p>获取文章列表:<br>网址格式为: <a href="https://blog.csdn.net/用户名/article/list/页码" target="_blank" rel="noopener">https://blog.csdn.net/用户名/article/list/页码</a>?<br>从1依次增加上述网址中的页码,当出现”空空如也”的时候即超过了最后一页,可作为终止条件(代码中的getPageByIndex函数)<br><img src="/photos/CSDN博客转高清PDF/文章列表.png" alt="文章列表"></p>
+</li>
+<li><p>获取文章链接:<br> 在上一步中得到的目录页面中通过chrome调试模式可以发现所有文章都在class=”article-list”的div中,而且链接在子div的class=”article-item-box”中的href中(代码中的getArticlesInPage函数)<br> <img src="/photos/CSDN博客转高清PDF/文章链接.png" alt="文章链接"></p>
+</li>
+<li><p>获取文章内容:<br>这一步没啥好说的,拿到网址后直接开干(getArticleByUrl函数)</p>
+</li>
+<li><p>数据清洗并生成PDF:</p>
+<p> 本步骤的目的主要是进行去广告,同时尽可能的保留博客的原汁原味主要在函数startThreadPool中完成</p>
+<p> ①cleanHtmlData主要对数据进行清洗,需要一点html知识</p>
+<p> ②为了加快生成速度,开辟了线程池主要调用函数doConvert</p>
+<p> ③生成pdf主要用到了pdfkit中的from_string()函数</p>
+</li>
+<li><p>PDF合并:</p>
+<p> ①生成目录</p>
+<p> ②添加书签(带跳转链接) </p>
+</li>
+<li><p>数据库:<br> 为了减少服务器压力使用了数据库(同时也方便我们自己,只需要爬取一次)</p>
+</li>
+</ol>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码:"></a>代码:</h2><p>代码在我的github中就有了<a href="https://github.com/spygg/csdn/" target="_blank" rel="noopener">https://github.com/spygg/csdn/</a></p>
+<h2 id="ps"><a href="#ps" class="headerlink" title="ps:"></a>ps:</h2><p>因为CSDN可能会进行<strong>反爬</strong>所以请随时关注<a href="https://github.com/spygg/csdn/" target="_blank" rel="noopener">本人github</a></p>
+<h2 id="pps"><a href="#pps" class="headerlink" title="pps:"></a>pps:</h2><p>请低调使用!</p>
+<h2 id="后记"><a href="#后记" class="headerlink" title="后记:"></a>后记:</h2><blockquote>
+<p>话说这个项目也折腾了我好几天,刚开始把所有的html弄到一个页面中想使用chrome导出为PDF功能,谁知道在本人的8g内存i7处理器的电脑上连续跑了几天后电脑直接卡死,试了几次均无效后<strong>痛定思痛</strong>才想起了化整为零,后面为了加快转化进度开辟了几十个线程来搞也是不错的</p>
+</blockquote>
+
+    </div>
+    
+        <div class="reward" ontouchstart>
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+                <span class="reward-type">
+                    <img class="alipay" src="/img/zhifubaocode.jpg"><b>支付宝打赏</b>
+                </span>
+            
+            
+                <span class="reward-type">
+                    <img class="wechat" src="/img/weixincode.jpg"><b>微信打赏</b>
+                </span>
+            
+        </div>
+    </div>
+    <p class="reward-tip">您的支持是我前行的动力!</p>
+</div>
+
+
+    
+    <div class="post-footer">
+        <div>
+            
+                转载声明：商业转载请联系作者获得授权,非商业转载请注明出处 © <a href target="_blank">spygg</a>
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+        <a href="/2019/04/13/基于snippet主题在github上搭建博客/" class="pre-post btn btn-default" title="基于snippet主题在github上搭建博客">
+            <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+            <span class="hidden-xs">基于snippet主题在github上搭建博客</span>
+        </a>
+    
+    
+        <a href="/2019/04/09/ubuntu-有道云笔记/" class="next-post btn btn-default" title="Qt版本ubuntu有道云笔记">
+            <span class="hidden-lg">下一篇</span>
+            <span class="hidden-xs">Qt版本ubuntu有道云笔记</span><i class="fa fa-angle-right fa-fw"></i>
+        </a>
+    
+</div>
+
+<!-- google广告 -->
+<!-- 
+<div class="googleAd">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+</div>
+-->
+
+
+    <div id="comments">
+        
+	<link rel="stylesheet" href="https://cdn.bootcss.com/gitalk/1.5.0/gitalk.min.css">
+<script src="https://cdn.bootcss.com/gitalk/1.5.0/gitalk.min.js"></script>
+<script src="https://cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
+
+<div id="gitalk-container"></div>
+<script type="text/javascript">
+    var gitalk = new Gitalk({
+        // Gitalk配置
+        clientID: "6c31603d4df9afc8351b",
+        clientSecret: "c9e81f3ac1492550170fccb28c0f8bb16e3b7ed1",
+        repo: "blogcomment",
+        owner: "spygg",
+        admin: ["spygg"],
+        id: md5(window.location.pathname),
+        distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+</script>
+
+
+    </div>
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">文章目录</h3>
+        
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#效果"><span class="toc-text">效果:</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#用法"><span class="toc-text">用法:</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#所需库-标注库除外"><span class="toc-text">所需库:(标注库除外)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实现步骤"><span class="toc-text">实现步骤:</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#代码"><span class="toc-text">代码:</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ps"><span class="toc-text">ps:</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#pps"><span class="toc-text">pps:</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#后记"><span class="toc-text">后记:</span></a></li></ol>
+        
+    </div>
+</aside>
+
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+
+<a id="back-to-top" class="icon-btn hide">
+	<i class="fa fa-chevron-up"></i>
+</a>
+
+
+
+
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+        访问量:
+        <strong id="busuanzi_value_site_pv">
+            <i class="fa fa-spinner fa-spin"></i>
+        </strong>
+        &nbsp; | &nbsp;
+        访客数:
+        <strong id="busuanzi_value_site_uv">
+            <i class="fa fa-spinner fa-spin"></i>
+        </strong>
+    
+</div>
+
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy; 2019
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+    <script src="/assets/tagcanvas.min.js?rev=2.9"></script>
+    <script>
+        var tagOption = {
+            textColour: '#444', // 字体颜色
+            outlineMethod: 'block', // 选中模式
+            outlineColour: '#FFDAB9', // 选中模式的颜色
+            interval: 30 || 30, // 动画帧之间的时间间隔，值越大，转动幅度越大
+            textHeight: 13,
+            outlineRadius: 3,
+            freezeActive: true || '', // 选中的标签是否继续滚动
+            frontSelect: true || '', // 不选标签云后部的标签
+            initial: [0.1, -0.1],
+            depth: 0.5,
+            decel: 0.95,
+            maxSpeed: 0.03,
+            reverse: true || '', // 是否反向触发
+            fadeIn: 500, // 进入动画时间
+            wheelZoom: false || '' // 是否启用鼠标滚轮
+        }
+        TagCanvas.Start('tag-cloud-3d','',tagOption);
+    </script>
+
+
+
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<script src="/js/app.js?rev=@@hash"></script>
+
+</body>
+</html>

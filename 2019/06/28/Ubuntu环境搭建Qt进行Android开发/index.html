@@ -1,0 +1,593 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="LiusBlog">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="google-site-verification" content="Ib3TgmBWfq5KtJE24-Dg_CaJRazvNc0JjfEdPPJf_mQ">
+    <meta name="msvalidate.01" content="9C33A26895A2A8B80CEE60CD519D1095">
+    
+    <link rel="dns-prefetch" href="https://spygg.github.io">
+    <!--SEO-->
+
+    <meta name="keywords" content="软件使用,Android,Ubuntu">
+
+
+    <meta name="description" content="
+鉴于Qt的全平台性,用来开发android对于只会用C++的人来说太合适了,但是在第一关往往都会遇到不少坑,本文将一一细数之…
+
+环境不说搭建的环境就是耍流氓,往往遇到问题的都是运行环境的问题...">
+
+
+
+<meta name="robots" content="all">
+<meta name="google" content="all">
+<meta name="googlebot" content="all">
+<meta name="verify" content="all">
+
+    <!--Title-->
+
+
+<title>Ubuntu环境搭建Qt进行Android开发 | LiusBlog</title>
+
+
+    <link rel="alternate" href="/atom.xml" title="LiusBlog" type="application/atom+xml">
+
+
+    <link rel="icon" href="/favicon.ico">
+
+    
+
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.5.0">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash">
+
+
+
+
+    
+
+
+
+
+
+    
+
+    <script>
+        (function(){
+            var bp = document.createElement('script');
+            var curProtocol = window.location.protocol.split(':')[0];
+            if (curProtocol === 'https') {
+                bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+            }
+            else {
+                bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+            }
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(bp, s);
+        })();
+    </script>
+
+
+<!--     <script type="text/javascript">
+        function IsPC() {
+          var userAgentInfo = navigator.userAgent;
+          var Agents = ["Android", "iPhone"];
+          var flag = true;
+          for (var v = 0; v < Agents.length; v++) {
+            if (userAgentInfo.indexOf(Agents[v]) > 0) {
+              flag = false;
+              break;
+            }
+          }
+          return flag;
+        }
+    </script> -->
+
+<!-- 	<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+	<script>
+	  (adsbygoogle = window.adsbygoogle || []).push({
+	    google_ad_client: "ca-pub-7854187021513757",
+	    enable_page_level_ads: IsPC()
+	  });
+	</script> -->
+
+
+	
+    <script type="text/javascript">
+        function hasClass(obj, cls) {
+            return obj.className.match(new RegExp('(\\s|^)' + cls + '(\\s|$)'));
+        }
+         
+        function addClass(obj, cls) {
+            if (!this.hasClass(obj, cls)) obj.className += " " + cls;
+        }
+         
+        function removeClass(obj, cls) {
+            if (hasClass(obj, cls)) {
+                var reg = new RegExp('(\\s|^)' + cls + '(\\s|$)');
+                obj.className = obj.className.replace(reg, ' ');
+            }
+        }
+
+
+        window.addEventListener('load', function () {
+            // 谷歌广告
+            // if(IsPC()){
+            //     var googleAds = document.getElementsByClassName('googleAd');
+            //     if(googleAds != undefined){
+            //         for (var i = 0; i < googleAds.length; i++) {
+            //             googleAds[i].innerHTML = '<ins class="adsbygoogle"\
+            //                  style="display:block; text-align:center;"\
+            //                  data-ad-layout="in-article"\
+            //                  data-ad-format="fluid"\
+            //                  data-ad-client="ca-pub-7854187021513757"\
+            //                  data-ad-slot="4637472251">\
+            //             </ins>'
+
+            //             var scriptFun = document.createElement("script");
+            //             scriptFun.text = "(adsbygoogle = window.adsbygoogle || []).push({});";
+            //             googleAds[i].appendChild(scriptFun);
+            //             // end
+            //         }
+            //     }
+           
+            // }
+
+            var imgAll = document.getElementsByClassName('post-body')[0];
+            if(imgAll == undefined){
+                return;
+            }
+            
+            var imgs = imgAll.getElementsByTagName('img')
+            for(var i=0;i<imgs.length;i++){
+                if(hasClass(imgs[i],'class_no_full_screen')){
+                    continue;
+                }
+
+                // imgs[i].setAttribute('data-background', 'rgba(10, 10, 10, .6)');
+                // imgs[i].setAttribute('data-lightense-padding', "0");
+                imgs[i].setAttribute('style', "cursor: zoom-in");
+                imgs[i].onclick=function(){
+                
+                    var section=document.getElementsByTagName("section")[0];
+
+                    var imgView = document.getElementById('imgViewDom');
+                    if(imgView == undefined){
+                        imgView=document.createElement("div");
+                        imgView.id = "imgViewDom";
+
+                        section.appendChild(imgView)
+
+
+                        imgView.onclick = function(){
+                            addClass(imgView, "disnone");
+                            imgView.innerHTML="";
+                        }
+
+                    }
+            
+                    imgView.innerHTML="<img id = 'jackslowfuck' src=" + this.src + " style='cursor: zoom-out; max-width: 100%;'" + ">";
+                    removeClass(imgView, "disnone");
+
+                    var jackslowfuck = document.getElementById('jackslowfuck');
+                    jackslowfuck.onclick=function(){
+                        addClass(imgView, "disnone");
+                        imgView.innerHTML="";
+                    }
+
+                }
+            }
+            
+        }, false);
+    </script>
+
+    <style type="text/css">
+        #imgViewDom {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            z-index: 99999999;
+            background: rgba(0, 0, 0,0.7);
+            overflow: auto;
+            display: -webkit-box;
+            -webkit-box-align: center;
+            -webkit-box-pack: center;
+            display: -moz-box;
+            -moz-box-align: center;
+            -moz-box-pack: center;
+            display: -o-box;
+            -o-box-align: center;
+            -o-box-pack: center;
+            display: -ms-box;
+            -ms-box-align: center;
+            -ms-box-pack: center;
+            display: box;
+            box-align: center;
+            box-pack: center;
+            cursor: zoom-out;
+        }
+
+        .disnone{
+            display: none !important;
+        }
+    </style>
+
+</head>
+
+</html>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+
+<body>
+    <header class="main-header" style="background-image:url(/img/banner.jpg)">
+    <div class="main-header-box">
+        <a class="header-avatar" href="/about" title="spygg">
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+        	<!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+                <h2> 技术引领生活! </h2>
+            
+    	</div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                    <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="https://spygg.github.io">LiusBlog</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/"><i class="fa fa-home"></i>首页</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/Qt"><i class="fa "></i>Qt</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/Python"><i class="fa "></i>Python</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/Linux"><i class="fa "></i>Linux</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/音视频"><i class="fa "></i>音视频</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/杂谈"><i class="fa "></i>杂谈</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/archives/"><i class="fa "></i>时间轴</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/about/"><i class="fa "></i>关于</a>
+                            </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="Ubuntu环境搭建Qt进行Android开发">
+            
+	            Ubuntu环境搭建Qt进行Android开发
+            
+        </h1>
+        <div class="post-meta">
+    
+        <span class="categories-meta fa-wrap">
+            <i class="fa fa-folder-open-o"></i>
+            <a class="category-link" href="/categories/Qt/">Qt</a>
+        </span>
+    
+
+    
+        <span class="fa-wrap">
+            <i class="fa fa-tags"></i>
+            <span class="tags-meta">
+                
+                    <a class="tag-link" href="/tags/Android/">Android</a> <a class="tag-link" href="/tags/Ubuntu/">Ubuntu</a> <a class="tag-link" href="/tags/软件使用/">软件使用</a>
+                
+            </span>
+        </span>
+    
+
+    
+        
+        <span class="fa-wrap">
+            <i class="fa fa-clock-o"></i>
+            <span class="date-meta">2019/06/28</span>
+        </span>
+        
+            <span class="fa-wrap">
+                <i class="fa fa-eye"></i>
+                <span id="busuanzi_value_page_pv"></span>
+            </span>
+        
+    
+</div>
+            
+            
+    </div>
+
+    
+    
+    <!-- google广告 -->
+    <!--
+    <div class="googleAd">
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    </div>
+    -->
+
+    <div class="post-body post-content">
+        <blockquote>
+<p>鉴于Qt的全平台性,用来开发android对于只会用C++的人来说太合适了,但是在第一关往往都会遇到不少坑,本文将一一细数之…</p>
+</blockquote>
+<h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><p>不说搭建的环境就是耍流氓,往往遇到问题的都是运行环境的问题,好吧,先说下我的环境配置</p>
+<ul>
+<li>Ubuntu : 版本18.04</li>
+<li>Qt: 版本5.12.03</li>
+</ul>
+<h2 id="搭建过程"><a href="#搭建过程" class="headerlink" title="搭建过程"></a>搭建过程</h2><ol>
+<li>去官网上下载Qt,嗯还是国内的源比较快<a href="&quot;https://mirrors.tuna.tsinghua.edu.cn/qt/&quot;">清华大学</a></li>
+<li>安装时选择到/opt目录</li>
+<li><p>安装jdk,必须用这个<strong>openjdk</strong>,去oracle网上下载会要登录啥的,而且会出问题</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install openjdk<span class="number">-8</span>-jdk</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>下载android-studio(用snap方式)<br>直接去软件中心网速会非常的慢,难以忍受,<strong>解决方案</strong>如下:</p>
+</li>
+</ol>
+<ul>
+<li>前往 <a href="https://uappexplorer.com/snaps" target="_blank" rel="noopener">网址uappexplorer</a> 搜索需要的 snap 包</li>
+<li>下载对应架构的 snap 包</li>
+<li>下载完成后，在同一目录执行以下命令即可<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo snap <span class="keyword">install</span> xxx.snap <span class="comment">--dangerous</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<ol start="5">
+<li>打开android studio后更新sdk,如果发现更新不了,去<a href="https://laod.cn" target="_blank" rel="noopener">老D</a> 或则 <a href="https://github.com/googlehosts/hosts" target="_blank" rel="noopener">网址</a>下载更新hosts</li>
+<li><p>安装sdk,这里选择一个8.0版本的吧(也可以在Creator中安装)</p>
+</li>
+<li><p>打开Qt Creator<br>这里特别说明:</p>
+</li>
+</ol>
+<ul>
+<li>用OpenJDK 上面已经说过</li>
+<li>用NDK版本为18就行,别用最新版的<a href="https://developer.android.com/ndk/downloads/" target="_blank" rel="noopener">下载网址</a><br>弄完后如下图所示<br><img src="/../photos/Ubuntu环境搭建Qt进行Android开发/QtCreator环境.png" alt="环境截图"></li>
+</ul>
+<ol start="8">
+<li><p>打开AVD创建镜像,可能要先执行命令</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo chmod <span class="number">777</span> /dev/kvm</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在android studio的avd 设置中选择皮肤</p>
+</li>
+</ol>
+<h2 id="参考网址"><a href="#参考网址" class="headerlink" title="参考网址"></a>参考网址</h2><ul>
+<li><a href="https://doc-snapshots.qt.io/qt5-5.12/android-getting-started.html" target="_blank" rel="noopener">Qt文档官网</a></li>
+<li><a href="https://wiki.qt.io/Qt_for_Android_known_issues" target="_blank" rel="noopener">Qt_for_Android_known_issues</a></li>
+</ul>
+<h2 id="PS"><a href="#PS" class="headerlink" title="PS"></a>PS</h2><ul>
+<li>科学上网很重要</li>
+<li>别用最新版本,很多坑的</li>
+<li>官方文档很重要</li>
+</ul>
+
+    </div>
+    
+        <div class="reward" ontouchstart>
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+                <span class="reward-type">
+                    <img class="alipay" src="/img/zhifubaocode.jpg"><b>支付宝打赏</b>
+                </span>
+            
+            
+                <span class="reward-type">
+                    <img class="wechat" src="/img/weixincode.jpg"><b>微信打赏</b>
+                </span>
+            
+        </div>
+    </div>
+    <p class="reward-tip">您的支持是我前行的动力!</p>
+</div>
+
+
+    
+    <div class="post-footer">
+        <div>
+            
+                转载声明：商业转载请联系作者获得授权,非商业转载请注明出处 © <a href target="_blank">spygg</a>
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+        <a href="/2019/07/03/Qt帮助系统的制作/" class="pre-post btn btn-default" title="Qt帮助系统的制作">
+            <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+            <span class="hidden-xs">Qt帮助系统的制作</span>
+        </a>
+    
+    
+        <a href="/2019/06/25/Qt单实例运行/" class="next-post btn btn-default" title="Qt单实例运行">
+            <span class="hidden-lg">下一篇</span>
+            <span class="hidden-xs">Qt单实例运行</span><i class="fa fa-angle-right fa-fw"></i>
+        </a>
+    
+</div>
+
+<!-- google广告 -->
+<!-- 
+<div class="googleAd">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+</div>
+-->
+
+
+    <div id="comments">
+        
+	<link rel="stylesheet" href="https://cdn.bootcss.com/gitalk/1.5.0/gitalk.min.css">
+<script src="https://cdn.bootcss.com/gitalk/1.5.0/gitalk.min.js"></script>
+<script src="https://cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
+
+<div id="gitalk-container"></div>
+<script type="text/javascript">
+    var gitalk = new Gitalk({
+        // Gitalk配置
+        clientID: "6c31603d4df9afc8351b",
+        clientSecret: "c9e81f3ac1492550170fccb28c0f8bb16e3b7ed1",
+        repo: "blogcomment",
+        owner: "spygg",
+        admin: ["spygg"],
+        id: md5(window.location.pathname),
+        distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+</script>
+
+
+    </div>
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">文章目录</h3>
+        
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#环境"><span class="toc-text">环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#搭建过程"><span class="toc-text">搭建过程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考网址"><span class="toc-text">参考网址</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PS"><span class="toc-text">PS</span></a></li></ol>
+        
+    </div>
+</aside>
+
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+
+<a id="back-to-top" class="icon-btn hide">
+	<i class="fa fa-chevron-up"></i>
+</a>
+
+
+
+
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+        访问量:
+        <strong id="busuanzi_value_site_pv">
+            <i class="fa fa-spinner fa-spin"></i>
+        </strong>
+        &nbsp; | &nbsp;
+        访客数:
+        <strong id="busuanzi_value_site_uv">
+            <i class="fa fa-spinner fa-spin"></i>
+        </strong>
+    
+</div>
+
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy; 2019
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+    <script src="/assets/tagcanvas.min.js?rev=2.9"></script>
+    <script>
+        var tagOption = {
+            textColour: '#444', // 字体颜色
+            outlineMethod: 'block', // 选中模式
+            outlineColour: '#FFDAB9', // 选中模式的颜色
+            interval: 30 || 30, // 动画帧之间的时间间隔，值越大，转动幅度越大
+            textHeight: 13,
+            outlineRadius: 3,
+            freezeActive: true || '', // 选中的标签是否继续滚动
+            frontSelect: true || '', // 不选标签云后部的标签
+            initial: [0.1, -0.1],
+            depth: 0.5,
+            decel: 0.95,
+            maxSpeed: 0.03,
+            reverse: true || '', // 是否反向触发
+            fadeIn: 500, // 进入动画时间
+            wheelZoom: false || '' // 是否启用鼠标滚轮
+        }
+        TagCanvas.Start('tag-cloud-3d','',tagOption);
+    </script>
+
+
+
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<script src="/js/app.js?rev=@@hash"></script>
+
+</body>
+</html>

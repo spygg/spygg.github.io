@@ -1,0 +1,681 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="LiusBlog">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="google-site-verification" content="Ib3TgmBWfq5KtJE24-Dg_CaJRazvNc0JjfEdPPJf_mQ">
+    <meta name="msvalidate.01" content="9C33A26895A2A8B80CEE60CD519D1095">
+    
+    <link rel="dns-prefetch" href="https://spygg.github.io">
+    <!--SEO-->
+
+    <meta name="keywords" content="Gitpage,Hexo,snippet">
+
+
+    <meta name="description" content="
+折腾了一通之后,还是更喜欢 snippet 主题,并且发誓不在折腾了,好吧,我开玩笑的呢!
+
+本人也做了一个动态的不过没买服务器,如下图所示
+主题官网主题 github
+插入广告(google...">
+
+
+
+<meta name="robots" content="all">
+<meta name="google" content="all">
+<meta name="googlebot" content="all">
+<meta name="verify" content="all">
+
+    <!--Title-->
+
+
+<title>基于snippet主题在github上搭建博客 | LiusBlog</title>
+
+
+    <link rel="alternate" href="/atom.xml" title="LiusBlog" type="application/atom+xml">
+
+
+    <link rel="icon" href="/favicon.ico">
+
+    
+
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.5.0">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash">
+
+
+
+
+    
+
+
+
+
+
+    
+
+    <script>
+        (function(){
+            var bp = document.createElement('script');
+            var curProtocol = window.location.protocol.split(':')[0];
+            if (curProtocol === 'https') {
+                bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+            }
+            else {
+                bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+            }
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(bp, s);
+        })();
+    </script>
+
+
+<!--     <script type="text/javascript">
+        function IsPC() {
+          var userAgentInfo = navigator.userAgent;
+          var Agents = ["Android", "iPhone"];
+          var flag = true;
+          for (var v = 0; v < Agents.length; v++) {
+            if (userAgentInfo.indexOf(Agents[v]) > 0) {
+              flag = false;
+              break;
+            }
+          }
+          return flag;
+        }
+    </script> -->
+
+<!-- 	<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+	<script>
+	  (adsbygoogle = window.adsbygoogle || []).push({
+	    google_ad_client: "ca-pub-7854187021513757",
+	    enable_page_level_ads: IsPC()
+	  });
+	</script> -->
+
+
+	
+    <script type="text/javascript">
+        function hasClass(obj, cls) {
+            return obj.className.match(new RegExp('(\\s|^)' + cls + '(\\s|$)'));
+        }
+         
+        function addClass(obj, cls) {
+            if (!this.hasClass(obj, cls)) obj.className += " " + cls;
+        }
+         
+        function removeClass(obj, cls) {
+            if (hasClass(obj, cls)) {
+                var reg = new RegExp('(\\s|^)' + cls + '(\\s|$)');
+                obj.className = obj.className.replace(reg, ' ');
+            }
+        }
+
+
+        window.addEventListener('load', function () {
+            // 谷歌广告
+            // if(IsPC()){
+            //     var googleAds = document.getElementsByClassName('googleAd');
+            //     if(googleAds != undefined){
+            //         for (var i = 0; i < googleAds.length; i++) {
+            //             googleAds[i].innerHTML = '<ins class="adsbygoogle"\
+            //                  style="display:block; text-align:center;"\
+            //                  data-ad-layout="in-article"\
+            //                  data-ad-format="fluid"\
+            //                  data-ad-client="ca-pub-7854187021513757"\
+            //                  data-ad-slot="4637472251">\
+            //             </ins>'
+
+            //             var scriptFun = document.createElement("script");
+            //             scriptFun.text = "(adsbygoogle = window.adsbygoogle || []).push({});";
+            //             googleAds[i].appendChild(scriptFun);
+            //             // end
+            //         }
+            //     }
+           
+            // }
+
+            var imgAll = document.getElementsByClassName('post-body')[0];
+            if(imgAll == undefined){
+                return;
+            }
+            
+            var imgs = imgAll.getElementsByTagName('img')
+            for(var i=0;i<imgs.length;i++){
+                if(hasClass(imgs[i],'class_no_full_screen')){
+                    continue;
+                }
+
+                // imgs[i].setAttribute('data-background', 'rgba(10, 10, 10, .6)');
+                // imgs[i].setAttribute('data-lightense-padding', "0");
+                imgs[i].setAttribute('style', "cursor: zoom-in");
+                imgs[i].onclick=function(){
+                
+                    var section=document.getElementsByTagName("section")[0];
+
+                    var imgView = document.getElementById('imgViewDom');
+                    if(imgView == undefined){
+                        imgView=document.createElement("div");
+                        imgView.id = "imgViewDom";
+
+                        section.appendChild(imgView)
+
+
+                        imgView.onclick = function(){
+                            addClass(imgView, "disnone");
+                            imgView.innerHTML="";
+                        }
+
+                    }
+            
+                    imgView.innerHTML="<img id = 'jackslowfuck' src=" + this.src + " style='cursor: zoom-out; max-width: 100%;'" + ">";
+                    removeClass(imgView, "disnone");
+
+                    var jackslowfuck = document.getElementById('jackslowfuck');
+                    jackslowfuck.onclick=function(){
+                        addClass(imgView, "disnone");
+                        imgView.innerHTML="";
+                    }
+
+                }
+            }
+            
+        }, false);
+    </script>
+
+    <style type="text/css">
+        #imgViewDom {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            z-index: 99999999;
+            background: rgba(0, 0, 0,0.7);
+            overflow: auto;
+            display: -webkit-box;
+            -webkit-box-align: center;
+            -webkit-box-pack: center;
+            display: -moz-box;
+            -moz-box-align: center;
+            -moz-box-pack: center;
+            display: -o-box;
+            -o-box-align: center;
+            -o-box-pack: center;
+            display: -ms-box;
+            -ms-box-align: center;
+            -ms-box-pack: center;
+            display: box;
+            box-align: center;
+            box-pack: center;
+            cursor: zoom-out;
+        }
+
+        .disnone{
+            display: none !important;
+        }
+    </style>
+
+</head>
+
+</html>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+
+<body>
+    <header class="main-header" style="background-image:url(/img/banner.jpg)">
+    <div class="main-header-box">
+        <a class="header-avatar" href="/about" title="spygg">
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+        	<!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+                <h2> 技术引领生活! </h2>
+            
+    	</div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                    <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="https://spygg.github.io">LiusBlog</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/"><i class="fa fa-home"></i>首页</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/Qt"><i class="fa "></i>Qt</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/Python"><i class="fa "></i>Python</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/Linux"><i class="fa "></i>Linux</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/音视频"><i class="fa "></i>音视频</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/杂谈"><i class="fa "></i>杂谈</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/archives/"><i class="fa "></i>时间轴</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/about/"><i class="fa "></i>关于</a>
+                            </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="基于snippet主题在github上搭建博客">
+            
+	            基于snippet主题在github上搭建博客
+            
+        </h1>
+        <div class="post-meta">
+    
+        <span class="categories-meta fa-wrap">
+            <i class="fa fa-folder-open-o"></i>
+            <a class="category-link" href="/categories/杂谈/">杂谈</a>
+        </span>
+    
+
+    
+        <span class="fa-wrap">
+            <i class="fa fa-tags"></i>
+            <span class="tags-meta">
+                
+                    <a class="tag-link" href="/tags/Gitpage/">Gitpage</a> <a class="tag-link" href="/tags/Hexo/">Hexo</a> <a class="tag-link" href="/tags/snippet/">snippet</a>
+                
+            </span>
+        </span>
+    
+
+    
+        
+        <span class="fa-wrap">
+            <i class="fa fa-clock-o"></i>
+            <span class="date-meta">2019/04/13</span>
+        </span>
+        
+            <span class="fa-wrap">
+                <i class="fa fa-eye"></i>
+                <span id="busuanzi_value_page_pv"></span>
+            </span>
+        
+    
+</div>
+            
+            
+            <p class="fa fa-exclamation-triangle warning">
+                本文于<strong>315</strong>天之前发表，文中内容可能已经过时。
+            </p>
+        
+    </div>
+
+    
+    
+    <!-- google广告 -->
+    <!--
+    <div class="googleAd">
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    </div>
+    -->
+
+    <div class="post-body post-content">
+        <blockquote>
+<p>折腾了一通之后,还是更喜欢 snippet 主题,并且发誓不在折腾了,好吧,我开玩笑的呢!</p>
+</blockquote>
+<p>本人也做了一个动态的不过没买服务器,如下图所示<br><img src="/photos/基于snippet主题在github上搭建博客/我的动态网页.png" alt="我的动态网页"></p>
+<p><a href="https://www.91h5.cc/" target="_blank" rel="noopener">主题官网</a><br><a href="https://github.com/shenliyang/hexo-theme-snippet" target="_blank" rel="noopener">主题 github</a></p>
+<h2 id="插入广告-google-Ads"><a href="#插入广告-google-Ads" class="headerlink" title="插入广告(google Ads)"></a>插入广告(google Ads)</h2><h3 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h3><ol>
+<li>到谷歌广告<a href="https://www.google.com/intl/zh-CN_cn/adsense/start/#/?modal_active=none" target="_blank" rel="noopener">主页</a>,注册和登录</li>
+<li>打开文件 hexo-theme-snippet/layout/head.ejs 在头部加入以下代码</li>
+</ol>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">async</span> <span class="attr">src</span>=<span class="string">"https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">  (adsbygoogle = <span class="built_in">window</span>.adsbygoogle || []).push(&#123;</span></span><br><span class="line"><span class="actionscript">    google_ad_client: <span class="string">"ca-pub-7854187021513757"</span>,</span></span><br><span class="line"><span class="actionscript">    enable_page_level_ads: <span class="literal">true</span></span></span><br><span class="line">  &#125;);</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line">   <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span></span><br><span class="line"><span class="actionscript">       <span class="function"><span class="keyword">function</span> <span class="title">IsPC</span><span class="params">()</span> </span>&#123;</span></span><br><span class="line"><span class="actionscript">         <span class="keyword">var</span> userAgentInfo = navigator.userAgent;</span></span><br><span class="line"><span class="actionscript">         <span class="keyword">var</span> Agents = [<span class="string">"Android"</span>, <span class="string">"iPhone"</span>];</span></span><br><span class="line"><span class="actionscript">         <span class="keyword">var</span> flag = <span class="literal">true</span>;</span></span><br><span class="line"><span class="actionscript">         <span class="keyword">for</span> (<span class="keyword">var</span> v = <span class="number">0</span>; v &lt; Agents.length; v++) &#123;</span></span><br><span class="line">           if (userAgentInfo.indexOf(Agents[v]) &gt; 0) &#123;</span><br><span class="line"><span class="actionscript">             flag = <span class="literal">false</span>;</span></span><br><span class="line"><span class="actionscript">             <span class="keyword">break</span>;</span></span><br><span class="line">           &#125;</span><br><span class="line">         &#125;</span><br><span class="line"><span class="actionscript">         <span class="keyword">return</span> flag;</span></span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line"><span class="actionscript">       <span class="comment">//页面加载完成后在根据是否是电脑进行加载广告</span></span></span><br><span class="line"><span class="javascript">       <span class="built_in">window</span>.addEventListener(<span class="string">'load'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="actionscript">           <span class="comment">// 谷歌广告</span></span></span><br><span class="line">           if(IsPC())&#123;</span><br><span class="line"><span class="javascript">               <span class="keyword">var</span> googleAds = <span class="built_in">document</span>.getElementsByClassName(<span class="string">'googleAd'</span>);</span></span><br><span class="line"><span class="actionscript">               <span class="keyword">if</span>(googleAds != <span class="literal">undefined</span>)&#123;</span></span><br><span class="line"><span class="actionscript">                   <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; googleAds.length; i++) &#123;</span></span><br><span class="line"><span class="handlebars"><span class="xml">                       googleAds[i].innerHTML = '<span class="tag">&lt;<span class="name">ins</span> <span class="attr">class</span>=<span class="string">"adsbygoogle"</span>\</span></span></span></span><br><span class="line"><span class="actionscript">                            style=<span class="string">"display:block; text-align:center;"</span>\</span></span><br><span class="line"><span class="actionscript">                            data-ad-layout=<span class="string">"in-article"</span>\</span></span><br><span class="line"><span class="actionscript">                            data-ad-format=<span class="string">"fluid"</span>\</span></span><br><span class="line"><span class="actionscript">                            data-ad-client=<span class="string">"ca-pub-7854187021513757"</span>\</span></span><br><span class="line"><span class="actionscript">                            data-ad-slot=<span class="string">"4637472251"</span>&gt;\</span></span><br><span class="line"><span class="handlebars"><span class="xml">                       <span class="tag">&lt;/<span class="name">ins</span>&gt;</span>'</span></span></span><br><span class="line"></span><br><span class="line"><span class="javascript">                       <span class="keyword">var</span> scriptFun = <span class="built_in">document</span>.createElement(<span class="string">"script"</span>);</span></span><br><span class="line"><span class="actionscript">                       scriptFun.text = <span class="string">"(adsbygoogle = window.adsbygoogle || []).push(&#123;&#125;);"</span>;</span></span><br><span class="line">                       googleAds[i].appendChild(scriptFun);</span><br><span class="line"><span class="actionscript">                       <span class="comment">// end</span></span></span><br><span class="line">                   &#125;</span><br><span class="line">               &#125;</span><br><span class="line"></span><br><span class="line">           &#125;</span><br><span class="line">           .......</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>等待回信</li>
+<li>在 source 目录下新建 ads.txt 内容如下</li>
+</ol>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">google.com, pub<span class="number">-7854187021513757</span>, <span class="keyword">DIRECT, </span>f08c<span class="symbol">47f</span>ec<span class="symbol">0942f</span><span class="built_in">a0</span></span><br></pre></td></tr></table></figure>
+<ol start="5">
+<li>回信通过后,在广告-&gt;广告单元-&gt;创建新的广告单元中选择,<strong>选取要使用的样式</strong>,我选择了<em>文章内嵌广告</em>然后把代码加到网页中<br>打开 hexo-theme-snippet/layout/post.ejs 文件</li>
+</ol>
+<figure class="highlight erb"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">p</span> <span class="attr">id</span>=<span class="string">"process"</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">article</span> <span class="attr">class</span>=<span class="string">"post"</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"post-head"</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;<span class="name">h1</span> <span class="attr">id</span>=<span class="string">"&lt;%=</span></span></span><span class="ruby"> page.title </span><span class="xml"><span class="tag"><span class="string">%&gt;"</span>&gt;</span></span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;<span class="name">%</span></span></span><span class="ruby"><span class="keyword">if</span>(page.link)&#123;</span><span class="xml"><span class="tag">%&gt;</span></span></span><br><span class="line"><span class="xml">	            <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"&lt;%-</span></span></span><span class="ruby"> url_for(page.link) </span><span class="xml"><span class="tag"><span class="string">%&gt;"</span> <span class="attr">target</span>=<span class="string">"_blank"</span>&gt;</span><span class="tag">&lt;<span class="name">%=</span></span></span><span class="ruby"> page.title </span><span class="xml"><span class="tag">%&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span></span></span><br><span class="line"><span class="xml">	            <span class="tag">&lt;<span class="name">%</span></span></span><span class="ruby">&#125;<span class="keyword">else</span>&#123;</span><span class="xml"><span class="tag">%&gt;</span></span></span><br><span class="line"><span class="xml">	            <span class="tag">&lt;<span class="name">%=</span></span></span><span class="ruby"> page.title<span class="params">||</span><span class="string">'NO Title!'</span> </span><span class="xml"><span class="tag">%&gt;</span></span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;<span class="name">%</span></span></span><span class="ruby">&#125;</span><span class="xml"><span class="tag">%&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;<span class="name">%-</span></span></span><span class="ruby"> partial(<span class="string">'_partial/article-meta'</span>, &#123;<span class="symbol">post:</span> page&#125;) </span><span class="xml"><span class="tag">%&gt;</span></span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;<span class="name">%</span></span></span></span><br><span class="line"><span class="ruby">                var diffDays = moment(new Date()).diff(moment(page.date), <span class="string">'day'</span>);</span></span><br><span class="line"><span class="ruby">                var warningTextArr = theme.warning.text.split(<span class="string">"%d"</span>);</span></span><br><span class="line"><span class="ruby">            </span><span class="xml">%&gt;</span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;<span class="name">%</span></span></span><span class="ruby"> <span class="keyword">if</span>((theme.warning.days!=<span class="number">0</span>) &amp;&amp; diffDays &gt; (theme.warning.days <span class="params">||</span> <span class="number">300</span>))&#123; </span><span class="xml"><span class="tag">%&gt;</span></span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span>=<span class="string">"fa fa-exclamation-triangle warning"</span>&gt;</span></span></span><br><span class="line"><span class="xml">                <span class="tag">&lt;<span class="name">%-</span></span></span><span class="ruby"> warningTextArr[<span class="number">0</span>]</span><span class="xml"><span class="tag">%&gt;</span><span class="tag">&lt;<span class="name">strong</span>&gt;</span><span class="tag">&lt;<span class="name">%=</span></span></span><span class="ruby"> diffDays </span><span class="xml"><span class="tag">%&gt;</span><span class="tag">&lt;/<span class="name">strong</span>&gt;</span><span class="tag">&lt;<span class="name">%-</span></span></span><span class="ruby"> warningTextArr[<span class="number">1</span>]</span><span class="xml"><span class="tag">%&gt;</span></span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;<span class="name">%</span></span></span><span class="ruby"> &#125; </span><span class="xml"><span class="tag">%&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="xml">    <span class="tag">&lt;<span class="name">%-</span></span></span><span class="ruby"> partial(<span class="string">'_partial/gallery'</span>,&#123;<span class="symbol">post:</span>page&#125;)</span><span class="xml"><span class="tag">%&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="xml">    <span class="comment">&lt;!-- google广告 --&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"googleAd"</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;<span class="name">script</span> <span class="attr">async</span> <span class="attr">src</span>=<span class="string">"https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="xml">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"post-body post-content"</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;<span class="name">%-</span></span></span><span class="ruby"> page.content </span><span class="xml"><span class="tag">%&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;<span class="name">%</span></span></span><span class="ruby"> <span class="keyword">if</span>(theme.reward.alipay <span class="params">||</span> theme.reward.wepay)&#123; </span><span class="xml"><span class="tag">%&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;<span class="name">%-</span></span></span><span class="ruby"> partial(<span class="string">'_partial/reward'</span>) </span><span class="xml"><span class="tag">%&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;<span class="name">%</span></span></span><span class="ruby"> &#125; </span><span class="xml"><span class="tag">%&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"post-footer"</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;<span class="name">%</span></span></span><span class="ruby"> <span class="keyword">if</span>(theme.declaration.enable)&#123; </span><span class="xml"><span class="tag">%&gt;</span></span></span><br><span class="line"><span class="xml">                <span class="tag">&lt;<span class="name">%-</span></span></span><span class="ruby"> theme.declaration.title </span><span class="xml"><span class="tag">%&gt;</span>：<span class="tag">&lt;<span class="name">%-</span></span></span><span class="ruby"> theme.declaration.tip </span><span class="xml"><span class="tag">%&gt;</span><span class="tag">&lt;<span class="name">%-</span></span></span><span class="ruby"> theme.cc </span><span class="xml"><span class="tag">%&gt;</span></span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;<span class="name">%</span></span></span><span class="ruby"> &#125; </span><span class="xml"><span class="tag">%&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;<span class="name">%</span></span></span><span class="ruby"> <span class="keyword">if</span>(theme.cc)&#123; </span><span class="xml"><span class="tag">%&gt;</span></span></span><br><span class="line"><span class="xml">                <span class="tag">&lt;<span class="name">%=</span></span></span><span class="ruby"> _<span class="number">_</span>(<span class="string">'post_licence'</span>) </span><span class="xml"><span class="tag">%&gt;</span>: <span class="tag">&lt;<span class="name">%-</span></span></span><span class="ruby"> theme.cc </span><span class="xml"><span class="tag">%&gt;</span></span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;<span class="name">%</span></span></span><span class="ruby"> &#125; </span><span class="xml"><span class="tag">%&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml"><span class="tag">&lt;/<span class="name">article</span>&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"article-nav prev-next-wrap clearfix"</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;<span class="name">%</span></span></span><span class="ruby"> <span class="keyword">if</span>(page.prev)&#123; </span><span class="xml"><span class="tag">%&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"&lt;%-</span></span></span><span class="ruby"> url_for(page.prev.path) </span><span class="xml"><span class="tag"><span class="string">%&gt;"</span> <span class="attr">class</span>=<span class="string">"pre-post btn btn-default"</span> <span class="attr">title</span>=<span class="string">'&lt;%-</span></span></span><span class="ruby"> page.prev.title </span><span class="xml"><span class="tag"><span class="string">%&gt;'</span>&gt;</span></span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">"fa fa-angle-left fa-fw"</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span><span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"hidden-lg"</span>&gt;</span>上一篇<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"hidden-xs"</span>&gt;</span><span class="tag">&lt;<span class="name">%-</span></span></span><span class="ruby"> page.prev.title </span><span class="xml"><span class="tag">%&gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;/<span class="name">a</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;<span class="name">%</span></span></span><span class="ruby"> &#125; </span><span class="xml"><span class="tag">%&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;<span class="name">%</span></span></span><span class="ruby"> <span class="keyword">if</span>(page.<span class="keyword">next</span>)&#123; </span><span class="xml"><span class="tag">%&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"&lt;%-</span></span></span><span class="ruby"> url_for(page.<span class="keyword">next</span>.path) </span><span class="xml"><span class="tag"><span class="string">%&gt;"</span> <span class="attr">class</span>=<span class="string">"next-post btn btn-default"</span> <span class="attr">title</span>=<span class="string">'&lt;%-</span></span></span><span class="ruby"> page.<span class="keyword">next</span>.title </span><span class="xml"><span class="tag"><span class="string">%&gt;'</span>&gt;</span></span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"hidden-lg"</span>&gt;</span>下一篇<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"hidden-xs"</span>&gt;</span><span class="tag">&lt;<span class="name">%-</span></span></span><span class="ruby"> page.<span class="keyword">next</span>.title </span><span class="xml"><span class="tag">%&gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">"fa fa-angle-right fa-fw"</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;/<span class="name">a</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;<span class="name">%</span></span></span><span class="ruby"> &#125; </span><span class="xml"><span class="tag">%&gt;</span></span></span><br><span class="line"><span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="xml"><span class="comment">&lt;!-- google广告 --&gt;</span></span></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"googleAd"</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">async</span> <span class="attr">src</span>=<span class="string">"https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line"><span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">%</span></span></span><span class="ruby"> <span class="keyword">if</span>(page.comments)&#123; </span><span class="xml"><span class="tag">%&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"comments"</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;<span class="name">%-</span></span></span><span class="ruby"> partial(<span class="string">'_vendor/comments/index'</span>, &#123;<span class="symbol">page:</span> page&#125;) </span><span class="xml"><span class="tag">%&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">%</span></span></span><span class="ruby"> &#125; </span><span class="xml"><span class="tag">%&gt;</span></span></span><br></pre></td></tr></table></figure>
+<h3 id="首页广告"><a href="#首页广告" class="headerlink" title="首页广告"></a>首页广告</h3><ol>
+<li>修改_config.yml,在 widgets 中将-search 去掉</li>
+<li>找到 layout/_widget/notification.ejs 文件修改内容如下</li>
+</ol>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">%if(theme.notification)&#123;%</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"widget"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">h3</span> <span class="attr">class</span>=<span class="string">"title"</span>&gt;</span>广告推广<span class="tag">&lt;/<span class="name">h3</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"notification"</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">async</span> <span class="attr">src</span>=<span class="string">"https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">ins</span> <span class="attr">class</span>=<span class="string">"adsbygoogle"</span></span></span><br><span class="line"><span class="tag">     <span class="attr">style</span>=<span class="string">"display:block; text-align:center;"</span></span></span><br><span class="line"><span class="tag">     <span class="attr">data-ad-layout</span>=<span class="string">"in-article"</span></span></span><br><span class="line"><span class="tag">     <span class="attr">data-ad-format</span>=<span class="string">"fluid"</span></span></span><br><span class="line"><span class="tag">     <span class="attr">data-ad-client</span>=<span class="string">"ca-pub-7854187021513757"</span></span></span><br><span class="line"><span class="tag">     <span class="attr">data-ad-slot</span>=<span class="string">"4190749692"</span>&gt;</span><span class="tag">&lt;/<span class="name">ins</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">     (adsbygoogle = <span class="built_in">window</span>.adsbygoogle || []).push(&#123;&#125;);</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">%&#125;%</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><ol>
+<li>下载插件:</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> git://github.com/shenliyang/hexo-theme-snippet.git themes/hexo-theme-snippet</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>安装依赖:</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm i hexo-renderer-ejs hexo-renderer-less hexo-deployer-git -S</span><br><span class="line">cnpm install hexo-generator-feed --save</span><br></pre></td></tr></table></figure>
+<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><h3 id="在主-config-yml-修改主题为"><a href="#在主-config-yml-修改主题为" class="headerlink" title="在主_config.yml 修改主题为"></a>在主_config.yml 修改主题为</h3><figure class="highlight xl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">theme</span>: hexo-<span class="built_in">theme</span>-snippet</span><br></pre></td></tr></table></figure>
+<h3 id="配置-menu-其中关于的页面要单独编写-后面介绍"><a href="#配置-menu-其中关于的页面要单独编写-后面介绍" class="headerlink" title="配置 menu(其中关于的页面要单独编写,后面介绍)"></a>配置 menu(其中关于的页面要单独编写,后面介绍)</h3><p>注意 categories 和实际文章中的对应(包括大小写)</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">menu</span>:</span><br><span class="line">- <span class="attribute">page</span>: home</span><br><span class="line">  <span class="attribute">url</span>: /</span><br><span class="line">  <span class="attribute">icon</span>: fa-home</span><br><span class="line">- <span class="attribute">page</span>: Qt</span><br><span class="line">  <span class="attribute">url</span>: /categories/Qt</span><br><span class="line">  <span class="attribute">icon</span>:</span><br><span class="line">- <span class="attribute">page</span>: Python</span><br><span class="line">  <span class="attribute">url</span>: /categories/Python</span><br><span class="line">  <span class="attribute">icon</span>:</span><br><span class="line">- <span class="attribute">page</span>: Linux</span><br><span class="line">  <span class="attribute">url</span>: /categories/Linux</span><br><span class="line">  <span class="attribute">icon</span>:</span><br><span class="line">- <span class="attribute">page</span>: 杂谈</span><br><span class="line">  <span class="attribute">url</span>: /categories/杂谈</span><br><span class="line">  <span class="attribute">icon</span>:</span><br><span class="line">- <span class="attribute">page</span>: 时间轴</span><br><span class="line">  <span class="attribute">url</span>: /archives/</span><br><span class="line">  <span class="attribute">icon</span>:</span><br><span class="line">- <span class="attribute">page</span>: 关于</span><br><span class="line">  <span class="attribute">url</span>: /about/</span><br><span class="line">  <span class="attribute">icon</span>:</span><br></pre></td></tr></table></figure>
+<h3 id="生成-about-页面"><a href="#生成-about-页面" class="headerlink" title="生成 about 页面"></a>生成 about 页面</h3><ol>
+<li>hexo new page about</li>
+<li>编写 about 目录下的 index.md</li>
+</ol>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">title:</span> <span class="string">关于博主</span></span><br><span class="line"><span class="attr">date:</span> <span class="number">2019</span><span class="number">-04</span><span class="number">-13</span> <span class="number">23</span><span class="string">:11:43</span></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## 关于本页面</span></span><br><span class="line"><span class="string">*</span> <span class="string">本页面是采用MARKDOWN</span> <span class="string">和</span> <span class="string">HTML混合编写</span></span><br><span class="line"><span class="string">*</span> <span class="string">主题基于</span> <span class="string">snippet</span></span><br><span class="line"><span class="string">*</span> <span class="string">一个对博主的简介</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## 关于博主</span></span><br><span class="line"><span class="string">*</span> <span class="string">人生苦短,</span> <span class="string">我用</span> <span class="string">Python！</span></span><br><span class="line"><span class="string">*</span> <span class="string">简单高效,</span> <span class="string">必须C语言</span></span><br><span class="line"><span class="string">*</span> <span class="string">优雅通用,</span> <span class="string">我选Qt</span></span><br><span class="line"><span class="string">*</span> <span class="string">博主</span> <span class="string">Github</span> <span class="string">地址：https://github.com/spygg</span></span><br><span class="line"><span class="string">*</span> <span class="string">联系邮箱：liushidc@163.com</span></span><br><span class="line"><span class="string">*</span> <span class="string">我的知乎:</span> <span class="string">https://www.zhihu.com/people/spygg/activities</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## 关于打赏</span></span><br><span class="line"><span class="string">*</span> <span class="string">本小节是使用HTML编写</span></span><br><span class="line"><span class="string">*</span> <span class="string">如果你感觉有用的话,大胆的赏赐吧,(*^__^*)</span></span><br><span class="line"><span class="string">&lt;img</span> <span class="string">style="width:</span> <span class="string">200px;display:</span> <span class="string">block;margin:</span> <span class="number">0</span> <span class="string">auto;"</span> <span class="string">src="/img/weixincode.jpg"&gt;</span></span><br><span class="line"><span class="string">&lt;center</span> <span class="string">style="font-size:</span> <span class="string">20px;</span> <span class="attr">margin-bottom:</span> <span class="string">2em;"&gt;微信赞助&lt;/center&gt;</span></span><br><span class="line"><span class="string">&lt;img</span> <span class="string">style="width:</span> <span class="string">200px;display:</span> <span class="string">block;margin:</span> <span class="number">0</span> <span class="string">auto;"</span> <span class="string">src="/img/zhifubaocode.jpg"&gt;</span></span><br><span class="line"><span class="string">&lt;center</span> <span class="string">style="font-size:</span> <span class="string">20px;</span> <span class="attr">margin-bottom:</span> <span class="string">2em;"&gt;支付宝打赏&lt;/center&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## 谢谢</span></span><br></pre></td></tr></table></figure>
+<p>同时修改 themes/hexo-theme-snippet/layout/_partial/header.ejs 下的头像链接为关于页面</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;a <span class="attribute">class</span>=<span class="string">"header-avatar"</span> <span class="attribute">href</span>=<span class="string">"/about"</span> <span class="attribute">title</span>=<span class="string">'&lt;%= config.author %&gt;'</span>&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="添加-google-索引"><a href="#添加-google-索引" class="headerlink" title="添加 google 索引"></a>添加 google 索引</h2><ol>
+<li>注册 google 账号</li>
+<li><p>打开<a href="https://search.google.com/search-console/welcome" target="_blank" rel="noopener">google 的控制台</a>选择第二个如下图所示</p>
+<p><img src="/photos/基于snippet主题在github上搭建博客/google控制台.png" alt="google控制台"></p>
+</li>
+</ol>
+<p>3) 在设置页面中会提供验证方法</p>
+<ul>
+<li>html 页面验证(这一步 google 会给一个 html 文件,放到工程的<strong>source</strong>目录下,这样在 hexo g 的时候会自动复制到站点根目录)</li>
+<li>html 字段验证(打/themes/hexo-theme-snippet/layout/_partial/head.ejs 文件)在头部添加</li>
+</ul>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;meta <span class="attribute">name</span>=<span class="string">"google-site-verification"</span> <span class="attribute">content</span>=<span class="string">"google提供的字段在控制台里面会有"</span> /&gt;</span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>生成站点地图</li>
+</ol>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cnpm <span class="keyword">install</span> hexo-generator-sitemap <span class="comment">--save</span></span><br></pre></td></tr></table></figure>
+<ol start="5">
+<li><p>在控制台左侧的站点地图中输入站点地图的名称(一般为 sitemap.xml)</p>
+</li>
+<li><p>在<em>source</em>目录下新建 robots.txt 文件内容如下(即允许所有)</p>
+</li>
+</ol>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">User-<span class="string">agent:</span> *</span><br><span class="line"><span class="string">Allow:</span> /</span><br></pre></td></tr></table></figure>
+<h2 id="添加必应索引"><a href="#添加必应索引" class="headerlink" title="添加必应索引"></a>添加必应索引</h2><ol>
+<li>登录<a href="https://www.bing.com/toolbox/webmaster/" target="_blank" rel="noopener">必应控制台</a></li>
+<li>添加网站<br><img src="/photos/基于snippet主题在github上搭建博客/bing控制台.png" alt="必应控制台"></li>
+<li>添加验证方法和 google 类似</li>
+</ol>
+<h2 id="必应站内搜索"><a href="#必应站内搜索" class="headerlink" title="必应站内搜索"></a>必应站内搜索</h2><ol>
+<li>这一步是基于上一步的操作,在 node_modules/hexo/lib/plugins/helper/search_form.js 文件中<ul>
+<li>增加 target=”_blank”</li>
+<li>修改 google.com 为 bing.com</li>
+<li>修改 sitesearch 为 q1</li>
+<li>在 value 值前添加 site:</li>
+</ul>
+</li>
+</ol>
+<p>修改后的文件为</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">'use strict'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> searchFormHelper(<span class="keyword">options</span> = &#123;&#125;) &#123;</span><br><span class="line">  const config = this.config;</span><br><span class="line">  const className = <span class="keyword">options</span>.<span class="keyword">class</span> || <span class="string">'search-form'</span>;</span><br><span class="line">  const <span class="type">text</span> = <span class="keyword">options</span>.hasOwnProperty(<span class="string">'text'</span>) ? <span class="keyword">options</span>.text : <span class="string">'Search'</span>;</span><br><span class="line">  const button = <span class="keyword">options</span>.button;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> `&lt;form action="//bing.com/search" target="_blank" <span class="keyword">method</span>="get" accept-charset="UTF-8" <span class="keyword">class</span>="$&#123;className&#125;"&gt;&lt;<span class="keyword">input</span> <span class="keyword">type</span>="search" <span class="type">name</span>="q" <span class="keyword">class</span>="$&#123;className&#125;-input"$&#123;<span class="type">text</span> ? ` placeholder="$&#123;text&#125;"` : <span class="string">''</span>&#125;&gt;$&#123;button ? `&lt;button <span class="keyword">type</span>="submit" <span class="keyword">class</span>="$&#123;className&#125;-submit"&gt;$&#123;typeof button === <span class="string">'string'</span> ? button : <span class="type">text</span>&#125;&lt;/button&gt;` : <span class="string">''</span>&#125;&lt;<span class="keyword">input</span> <span class="keyword">type</span>="hidden" <span class="type">name</span>="q1" <span class="keyword">value</span>="site:$&#123;config.url&#125;"&gt;&lt;/form&gt;`;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">module.exports = searchFormHelper;</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>修改 themes/hexo-theme-snippet/layout/_widget/search.ejs 文件<br>将”谷歌搜索”改为”必应搜索”和”Bing Search”</li>
+</ol>
+<figure class="highlight mel"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;%- search_form(&#123;<span class="string">'button'</span>:<span class="string">'必应搜索'</span>,<span class="string">'text'</span>:<span class="string">'Bing Search'</span>&#125;) %&gt;</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>修改_config.yml 中的</li>
+</ol>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">searchGoogle:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+<h2 id="gitalk-评论系统"><a href="#gitalk-评论系统" class="headerlink" title="gitalk 评论系统"></a>gitalk 评论系统</h2><p>网上一大堆好多是过时(或者与本主题不一致)信息,找了半天都一直不行,授人以鱼不如授人以渔,下面本大神就一步步演示如何搞定的<a href="https://github.com/gitalk/gitalk" target="_blank" rel="noopener">参考网址 gitalk</a></p>
+<ol>
+<li><p>创建一个新的 OAuth App<br>登录<a href="https://github.com/settings/applications/new" target="_blank" rel="noopener">网站</a>新建一个如下图<img src="/photos/基于snippet主题在github上搭建博客/新建页面.png" alt="新建页面"></p>
+</li>
+<li><p>点击上图中的左边的<em>Develop Settings</em>新建一个应用如下图所示<br><img src="/photos/基于snippet主题在github上搭建博客/新建应用.jpg" alt="新建应用"></p>
+</li>
+<li><p>填写配置信息从下图所示的页面中找到最重要的两个 ID<br><img src="/photos/基于snippet主题在github上搭建博客/信息.png" alt="信息"></p>
+</li>
+<li><p>配置_config.yml</p>
+</li>
+</ol>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## Gitalk评论</span></span><br><span class="line"><span class="attr">gitalk:</span></span><br><span class="line">   <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">   <span class="attr">clientID:</span> <span class="string">6c31603d4df9afc8351b</span></span><br><span class="line">   <span class="attr">clientSecret:</span> <span class="string">c9e81f3ac1492550170fccb28c0f8bb16e3b7ed1</span></span><br><span class="line">   <span class="attr">repo:</span> <span class="string">blogcomment</span></span><br><span class="line">   <span class="attr">owner:</span> <span class="string">spygg</span></span><br><span class="line">   <span class="attr">admin:</span> <span class="string">spygg</span></span><br><span class="line">   <span class="attr">id:</span> <span class="string">window.location.pathname</span></span><br><span class="line">   <span class="comment"># perPage:</span></span><br></pre></td></tr></table></figure>
+<ol start="5">
+<li>找到 themes/hexo-theme-snippet/layout/_vendor/comments/gitalk.ejs 修改成以下内容,同时解决 Validation Failed 的错误<a href="https://www.voidking.com/2018/07/26/deve-hexo-gitalk-comment-plugin/" target="_blank" rel="noopener">参见链接</a></li>
+</ol>
+<figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span> <span class="attr">href</span>=<span class="string">"https://cdn.bootcss.com/gitalk/1.5.0/gitalk.min.css"</span>&gt;</span></span></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"https://cdn.bootcss.com/gitalk/1.5.0/gitalk.min.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"https://cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"gitalk-container"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span></span></span><br><span class="line"><span class="xml">    var gitalk = new Gitalk(</span><span class="xquery">&#123;</span></span><br><span class="line"><span class="xquery">        // Gitalk配置</span></span><br><span class="line"><span class="xquery">        clientID: <span class="string">"&lt;%= theme.gitalk.clientID%&gt;"</span>,</span></span><br><span class="line"><span class="xquery">        clientSecret: <span class="string">"&lt;%= theme.gitalk.clientSecret%&gt;"</span>,</span></span><br><span class="line"><span class="xquery">        repo: <span class="string">"&lt;%= theme.gitalk.repo%&gt;"</span>,</span></span><br><span class="line"><span class="xquery">        owner: <span class="string">"&lt;%= theme.gitalk.owner%&gt;"</span>,</span></span><br><span class="line"><span class="xquery">        admin: [<span class="string">"&lt;%= theme.gitalk.admin%&gt;"</span>],</span></span><br><span class="line"><span class="xquery">       <span class="built_in"> id</span>: md5(&lt;%= theme.gitalk<span class="built_in">.id</span>%&gt;),</span></span><br><span class="line"><span class="xquery">        distractionFreeMode:<span class="built_in"> true</span></span></span><br><span class="line"><span class="xquery">    &#125;</span><span class="xml">);</span></span><br><span class="line"><span class="xml">    gitalk.render('gitalk-container');</span></span><br><span class="line"><span class="xml"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+<ol start="6">
+<li><p>生成,发布页面(不要本地预览),登录你的博客网址,然后在进行你的 github 授权就行了</p>
+</li>
+<li><p>*<strong>*排查错误**</strong><br>一直遇到找不到 issue 的情况,上网各种看教程也不行,下面介绍下解决问题的方法</p>
+</li>
+</ol>
+<ul>
+<li>用 chrome 打开你的博客页面,用 F12 进入 network 模式</li>
+<li>发现最后一个页面为<a href="https://api.github.com/repos/spygg/blogcomment/issues?client_id=6c31603d4df9afc8351b&amp;client_secret=c9e81f3ac1492550170fccb28c0f8bb16e3b7ed1&amp;labels=Gitalk,Gitalk&amp;t=1555766674635打开后发现数据果然为空" target="_blank" rel="noopener">https://api.github.com/repos/spygg/blogcomment/issues?client_id=6c31603d4df9afc8351b&amp;client_secret=c9e81f3ac1492550170fccb28c0f8bb16e3b7ed1&amp;labels=Gitalk,Gitalk&amp;t=1555766674635打开后发现数据果然为空</a></li>
+<li>找到 gitalk 的<a href="https://gitalk.github.io/" target="_blank" rel="noopener">demo 页面</a>看他的网址第二个参数为 Gitalk,Demo</li>
+<li>将我的网址 Gitalk,Gitalk 改为 Gitalk 在进入发现竟然有数据返回</li>
+<li>怀疑是 id 配置不对,用 chrome 源码方式发现果然 ID 有问题于是修改成上面第 5 步中的内容,打完收招…</li>
+</ul>
+<h2 id="添加图片放大"><a href="#添加图片放大" class="headerlink" title="添加图片放大"></a>添加图片放大</h2><p>在 themes/hexo-theme-snippet/layout/_partial/head.ejs 添加入下内容</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span></span><br><span class="line"><span class="actionscript">    <span class="function"><span class="keyword">function</span> <span class="title">hasClass</span><span class="params">(obj, cls)</span> </span>&#123;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">return</span> obj.className.match(<span class="keyword">new</span> <span class="built_in">RegExp</span>(<span class="string">'(\\s|^)'</span> + cls + <span class="string">'(\\s|$)'</span>));</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="actionscript">    <span class="function"><span class="keyword">function</span> <span class="title">addClass</span><span class="params">(obj, cls)</span> </span>&#123;</span></span><br><span class="line"><span class="actionscript">        <span class="keyword">if</span> (!<span class="keyword">this</span>.hasClass(obj, cls)) obj.className += <span class="string">" "</span> + cls;</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="actionscript">    <span class="function"><span class="keyword">function</span> <span class="title">removeClass</span><span class="params">(obj, cls)</span> </span>&#123;</span></span><br><span class="line">        if (hasClass(obj, cls)) &#123;</span><br><span class="line"><span class="javascript">            <span class="keyword">var</span> reg = <span class="keyword">new</span> <span class="built_in">RegExp</span>(<span class="string">'(\\s|^)'</span> + cls + <span class="string">'(\\s|$)'</span>);</span></span><br><span class="line"><span class="actionscript">            obj.className = obj.className.replace(reg, <span class="string">' '</span>);</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="javascript">    <span class="built_in">window</span>.addEventListener(<span class="string">'load'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">var</span> imgs = <span class="built_in">document</span>.getElementsByClassName(<span class="string">'post-body'</span>)[<span class="number">0</span>].getElementsByTagName(<span class="string">'img'</span>)</span></span><br><span class="line"><span class="actionscript">        <span class="keyword">for</span>(<span class="keyword">var</span> i=<span class="number">0</span>;i&lt;imgs.length;i++)&#123;</span></span><br><span class="line"><span class="actionscript">            <span class="comment">//如果设置非全屏标志则跳过</span></span></span><br><span class="line"><span class="actionscript">            <span class="keyword">if</span>(hasClass(imgs[i],<span class="string">'class_no_full_screen'</span>))&#123;</span></span><br><span class="line"><span class="actionscript">                <span class="keyword">continue</span>;</span></span><br><span class="line">            &#125;</span><br><span class="line"><span class="actionscript">            <span class="comment">// imgs[i].setAttribute('data-background', 'rgba(10, 10, 10, .6)');</span></span></span><br><span class="line"><span class="actionscript">            <span class="comment">// imgs[i].setAttribute('data-lightense-padding', "0");</span></span></span><br><span class="line"><span class="actionscript">            imgs[i].setAttribute(<span class="string">'style'</span>, <span class="string">"cursor: zoom-in"</span>);</span></span><br><span class="line"><span class="actionscript">            imgs[i].onclick=<span class="function"><span class="keyword">function</span><span class="params">()</span></span>&#123;</span></span><br><span class="line"></span><br><span class="line"><span class="javascript">                <span class="keyword">var</span> section=<span class="built_in">document</span>.getElementsByTagName(<span class="string">"section"</span>)[<span class="number">0</span>];</span></span><br><span class="line"></span><br><span class="line"><span class="javascript">                <span class="keyword">var</span> imgView = <span class="built_in">document</span>.getElementById(<span class="string">'imgViewDom'</span>);</span></span><br><span class="line"><span class="actionscript">                <span class="keyword">if</span>(imgView == <span class="literal">undefined</span>)&#123;</span></span><br><span class="line"><span class="javascript">                    imgView=<span class="built_in">document</span>.createElement(<span class="string">"div"</span>);</span></span><br><span class="line"><span class="actionscript">                    imgView.id = <span class="string">"imgViewDom"</span>;</span></span><br><span class="line"></span><br><span class="line">                    section.appendChild(imgView)</span><br><span class="line"></span><br><span class="line"><span class="actionscript">                    imgView.onclick = <span class="function"><span class="keyword">function</span><span class="params">()</span></span>&#123;</span></span><br><span class="line"><span class="actionscript">                        addClass(imgView, <span class="string">"disnone"</span>);</span></span><br><span class="line"><span class="actionscript">                        imgView.innerHTML=<span class="string">""</span>;</span></span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line"><span class="actionscript">                imgView.innerHTML=<span class="string">"&lt;img id = 'jackslowfuck' src="</span> + <span class="keyword">this</span>.src + <span class="string">" style='cursor: zoom-out; max-width: 100%;'"</span> + <span class="string">"&gt;"</span>;</span></span><br><span class="line"><span class="actionscript">                removeClass(imgView, <span class="string">"disnone"</span>);</span></span><br><span class="line"></span><br><span class="line"><span class="javascript">                <span class="keyword">var</span> jackslowfuck = <span class="built_in">document</span>.getElementById(<span class="string">'jackslowfuck'</span>);</span></span><br><span class="line"><span class="actionscript">                jackslowfuck.onclick=<span class="function"><span class="keyword">function</span><span class="params">()</span></span>&#123;</span></span><br><span class="line"><span class="actionscript">                    addClass(imgView, <span class="string">"disnone"</span>);</span></span><br><span class="line"><span class="actionscript">                    imgView.innerHTML=<span class="string">""</span>;</span></span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"><span class="actionscript">    &#125;, <span class="literal">false</span>);</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">style</span> <span class="attr">type</span>=<span class="string">"text/css"</span>&gt;</span></span><br><span class="line"><span class="css">    <span class="selector-id">#imgViewDom</span> &#123;</span></span><br><span class="line">        display: none;</span><br><span class="line">        position: fixed;</span><br><span class="line">        top: 0;</span><br><span class="line">        left: 0;</span><br><span class="line">        height: 100%;</span><br><span class="line">        width: 100%;</span><br><span class="line">        z-index: 99999999;</span><br><span class="line"><span class="css">        <span class="selector-tag">background</span>: <span class="selector-tag">rgba</span>(0, 0, 0,0<span class="selector-class">.7</span>);</span></span><br><span class="line">        overflow: auto;</span><br><span class="line">        display: -webkit-box;</span><br><span class="line">        -webkit-box-align: center;</span><br><span class="line">        -webkit-box-pack: center;</span><br><span class="line">        display: -moz-box;</span><br><span class="line">        -moz-box-align: center;</span><br><span class="line">        -moz-box-pack: center;</span><br><span class="line">        display: -o-box;</span><br><span class="line">        -o-box-align: center;</span><br><span class="line">        -o-box-pack: center;</span><br><span class="line">        display: -ms-box;</span><br><span class="line">        -ms-box-align: center;</span><br><span class="line">        -ms-box-pack: center;</span><br><span class="line">        display: box;</span><br><span class="line">        box-align: center;</span><br><span class="line">        box-pack: center;</span><br><span class="line">        cursor: zoom-out;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="css">    <span class="selector-class">.disnone</span>&#123;</span></span><br><span class="line">        display: none !important;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="视频大小调整"><a href="#视频大小调整" class="headerlink" title="视频大小调整"></a>视频大小调整</h2><p>修改 hexo-theme-snippet/source/css/style.css</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">video</span>&#123;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">100%</span>;</span><br><span class="line">    <span class="attribute">max-width</span>: <span class="number">100%</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="去掉首页懒加载图"><a href="#去掉首页懒加载图" class="headerlink" title="去掉首页懒加载图"></a>去掉首页懒加载图</h2><p>在 hexo-theme-snippet/layout/index.ejs 文件中找到_photoUrl 修改为 false 如下所示</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">var _photoUrl = post.img <span class="params">||</span> (urls.length &gt; <span class="number">0</span> &amp;&amp; urls[random]) <span class="params">||</span> (urls2.length &gt; <span class="number">0</span> &amp;&amp; urls2[random2]) <span class="params">||</span> <span class="string">''</span>;</span><br><span class="line"></span><br><span class="line">_photoUrl = <span class="literal">false</span></span><br></pre></td></tr></table></figure>
+<h2 id="自动创建-gitalk-issue"><a href="#自动创建-gitalk-issue" class="headerlink" title="自动创建 gitalk issue"></a>自动创建 gitalk issue</h2><p>没自己动手….</p>
+<ul>
+<li><p><a href="https://draveness.me/git-comments-initialize" target="_blank" rel="noopener">参考页面 1</a></p>
+</li>
+<li><p><a href="https://daihaoxin.github.io/post/322747ae.html" target="_blank" rel="noopener">参考页面 2</a></p>
+</li>
+</ul>
+<h2 id="我的配置"><a href="#我的配置" class="headerlink" title="我的配置"></a>我的配置</h2><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ---------------------------------------------------------------</span></span><br><span class="line"><span class="comment">#   Site Information And Theme Configuration Settings</span></span><br><span class="line"><span class="comment">#   language: zh-CN</span></span><br><span class="line"><span class="comment"># ---------------------------------------------------------------</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## menu</span></span><br><span class="line"><span class="attr">menu:</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">page:</span> <span class="string">home</span></span><br><span class="line">  <span class="attr">url:</span> <span class="string">/</span></span><br><span class="line">  <span class="attr">icon:</span> <span class="string">fa-home</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">page:</span> <span class="string">Qt</span></span><br><span class="line">  <span class="attr">url:</span> <span class="string">/categories/Qt</span></span><br><span class="line">  <span class="attr">icon:</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">page:</span> <span class="string">Python</span></span><br><span class="line">  <span class="attr">url:</span> <span class="string">/categories/Python</span></span><br><span class="line">  <span class="attr">icon:</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">page:</span> <span class="string">Linux</span></span><br><span class="line">  <span class="attr">url:</span> <span class="string">/categories/Linux</span></span><br><span class="line">  <span class="attr">icon:</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">page:</span> <span class="string">杂谈</span></span><br><span class="line">  <span class="attr">url:</span> <span class="string">/categories/杂谈</span></span><br><span class="line">  <span class="attr">icon:</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">page:</span> <span class="string">时间轴</span></span><br><span class="line">  <span class="attr">url:</span> <span class="string">/archives/</span></span><br><span class="line">  <span class="attr">icon:</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">page:</span> <span class="string">关于</span></span><br><span class="line">  <span class="attr">url:</span> <span class="string">/about/</span></span><br><span class="line">  <span class="attr">icon:</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## favicon</span></span><br><span class="line"><span class="attr">favicon:</span> <span class="string">/favicon.ico</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## Feed</span></span><br><span class="line"><span class="attr">rss:</span> <span class="string">/atom.xml</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## Carousel</span></span><br><span class="line"><span class="attr">carousel:</span></span><br><span class="line">  <span class="attr">img:</span> <span class="string">'./img/head-img.jpg'</span></span><br><span class="line">  <span class="attr">url:</span> <span class="string">'javascript:'</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 各个小工具的设置</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## widgets</span></span><br><span class="line"><span class="attr">widgets:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">search</span></span><br><span class="line">  <span class="comment"># - notification</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">social</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">category</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">archive</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">tagcloud</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">friends</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">## 搜索</span></span><br><span class="line"><span class="attr">jsonContent:</span></span><br><span class="line">  <span class="attr">searchLocal:</span> <span class="literal">false</span></span><br><span class="line">  <span class="attr">searchGoogle:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">posts:</span></span><br><span class="line">    <span class="attr">title:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">text:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">content:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">categories:</span> <span class="literal">false</span></span><br><span class="line">    <span class="attr">tags:</span> <span class="literal">false</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## 网站公告设置</span></span><br><span class="line"><span class="attr">notification:</span> <span class="string">|-</span></span><br><span class="line">            <span class="string">&lt;p&gt;</span></span><br><span class="line">                <span class="string">主题下载：&lt;a</span> <span class="string">href="https://github.com/shenliyang/hexo-theme-snippet"</span> <span class="string">title="fork</span> <span class="string">me"</span> <span class="string">target="_blank"&gt;Snippet主题&lt;/a&gt;</span> <span class="string">&lt;br/&gt;</span></span><br><span class="line">                <span class="string">主题使用：&lt;a</span> <span class="string">href="https://github.com/shenliyang/hexo-theme-snippet/blob/master/README.md#常见问题"</span> <span class="string">title=""</span> <span class="string">target="_blank"&gt;常见使用问题&lt;/a&gt;</span> <span class="string">&lt;br/&gt;</span></span><br><span class="line">                <span class="string">支持主题：&lt;a</span> <span class="string">href="https://github.com/shenliyang/hexo-theme-snippet/stargazers"&gt;Star一下&lt;/a&gt;</span></span><br><span class="line">            <span class="string">&lt;/p&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## 社交设置</span></span><br><span class="line"><span class="attr">social:</span></span><br><span class="line"> <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Github</span></span><br><span class="line">   <span class="attr">icon:</span> <span class="string">git</span></span><br><span class="line">   <span class="attr">href:</span> <span class="string">//github.com/spygg</span></span><br><span class="line"> <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">邮箱</span></span><br><span class="line">   <span class="attr">icon:</span> <span class="string">envelope-o</span></span><br><span class="line">   <span class="attr">href:</span> <span class="string">mailto:liushidc@163.com</span></span><br><span class="line"> <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">RSS</span></span><br><span class="line">   <span class="attr">icon:</span> <span class="string">feed</span></span><br><span class="line">   <span class="attr">href:</span> <span class="string">/atom.xml</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## 文章分类设置</span></span><br><span class="line"><span class="attr">cate_config:</span></span><br><span class="line">   <span class="attr">show_count:</span> <span class="literal">true</span></span><br><span class="line">   <span class="attr">show_current:</span> <span class="literal">true</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## 文章归档设置</span></span><br><span class="line"><span class="attr">arch_config:</span></span><br><span class="line">   <span class="attr">type:</span> <span class="string">'monthly'</span></span><br><span class="line">   <span class="attr">format:</span> <span class="string">'YYYY年MM月'</span></span><br><span class="line">   <span class="attr">show_count:</span> <span class="literal">true</span></span><br><span class="line">   <span class="attr">order:</span> <span class="number">-1</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## 标签云设置</span></span><br><span class="line"><span class="attr">tagcloud:</span></span><br><span class="line">  <span class="attr">tag3d:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">textColour:</span> <span class="string">'#444'</span></span><br><span class="line">  <span class="attr">outlineMethod:</span> <span class="string">'block'</span></span><br><span class="line">  <span class="attr">outlineColour:</span> <span class="string">'#FFDAB9'</span></span><br><span class="line">  <span class="attr">interval:</span> <span class="number">30</span></span><br><span class="line">  <span class="attr">freezeActive:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">frontSelect:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">reverse:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">wheelZoom:</span> <span class="literal">false</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## 友链设置</span></span><br><span class="line"><span class="attr">links:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">Hexo官网:</span> <span class="string">https://hexo.io/zh-cn/</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">snippet主题博主:</span> <span class="string">https://www.91h5.cc/</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 主题自定义个性化配置</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## 网站宣传语</span></span><br><span class="line"><span class="attr">branding:</span> <span class="string">技术引领生活!</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## 设置banner背景图片</span></span><br><span class="line"><span class="attr">banner:</span></span><br><span class="line">    <span class="attr">img:</span> <span class="string">http://snippet.shenliyang.com/img/banner.jpg</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## 首页列表底部面板</span></span><br><span class="line"><span class="attr">homePanel:</span> <span class="literal">true</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## 缩略图自定义随机图片</span></span><br><span class="line"><span class="attr">defaultImgs:</span></span><br><span class="line">  <span class="bullet">-</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## 截取文章首页描述字数</span></span><br><span class="line"><span class="attr">excerptLength:</span> <span class="number">120</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## 是否开启文章目录</span></span><br><span class="line"><span class="attr">toc:</span> <span class="literal">true</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## 代码高亮配置</span></span><br><span class="line"><span class="attr">highlightTheme:</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## bootstrap配置</span></span><br><span class="line"><span class="attr">bootstrap:</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## ICON配置</span></span><br><span class="line"><span class="attr">fontAwesome:</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## 文章过期提醒功能</span></span><br><span class="line"><span class="attr">warning:</span></span><br><span class="line">  <span class="attr">days:</span> <span class="number">300</span></span><br><span class="line">  <span class="attr">text:</span> <span class="string">'本文于%d天之前发表，文中内容可能已经过时。'</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## 文章内声明</span></span><br><span class="line"><span class="attr">declaration:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">title:</span> <span class="string">'转载声明'</span></span><br><span class="line">  <span class="attr">tip:</span> <span class="string">|-</span></span><br><span class="line">      <span class="string">商业转载请联系作者获得授权,非商业转载请注明出处</span> <span class="string">©</span> <span class="string">&lt;a</span> <span class="string">href=""</span> <span class="string">target="_blank"&gt;spygg&lt;/a&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## 文章打赏</span></span><br><span class="line"><span class="attr">reward:</span></span><br><span class="line">  <span class="attr">alipay:</span> <span class="string">'/img/zhifubaocode.jpg'</span></span><br><span class="line">  <span class="attr">wepay:</span> <span class="string">'/img/weixincode.jpg'</span></span><br><span class="line">  <span class="attr">tip:</span> <span class="string">您的支持是我前行的动力!</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## 主题评论</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## Valine评论</span></span><br><span class="line"><span class="attr">valine:</span></span><br><span class="line">   <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">   <span class="attr">appId:</span></span><br><span class="line">   <span class="attr">appKey:</span></span><br><span class="line">   <span class="attr">placeholder:</span> <span class="string">说点什么吧</span></span><br><span class="line">   <span class="attr">notify:</span> <span class="literal">false</span></span><br><span class="line">   <span class="attr">verify:</span> <span class="literal">false</span></span><br><span class="line">   <span class="attr">avatar:</span> <span class="string">mm</span></span><br><span class="line">   <span class="attr">meta:</span> <span class="string">nick,mail</span></span><br><span class="line">   <span class="attr">pageSize:</span> <span class="number">10</span></span><br><span class="line"></span><br><span class="line"><span class="comment">### 畅言评论(需要ICP备案)</span></span><br><span class="line"><span class="attr">changyan:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">false</span></span><br><span class="line">  <span class="attr">appid:</span></span><br><span class="line">  <span class="attr">conf:</span></span><br><span class="line"></span><br><span class="line"><span class="comment">### 来必力</span></span><br><span class="line"><span class="attr">livere:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">false</span></span><br><span class="line">  <span class="attr">livere_uid:</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## Gitalk评论</span></span><br><span class="line"><span class="attr">gitalk:</span></span><br><span class="line">   <span class="attr">enable:</span> <span class="literal">false</span></span><br><span class="line">   <span class="attr">clientID:</span></span><br><span class="line">   <span class="attr">clientSecret:</span></span><br><span class="line">   <span class="attr">repo:</span></span><br><span class="line">   <span class="attr">owner:</span></span><br><span class="line">   <span class="attr">admin:</span></span><br><span class="line">   <span class="attr">perPage:</span></span><br><span class="line">   <span class="attr">id:</span></span><br><span class="line"></span><br><span class="line"><span class="comment">### Disqus评论</span></span><br><span class="line"><span class="attr">disqus:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">false</span></span><br><span class="line">  <span class="attr">shortname:</span> <span class="string">snippet</span></span><br><span class="line">  <span class="attr">count:</span> <span class="literal">false</span></span><br><span class="line"></span><br><span class="line"><span class="comment">### gitment评论(长期不更新，不建议使用)</span></span><br><span class="line"><span class="attr">gitment:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">false</span></span><br><span class="line">  <span class="attr">owner:</span></span><br><span class="line">  <span class="attr">repo:</span></span><br><span class="line">  <span class="attr">client_id:</span></span><br><span class="line">  <span class="attr">client_secret:</span></span><br><span class="line">  <span class="attr">perPage:</span> <span class="number">10</span></span><br><span class="line"></span><br><span class="line"><span class="comment">### 友言评论(服务不稳定)</span></span><br><span class="line"><span class="attr">uyan:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">false</span></span><br><span class="line">  <span class="attr">uyan_id:</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">## 网站访客统计</span></span><br><span class="line"><span class="attr">visit_counter:</span></span><br><span class="line">   <span class="attr">site:</span> <span class="literal">false</span></span><br><span class="line">   <span class="attr">page:</span> <span class="literal">false</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## 网站访问统计分析</span></span><br><span class="line"></span><br><span class="line"><span class="comment">### 网盟CNZZ统计</span></span><br><span class="line"><span class="attr">cnzz_analytics:</span></span><br><span class="line"></span><br><span class="line"><span class="comment">### 百度统计</span></span><br><span class="line"><span class="attr">baidu_analytics:</span></span><br><span class="line"></span><br><span class="line"><span class="comment">### 谷歌统计</span></span><br><span class="line"><span class="attr">google_analytics:</span></span><br><span class="line"></span><br><span class="line"><span class="comment">### 腾讯分析</span></span><br><span class="line"><span class="attr">tencent_analytics:</span></span><br><span class="line"></span><br><span class="line"><span class="comment">### 百度站点认证</span></span><br><span class="line"><span class="attr">baidu_site_verification:</span></span><br><span class="line"></span><br><span class="line"><span class="comment">### 百度自动推送</span></span><br><span class="line"><span class="attr">baidu_push:</span> <span class="literal">true</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#网站主题配置</span></span><br><span class="line"><span class="attr">since:</span> <span class="number">2019</span></span><br><span class="line"><span class="attr">robot:</span> <span class="string">'all'</span> <span class="comment">### 控制搜索引擎的抓取和索引编制行为，默认为all</span></span><br><span class="line"><span class="attr">version:</span> <span class="number">1.2</span><span class="number">.1</span></span><br></pre></td></tr></table></figure>
+
+    </div>
+    
+        <div class="reward" ontouchstart>
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+                <span class="reward-type">
+                    <img class="alipay" src="/img/zhifubaocode.jpg"><b>支付宝打赏</b>
+                </span>
+            
+            
+                <span class="reward-type">
+                    <img class="wechat" src="/img/weixincode.jpg"><b>微信打赏</b>
+                </span>
+            
+        </div>
+    </div>
+    <p class="reward-tip">您的支持是我前行的动力!</p>
+</div>
+
+
+    
+    <div class="post-footer">
+        <div>
+            
+                转载声明：商业转载请联系作者获得授权,非商业转载请注明出处 © <a href target="_blank">spygg</a>
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+        <a href="/2019/04/13/Linux下Qt工程文件打开方式关联/" class="pre-post btn btn-default" title="Linux下Qt工程文件打开方式关联">
+            <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+            <span class="hidden-xs">Linux下Qt工程文件打开方式关联</span>
+        </a>
+    
+    
+        <a href="/2019/04/12/CSDN博客转高清PDF/" class="next-post btn btn-default" title="CSDN博客转高清PDF">
+            <span class="hidden-lg">下一篇</span>
+            <span class="hidden-xs">CSDN博客转高清PDF</span><i class="fa fa-angle-right fa-fw"></i>
+        </a>
+    
+</div>
+
+<!-- google广告 -->
+<!-- 
+<div class="googleAd">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+</div>
+-->
+
+
+    <div id="comments">
+        
+	<link rel="stylesheet" href="https://cdn.bootcss.com/gitalk/1.5.0/gitalk.min.css">
+<script src="https://cdn.bootcss.com/gitalk/1.5.0/gitalk.min.js"></script>
+<script src="https://cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
+
+<div id="gitalk-container"></div>
+<script type="text/javascript">
+    var gitalk = new Gitalk({
+        // Gitalk配置
+        clientID: "6c31603d4df9afc8351b",
+        clientSecret: "c9e81f3ac1492550170fccb28c0f8bb16e3b7ed1",
+        repo: "blogcomment",
+        owner: "spygg",
+        admin: ["spygg"],
+        id: md5(window.location.pathname),
+        distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+</script>
+
+
+    </div>
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">文章目录</h3>
+        
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#插入广告-google-Ads"><span class="toc-text">插入广告(google Ads)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#步骤"><span class="toc-text">步骤</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#首页广告"><span class="toc-text">首页广告</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装"><span class="toc-text">安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#配置"><span class="toc-text">配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#在主-config-yml-修改主题为"><span class="toc-text">在主_config.yml 修改主题为</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#配置-menu-其中关于的页面要单独编写-后面介绍"><span class="toc-text">配置 menu(其中关于的页面要单独编写,后面介绍)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#生成-about-页面"><span class="toc-text">生成 about 页面</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#添加-google-索引"><span class="toc-text">添加 google 索引</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#添加必应索引"><span class="toc-text">添加必应索引</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#必应站内搜索"><span class="toc-text">必应站内搜索</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#gitalk-评论系统"><span class="toc-text">gitalk 评论系统</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#添加图片放大"><span class="toc-text">添加图片放大</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#视频大小调整"><span class="toc-text">视频大小调整</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#去掉首页懒加载图"><span class="toc-text">去掉首页懒加载图</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#自动创建-gitalk-issue"><span class="toc-text">自动创建 gitalk issue</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#我的配置"><span class="toc-text">我的配置</span></a></li></ol>
+        
+    </div>
+</aside>
+
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+
+<a id="back-to-top" class="icon-btn hide">
+	<i class="fa fa-chevron-up"></i>
+</a>
+
+
+
+
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+        访问量:
+        <strong id="busuanzi_value_site_pv">
+            <i class="fa fa-spinner fa-spin"></i>
+        </strong>
+        &nbsp; | &nbsp;
+        访客数:
+        <strong id="busuanzi_value_site_uv">
+            <i class="fa fa-spinner fa-spin"></i>
+        </strong>
+    
+</div>
+
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy; 2019
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+    <script src="/assets/tagcanvas.min.js?rev=2.9"></script>
+    <script>
+        var tagOption = {
+            textColour: '#444', // 字体颜色
+            outlineMethod: 'block', // 选中模式
+            outlineColour: '#FFDAB9', // 选中模式的颜色
+            interval: 30 || 30, // 动画帧之间的时间间隔，值越大，转动幅度越大
+            textHeight: 13,
+            outlineRadius: 3,
+            freezeActive: true || '', // 选中的标签是否继续滚动
+            frontSelect: true || '', // 不选标签云后部的标签
+            initial: [0.1, -0.1],
+            depth: 0.5,
+            decel: 0.95,
+            maxSpeed: 0.03,
+            reverse: true || '', // 是否反向触发
+            fadeIn: 500, // 进入动画时间
+            wheelZoom: false || '' // 是否启用鼠标滚轮
+        }
+        TagCanvas.Start('tag-cloud-3d','',tagOption);
+    </script>
+
+
+
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<script src="/js/app.js?rev=@@hash"></script>
+
+</body>
+</html>

@@ -1,0 +1,601 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="LiusBlog">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="google-site-verification" content="Ib3TgmBWfq5KtJE24-Dg_CaJRazvNc0JjfEdPPJf_mQ">
+    <meta name="msvalidate.01" content="9C33A26895A2A8B80CEE60CD519D1095">
+    
+    <link rel="dns-prefetch" href="https://spygg.github.io">
+    <!--SEO-->
+
+    <meta name="keywords" content="Qt,C,VC 6.0,MFC">
+
+
+    <meta name="description" content="
+由于Qt的强大特性,在VC开发时一直想能否导出Qt的各个模块为VC所用,本文介绍一种思路,抛砖引玉下,经测试满足 VC 6.0及以上版本
+
+起源大家都知道MFC框架没有很好的数据库框架来用,而...">
+
+
+
+<meta name="robots" content="all">
+<meta name="google" content="all">
+<meta name="googlebot" content="all">
+<meta name="verify" content="all">
+
+    <!--Title-->
+
+
+<title>导出Qt模块DLL给VC调用 | LiusBlog</title>
+
+
+    <link rel="alternate" href="/atom.xml" title="LiusBlog" type="application/atom+xml">
+
+
+    <link rel="icon" href="/favicon.ico">
+
+    
+
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.5.0">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash">
+
+
+
+
+    
+
+
+
+
+
+    
+
+    <script>
+        (function(){
+            var bp = document.createElement('script');
+            var curProtocol = window.location.protocol.split(':')[0];
+            if (curProtocol === 'https') {
+                bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+            }
+            else {
+                bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+            }
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(bp, s);
+        })();
+    </script>
+
+
+<!--     <script type="text/javascript">
+        function IsPC() {
+          var userAgentInfo = navigator.userAgent;
+          var Agents = ["Android", "iPhone"];
+          var flag = true;
+          for (var v = 0; v < Agents.length; v++) {
+            if (userAgentInfo.indexOf(Agents[v]) > 0) {
+              flag = false;
+              break;
+            }
+          }
+          return flag;
+        }
+    </script> -->
+
+<!-- 	<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+	<script>
+	  (adsbygoogle = window.adsbygoogle || []).push({
+	    google_ad_client: "ca-pub-7854187021513757",
+	    enable_page_level_ads: IsPC()
+	  });
+	</script> -->
+
+
+	
+    <script type="text/javascript">
+        function hasClass(obj, cls) {
+            return obj.className.match(new RegExp('(\\s|^)' + cls + '(\\s|$)'));
+        }
+         
+        function addClass(obj, cls) {
+            if (!this.hasClass(obj, cls)) obj.className += " " + cls;
+        }
+         
+        function removeClass(obj, cls) {
+            if (hasClass(obj, cls)) {
+                var reg = new RegExp('(\\s|^)' + cls + '(\\s|$)');
+                obj.className = obj.className.replace(reg, ' ');
+            }
+        }
+
+
+        window.addEventListener('load', function () {
+            // 谷歌广告
+            // if(IsPC()){
+            //     var googleAds = document.getElementsByClassName('googleAd');
+            //     if(googleAds != undefined){
+            //         for (var i = 0; i < googleAds.length; i++) {
+            //             googleAds[i].innerHTML = '<ins class="adsbygoogle"\
+            //                  style="display:block; text-align:center;"\
+            //                  data-ad-layout="in-article"\
+            //                  data-ad-format="fluid"\
+            //                  data-ad-client="ca-pub-7854187021513757"\
+            //                  data-ad-slot="4637472251">\
+            //             </ins>'
+
+            //             var scriptFun = document.createElement("script");
+            //             scriptFun.text = "(adsbygoogle = window.adsbygoogle || []).push({});";
+            //             googleAds[i].appendChild(scriptFun);
+            //             // end
+            //         }
+            //     }
+           
+            // }
+
+            var imgAll = document.getElementsByClassName('post-body')[0];
+            if(imgAll == undefined){
+                return;
+            }
+            
+            var imgs = imgAll.getElementsByTagName('img')
+            for(var i=0;i<imgs.length;i++){
+                if(hasClass(imgs[i],'class_no_full_screen')){
+                    continue;
+                }
+
+                // imgs[i].setAttribute('data-background', 'rgba(10, 10, 10, .6)');
+                // imgs[i].setAttribute('data-lightense-padding', "0");
+                imgs[i].setAttribute('style', "cursor: zoom-in");
+                imgs[i].onclick=function(){
+                
+                    var section=document.getElementsByTagName("section")[0];
+
+                    var imgView = document.getElementById('imgViewDom');
+                    if(imgView == undefined){
+                        imgView=document.createElement("div");
+                        imgView.id = "imgViewDom";
+
+                        section.appendChild(imgView)
+
+
+                        imgView.onclick = function(){
+                            addClass(imgView, "disnone");
+                            imgView.innerHTML="";
+                        }
+
+                    }
+            
+                    imgView.innerHTML="<img id = 'jackslowfuck' src=" + this.src + " style='cursor: zoom-out; max-width: 100%;'" + ">";
+                    removeClass(imgView, "disnone");
+
+                    var jackslowfuck = document.getElementById('jackslowfuck');
+                    jackslowfuck.onclick=function(){
+                        addClass(imgView, "disnone");
+                        imgView.innerHTML="";
+                    }
+
+                }
+            }
+            
+        }, false);
+    </script>
+
+    <style type="text/css">
+        #imgViewDom {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            z-index: 99999999;
+            background: rgba(0, 0, 0,0.7);
+            overflow: auto;
+            display: -webkit-box;
+            -webkit-box-align: center;
+            -webkit-box-pack: center;
+            display: -moz-box;
+            -moz-box-align: center;
+            -moz-box-pack: center;
+            display: -o-box;
+            -o-box-align: center;
+            -o-box-pack: center;
+            display: -ms-box;
+            -ms-box-align: center;
+            -ms-box-pack: center;
+            display: box;
+            box-align: center;
+            box-pack: center;
+            cursor: zoom-out;
+        }
+
+        .disnone{
+            display: none !important;
+        }
+    </style>
+
+</head>
+
+</html>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+
+<body>
+    <header class="main-header" style="background-image:url(/img/banner.jpg)">
+    <div class="main-header-box">
+        <a class="header-avatar" href="/about" title="spygg">
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+        	<!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+                <h2> 技术引领生活! </h2>
+            
+    	</div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                    <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="https://spygg.github.io">LiusBlog</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/"><i class="fa fa-home"></i>首页</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/Qt"><i class="fa "></i>Qt</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/Python"><i class="fa "></i>Python</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/Linux"><i class="fa "></i>Linux</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/音视频"><i class="fa "></i>音视频</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/杂谈"><i class="fa "></i>杂谈</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/archives/"><i class="fa "></i>时间轴</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/about/"><i class="fa "></i>关于</a>
+                            </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="导出Qt模块DLL给VC调用">
+            
+	            导出Qt模块DLL给VC调用
+            
+        </h1>
+        <div class="post-meta">
+    
+        <span class="categories-meta fa-wrap">
+            <i class="fa fa-folder-open-o"></i>
+            <a class="category-link" href="/categories/Qt/">Qt</a>
+        </span>
+    
+
+    
+        <span class="fa-wrap">
+            <i class="fa fa-tags"></i>
+            <span class="tags-meta">
+                
+                    <a class="tag-link" href="/tags/C/">C</a> <a class="tag-link" href="/tags/MFC/">MFC</a> <a class="tag-link" href="/tags/Qt/">Qt</a> <a class="tag-link" href="/tags/VC-6-0/">VC 6.0</a>
+                
+            </span>
+        </span>
+    
+
+    
+        
+        <span class="fa-wrap">
+            <i class="fa fa-clock-o"></i>
+            <span class="date-meta">2019/10/22</span>
+        </span>
+        
+            <span class="fa-wrap">
+                <i class="fa fa-eye"></i>
+                <span id="busuanzi_value_page_pv"></span>
+            </span>
+        
+    
+</div>
+            
+            
+    </div>
+
+    
+    
+    <!-- google广告 -->
+    <!--
+    <div class="googleAd">
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    </div>
+    -->
+
+    <div class="post-body post-content">
+        <blockquote>
+<p>由于Qt的强大特性,在VC开发时一直想能否导出Qt的各个模块为VC所用,本文介绍一种思路,抛砖引玉下,经测试<em>满足</em> <strong>VC 6.0</strong>及以上版本</p>
+</blockquote>
+<h2 id="起源"><a href="#起源" class="headerlink" title="起源"></a>起源</h2><p>大家都知道MFC框架没有很好的数据库框架来用,而Qt的数据库模块简直不要太好用,于是就想能否来个<strong>乾坤大挪移</strong>呢?经过一阵乱撸,终于搞定!!!</p>
+<h2 id="借鉴思路"><a href="#借鉴思路" class="headerlink" title="借鉴思路"></a>借鉴思路</h2><p><a href="https://blog.csdn.net/ly305750665" target="_blank" rel="noopener">雨田哥的博客</a>之 <a href="https://blog.csdn.net/ly305750665/article/details/65948096" target="_blank" rel="noopener">封装QtCore</a>,于是想除了QtCore能否将Qt的数据库模块也导出来呢?答案是肯定的</p>
+<h2 id="实现步骤"><a href="#实现步骤" class="headerlink" title="实现步骤"></a>实现步骤</h2><p>分为两个部分:</p>
+<ol>
+<li>DLL模块</li>
+<li>测试调用程序</li>
+</ol>
+<h3 id="DLL编写"><a href="#DLL编写" class="headerlink" title="DLL编写"></a>DLL编写</h3><p>先说下版本,为了方便的在Windows下调用,肯定使用<strong>MSVC版本</strong>的Qt,我电脑上装了Qt 4.8.0 VS 2010版本</p>
+<ul>
+<li>新建Qt C++ library工程</li>
+</ul>
+<p>偷巧的方法为先使用Qt Creator 创建一个DLL工程,然后再用VS插件打开进行编译,经测试需要在工程文件夹下建立include文件夹放入下列文件<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">qsqldatabase</span><span class="selector-class">.h</span>  <span class="selector-tag">qsqlerror</span><span class="selector-class">.h</span>  <span class="selector-tag">qsqlrecord</span><span class="selector-class">.h</span></span><br><span class="line"><span class="selector-tag">qsqldriver</span><span class="selector-class">.h</span>    <span class="selector-tag">qsqlquery</span><span class="selector-class">.h</span>  <span class="selector-tag">qvariant</span><span class="selector-class">.h</span></span><br></pre></td></tr></table></figure></p>
+<p>请注意,以上文件为真实的文件,一般在Qt安装目录下的corelib目录下(可以通过QtCreator跳转过去,一直找到真实的文件为止)</p>
+<ul>
+<li>代码如下</li>
+</ul>
+<h4 id="头文件"><a href="#头文件" class="headerlink" title="头文件"></a>头文件</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//qsqllib.h</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> QSQLLIB_H</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> QSQLLIB_H</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"include/qsqldatabase.h"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"include/qsqlquery.h"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"include/qsqldriver.h"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"include/qsqlerror.h"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"include/qsqlrecord.h"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"include/qvariant.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">if</span> defined(QSQLLIB_LIBRARY)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> QSQLLIBSHARED_EXPORT  __declspec(dllexport)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">else</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> QSQLLIBSHARED_EXPORT  __declspec(dllimport)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">QSQLLIBSHARED_EXPORT</span> <span class="title">CSql</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    CSql();</span><br><span class="line">    ~CSql();</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">exec</span><span class="params">( QSqlQuery *query, QString queryString)</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">closeDataBase</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">connectDataBase</span><span class="params">(QString dbName,</span></span></span><br><span class="line"><span class="function"><span class="params">        QString type = <span class="string">"QSQLITE"</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">        QString host = <span class="string">"127.0.0.1"</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">        <span class="keyword">int</span> port = <span class="number">-1</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">        QString userName = <span class="string">""</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">        QString passWd = <span class="string">""</span>)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function">QString <span class="title">lastError</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function">QStringList <span class="title">drivers</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function">QSqlDatabase *<span class="title">dataBase</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function">QSqlRecord <span class="title">tableInfo</span><span class="params">(QString table)</span></span>;</span><br><span class="line">    <span class="function">QStringList <span class="title">tables</span><span class="params">()</span></span>;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line"></span><br><span class="line">    QSqlDatabase m_db;</span><br><span class="line">    QStringList m_tables;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">if</span> !defined(QSQLLIB_LIBRARY)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> _DEBUG</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> comment(lib, <span class="meta-string">"lib/qSqlLibd.lib"</span>)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> comment(lib, <span class="meta-string">"lib/QtSqld4.lib"</span>)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> comment(lib, <span class="meta-string">"lib/QtCored4.lib"</span>)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">else</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> comment(lib, <span class="meta-string">"lib/qSqlLib.lib"</span>)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> comment(lib, <span class="meta-string">"lib/QtSql4.lib"</span>)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> comment(lib, <span class="meta-string">"lib/QtCore4.lib"</span>)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span> <span class="comment">// QSQLLIB_H</span></span></span><br></pre></td></tr></table></figure>
+<h4 id="Cpp文件"><a href="#Cpp文件" class="headerlink" title="Cpp文件"></a>Cpp文件</h4><figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//代码 qsqllib.cpp</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"qsqllib.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QCoreApplication&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QDir&gt;</span></span></span><br><span class="line"></span><br><span class="line">CSql::CSql()</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">CSql::~CSql()</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span>(m_db.isOpen())&#123;</span><br><span class="line">        closeDataBase();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">CSql::closeDataBase</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    &#123;</span><br><span class="line">        QString connectionName = m_db.connectionName();</span><br><span class="line">        m_db.<span class="built_in">close</span>();</span><br><span class="line"></span><br><span class="line">        m_db = QSqlDatabase();</span><br><span class="line">        QSqlDatabase::removeDatabase(connectionName);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">CSql::connectDataBase</span><span class="params">(QString dbName, QString type, </span></span></span><br><span class="line"><span class="function"><span class="params">QString host, <span class="keyword">int</span> port, QString userName, QString passWd)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    QCoreApplication::addLibraryPath(QDir::toNativeSeparators(QCoreApplication::applicationDirPath()));</span><br><span class="line">    QCoreApplication::addLibraryPath(QDir::toNativeSeparators(<span class="string">"./"</span>));</span><br><span class="line">    <span class="comment">//关闭已有连接,将m_db重置</span></span><br><span class="line">    closeDataBase();</span><br><span class="line"></span><br><span class="line">    m_db = QSqlDatabase::addDatabase(type);</span><br><span class="line"></span><br><span class="line">    m_db.setHostName(host);</span><br><span class="line">    m_db.setPort(port);</span><br><span class="line">    m_db.setUserName(userName);</span><br><span class="line">    m_db.setPassword(passWd);</span><br><span class="line">    m_db.setDatabaseName(dbName);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (!m_db.<span class="built_in">open</span>()) &#123;</span><br><span class="line">        <span class="comment">//关闭数据库,必须这样..</span></span><br><span class="line">        closeDataBase();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(type.compare(<span class="string">"QOCI"</span>) == <span class="number">0</span> || type.compare(<span class="string">"QODBC"</span>) == <span class="number">0</span>)&#123;</span><br><span class="line">        QStringList tl;</span><br><span class="line">        QSqlQuery query;</span><br><span class="line">        <span class="function"><span class="keyword">const</span> QLatin1String <span class="title">tableQuery</span><span class="params">(<span class="string">"select table_name from user_tables"</span>)</span></span>;</span><br><span class="line">        exec(&amp;query, tableQuery);</span><br><span class="line">        <span class="keyword">while</span> (query.next()) &#123;</span><br><span class="line">            tl.append(query.value(<span class="number">0</span>).toString());</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        m_tables = tl;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span>&#123;</span><br><span class="line">        m_tables = m_db.tables();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">QSqlDatabase *<span class="title">CSql::dataBase</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> &amp;m_db;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">QSqlRecord <span class="title">CSql::tableInfo</span><span class="params">(QString table)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">//开启事务</span></span><br><span class="line">    m_db.transaction();</span><br><span class="line">    QSqlRecord record =  m_db.record(table);</span><br><span class="line">    m_db.commit();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> record;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">QStringList <span class="title">CSql::tables</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> m_tables;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">QStringList <span class="title">drivers</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> QSqlDatabase::drivers();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">CSql::exec</span><span class="params">( QSqlQuery *query, QString queryString)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">bool</span> bok = <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//开启事务</span></span><br><span class="line">    m_db.transaction();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(!queryString.isEmpty())&#123;</span><br><span class="line">        bok = query-&gt;exec(queryString);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span>&#123;</span><br><span class="line">        bok = query-&gt;exec();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    m_db.commit();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> bok;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">QString <span class="title">CSql::lastError</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> m_db.lastError().<span class="built_in">text</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="测试调用程序"><a href="#测试调用程序" class="headerlink" title="测试调用程序"></a>测试调用程序</h3><ol>
+<li>新建一个MFC工程</li>
+<li>加入上一步中的导出头文件(见底部链接下载即可)</li>
+<li>对用到的头文件拷贝到当前文件夹下来(对于 VC6.0来说,必须将文件编码转为assic版本,不然会报错)</li>
+<li>找到对应版本的.lib文件拷贝到当前目录下lib文件夹下</li>
+<li>编写代码,如下<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">#<span class="keyword">include</span> <span class="string">"include/qsqllib.h"</span></span><br><span class="line"></span><br><span class="line">void foo<span class="literal">()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">bool</span> bok = <span class="literal">false</span>;</span><br><span class="line">        </span><br><span class="line">    <span class="built_in">char</span> dbName<span class="literal">[<span class="number">255</span>]</span> = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">    <span class="built_in">char</span> <span class="keyword">type</span><span class="literal">[<span class="number">20</span>]</span> = &#123;<span class="number">0</span>&#125;;	<span class="comment">//"QSQLITE"</span></span><br><span class="line">    <span class="built_in">char</span> host<span class="literal">[<span class="number">20</span>]</span> = &#123;<span class="number">0</span>&#125;;   <span class="comment">//"127.0.0.1",</span></span><br><span class="line">    <span class="built_in">char</span> szPort<span class="literal">[<span class="number">20</span>]</span> = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">    <span class="built_in">char</span> userName<span class="literal">[<span class="number">50</span>]</span> = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">    <span class="built_in">char</span> passWd<span class="literal">[<span class="number">50</span>]</span> = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">    <span class="comment">//......</span></span><br><span class="line">    CSql sql;</span><br><span class="line">    bok = sql.connect<span class="constructor">DataBase(<span class="params">dbName</span>, <span class="params">type</span>, <span class="params">host</span>, <span class="params">atoi</span>(<span class="params">szPort</span>)</span>, userName, passWd);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(!bok)&#123;</span><br><span class="line">        <span class="constructor">AfxMessageBox(<span class="params">sql</span>.<span class="params">lastError</span>()</span>.<span class="keyword">to</span><span class="constructor">Local8Bit()</span>.const<span class="constructor">Data()</span>);</span><br><span class="line">        return FALSE;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    QSqlQuery query;</span><br><span class="line">    bok = sql.exec(&amp;query, <span class="string">"select * from table"</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(bok)&#123;</span><br><span class="line">        <span class="keyword">while</span>(query.next<span class="literal">()</span>)&#123;</span><br><span class="line">            <span class="constructor">TRACE(<span class="string">"%d, %s\n"</span>, <span class="params">query</span>.<span class="params">value</span>(0)</span>.<span class="keyword">to</span><span class="constructor">Int()</span>,query.value(<span class="number">1</span>).<span class="keyword">to</span><span class="constructor">String()</span>.<span class="keyword">to</span><span class="constructor">Local8Bit()</span>.const<span class="constructor">Data()</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="经验"><a href="#经验" class="headerlink" title="经验"></a>经验</h2><ol>
+<li>VC 6.0版本要求文件编码为<strong>ASSIC</strong>,Qt默认版本应该是 utf-8,所以可以通过notepad++转化,本人已经将所有的格式转化完毕,见附件<a href="/attachment/导出Qt模块DLL给VC调用/include.zip">头文件</a></li>
+<li>对于<strong>编译错误</strong>先注释起来(为毛这样能行?因为对于DLL来说只要有个声明就行.h文件中声明的东西在对应的DLL中都已经实现了)</li>
+<li>对于数据库提示<em>Driver not loader</em>错误,需要将sqldriver路径加入到库路径,见代码中的QCoreApplication::addLibraryPath();</li>
+<li>数据库关闭错误说明见<a href="/2019/06/20/Qt数据库removeDatabase注意事项/">Qt数据库removeDatabase注意事项</a></li>
+<li><p>在C语言的DLL中(本文未给出)其他版本的都OK,但是oracle老是在退出的时候崩溃,一阵乱撸之下发现有两种方法可以搞定(貌似是资源释放的问题),都不是很理想,于是就有了C++的class版本</p>
+<ul>
+<li><p>方法1:(勉强可以接受)</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//用指针</span></span><br><span class="line">QSqlQuery *query = <span class="keyword">new</span> <span class="constructor">QSqlQuery()</span>;</span><br><span class="line">bok = exec(query, <span class="string">"select * from table"</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(bok)&#123;</span><br><span class="line">    <span class="keyword">while</span>(query-&gt;next<span class="literal">()</span>)&#123;</span><br><span class="line">        <span class="constructor">TRACE(<span class="string">"%d, %s\n"</span>, <span class="params">query</span>-&gt;<span class="params">value</span>(0)</span>.<span class="keyword">to</span><span class="constructor">Int()</span>,query-&gt;value(<span class="number">1</span>).<span class="keyword">to</span><span class="constructor">String()</span>.<span class="keyword">to</span><span class="constructor">Local8Bit()</span>.const<span class="constructor">Data()</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//这里要delete</span></span><br><span class="line">delete query;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>方法2:(有点2)</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//用局部区域变量来自动释放</span></span><br><span class="line">&#123;</span><br><span class="line">    QSqlQuery query;</span><br><span class="line">    bok = exec(&amp;query, <span class="string">"select * from table"</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(bok)&#123;</span><br><span class="line">        <span class="keyword">while</span>(query.next<span class="literal">()</span>)&#123;</span><br><span class="line">            <span class="constructor">TRACE(<span class="string">"%d, %s\n"</span>, <span class="params">query</span>.<span class="params">value</span>(0)</span>.<span class="keyword">to</span><span class="constructor">Int()</span>, query.value(<span class="number">1</span>).<span class="keyword">to</span><span class="constructor">String()</span>.<span class="keyword">to</span><span class="constructor">Local8Bit()</span>.const<span class="constructor">Data()</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="PS"><a href="#PS" class="headerlink" title="PS"></a>PS</h2><p>也曾尝试将Gui相关的导出,比如QPixmap类,但是没有成功</p>
+<h2 id="更新"><a href="#更新" class="headerlink" title="更新"></a>更新</h2><ul>
+<li><p>GUI类也可以成功,比如QImage,可以直接使用, QPixmap类,需要在头文件中注释掉错误行即可</p>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">//Q_DECLARE_SHARED(<span class="name">QPixmap</span>)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>需要注意的是在使用GUI相关的类时会提示在使用前必须<strong>初始化QApplication</strong><br>解决方案:</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//在实例化QPixmap之前调用实例化QApplication</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">MFC_FOO</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> argc = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">char</span> *argv[] = &#123;</span><br><span class="line">        <span class="string">"foo"</span></span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="function">QApplication <span class="title">a</span><span class="params">(argc, argv)</span></span>;</span><br><span class="line"></span><br><span class="line">    QPixmap pix;</span><br><span class="line"></span><br><span class="line">    pix.loadFromData(....);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//MFC 代码  ......</span></span><br><span class="line">    <span class="comment">//          .....</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">//不需要调用a的事件循环,嗯,就是这么浪..</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="下载链接"><a href="#下载链接" class="headerlink" title="下载链接"></a>下载链接</h2><ul>
+<li>附件中的头文件链接在来一遍<a href="/attachment/导出Qt模块DLL给VC调用/include.zip">头文件</a></li>
+<li>对于最难缠的oracle数据来说,OCI版本的DLL见<a href="/attachment/导出Qt模块DLL给VC调用/oracle的oci驱动DLL.zip">oracle的oci驱动DLL</a></li>
+</ul>
+
+    </div>
+    
+        <div class="reward" ontouchstart>
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+                <span class="reward-type">
+                    <img class="alipay" src="/img/zhifubaocode.jpg"><b>支付宝打赏</b>
+                </span>
+            
+            
+                <span class="reward-type">
+                    <img class="wechat" src="/img/weixincode.jpg"><b>微信打赏</b>
+                </span>
+            
+        </div>
+    </div>
+    <p class="reward-tip">您的支持是我前行的动力!</p>
+</div>
+
+
+    
+    <div class="post-footer">
+        <div>
+            
+                转载声明：商业转载请联系作者获得授权,非商业转载请注明出处 © <a href target="_blank">spygg</a>
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+        <a href="/2020/02/23/Qt中的矩阵计算库eigen/" class="pre-post btn btn-default" title="Qt中的矩阵计算库eigen">
+            <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+            <span class="hidden-xs">Qt中的矩阵计算库eigen</span>
+        </a>
+    
+    
+        <a href="/2019/07/03/Qt帮助系统的制作/" class="next-post btn btn-default" title="Qt帮助系统的制作">
+            <span class="hidden-lg">下一篇</span>
+            <span class="hidden-xs">Qt帮助系统的制作</span><i class="fa fa-angle-right fa-fw"></i>
+        </a>
+    
+</div>
+
+<!-- google广告 -->
+<!-- 
+<div class="googleAd">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+</div>
+-->
+
+
+    <div id="comments">
+        
+	<link rel="stylesheet" href="https://cdn.bootcss.com/gitalk/1.5.0/gitalk.min.css">
+<script src="https://cdn.bootcss.com/gitalk/1.5.0/gitalk.min.js"></script>
+<script src="https://cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
+
+<div id="gitalk-container"></div>
+<script type="text/javascript">
+    var gitalk = new Gitalk({
+        // Gitalk配置
+        clientID: "6c31603d4df9afc8351b",
+        clientSecret: "c9e81f3ac1492550170fccb28c0f8bb16e3b7ed1",
+        repo: "blogcomment",
+        owner: "spygg",
+        admin: ["spygg"],
+        id: md5(window.location.pathname),
+        distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+</script>
+
+
+    </div>
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">文章目录</h3>
+        
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#起源"><span class="toc-text">起源</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#借鉴思路"><span class="toc-text">借鉴思路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实现步骤"><span class="toc-text">实现步骤</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#DLL编写"><span class="toc-text">DLL编写</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#头文件"><span class="toc-text">头文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Cpp文件"><span class="toc-text">Cpp文件</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#测试调用程序"><span class="toc-text">测试调用程序</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#经验"><span class="toc-text">经验</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PS"><span class="toc-text">PS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#更新"><span class="toc-text">更新</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#下载链接"><span class="toc-text">下载链接</span></a></li></ol>
+        
+    </div>
+</aside>
+
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+
+<a id="back-to-top" class="icon-btn hide">
+	<i class="fa fa-chevron-up"></i>
+</a>
+
+
+
+
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+        访问量:
+        <strong id="busuanzi_value_site_pv">
+            <i class="fa fa-spinner fa-spin"></i>
+        </strong>
+        &nbsp; | &nbsp;
+        访客数:
+        <strong id="busuanzi_value_site_uv">
+            <i class="fa fa-spinner fa-spin"></i>
+        </strong>
+    
+</div>
+
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy; 2019
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+    <script src="/assets/tagcanvas.min.js?rev=2.9"></script>
+    <script>
+        var tagOption = {
+            textColour: '#444', // 字体颜色
+            outlineMethod: 'block', // 选中模式
+            outlineColour: '#FFDAB9', // 选中模式的颜色
+            interval: 30 || 30, // 动画帧之间的时间间隔，值越大，转动幅度越大
+            textHeight: 13,
+            outlineRadius: 3,
+            freezeActive: true || '', // 选中的标签是否继续滚动
+            frontSelect: true || '', // 不选标签云后部的标签
+            initial: [0.1, -0.1],
+            depth: 0.5,
+            decel: 0.95,
+            maxSpeed: 0.03,
+            reverse: true || '', // 是否反向触发
+            fadeIn: 500, // 进入动画时间
+            wheelZoom: false || '' // 是否启用鼠标滚轮
+        }
+        TagCanvas.Start('tag-cloud-3d','',tagOption);
+    </script>
+
+
+
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<script src="/js/app.js?rev=@@hash"></script>
+
+</body>
+</html>
