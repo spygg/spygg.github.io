@@ -104,11 +104,11 @@
     
       <category term="Qt" scheme="https://spygg.github.io/tags/Qt/"/>
     
-      <category term="C" scheme="https://spygg.github.io/tags/C/"/>
-    
       <category term="VC 6.0" scheme="https://spygg.github.io/tags/VC-6-0/"/>
     
       <category term="MFC" scheme="https://spygg.github.io/tags/MFC/"/>
+    
+      <category term="C" scheme="https://spygg.github.io/tags/C/"/>
     
   </entry>
   
@@ -318,9 +318,9 @@
       <category term="音视频" scheme="https://spygg.github.io/categories/%E9%9F%B3%E8%A7%86%E9%A2%91/"/>
     
     
-      <category term="FFMPEG" scheme="https://spygg.github.io/tags/FFMPEG/"/>
-    
       <category term="C" scheme="https://spygg.github.io/tags/C/"/>
+    
+      <category term="FFMPEG" scheme="https://spygg.github.io/tags/FFMPEG/"/>
     
   </entry>
   
