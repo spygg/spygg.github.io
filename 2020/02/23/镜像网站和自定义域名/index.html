@@ -421,10 +421,17 @@ netfily 镜像注册账号Netlify 官网网站然后使用 github 账号登录..
 <ul>
 <li>方法二:<br>在码云中新建一个和你用户名一样的库,<strong>新建的时候选择导入库</strong> 导入的地址就是你 github 这个地址<br>如<a href="https://github.com/spygg/spygg.github.io" target="_blank" rel="noopener">https://github.com/spygg/spygg.github.io</a></li>
 </ul>
-<h2 id="域名解析"><a href="#域名解析" class="headerlink" title="域名解析"></a>域名解析</h2><ul>
+<h2 id="自定义域名解析"><a href="#自定义域名解析" class="headerlink" title="自定义域名解析"></a>自定义域名解析</h2><ul>
 <li>到阿里云购买一个域名</li>
 <li>在阿里控制台中添加域名解析</li>
 <li>在 github 工程设置中设置解析地址</li>
+<li><strong>不要</strong>设置 CNAME</li>
+<li>如果非要设置 CNAME<ol>
+<li>第一讲 CNAME 放到 source 根目录下</li>
+<li>内容只有一个(知乎上搜的是错误示范)<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">spygg</span><span class="selector-class">.github</span><span class="selector-class">.io</span>.</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
 </ul>
 
     </div>
@@ -509,7 +516,7 @@ netfily 镜像注册账号Netlify 官网网站然后使用 github 账号登录..
     <div class="widget">
         <h3 class="title">文章目录</h3>
         
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#netfily-镜像"><span class="toc-text">netfily 镜像</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#注册账号"><span class="toc-text">注册账号</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#创建网站"><span class="toc-text">创建网站</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#设置域名，绑定域名"><span class="toc-text">设置域名，绑定域名</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#参考教程"><span class="toc-text">参考教程</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#码云镜像"><span class="toc-text">码云镜像</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#域名解析"><span class="toc-text">域名解析</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#netfily-镜像"><span class="toc-text">netfily 镜像</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#注册账号"><span class="toc-text">注册账号</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#创建网站"><span class="toc-text">创建网站</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#设置域名，绑定域名"><span class="toc-text">设置域名，绑定域名</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#参考教程"><span class="toc-text">参考教程</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#码云镜像"><span class="toc-text">码云镜像</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#自定义域名解析"><span class="toc-text">自定义域名解析</span></a></li></ol>
         
     </div>
 </aside>
