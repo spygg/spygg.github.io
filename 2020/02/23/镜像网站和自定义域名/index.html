@@ -25,7 +25,7 @@
     <meta name="description" content="
 由于众所周知的原因,github 经常抽风,偶尔了解到 netlify 可以镜像本网站,于是特记录之….
 
-netfily 镜像注册账号Netlify 官网网站然后使用 github 账号登录...">
+多个 git 账号同步在 .ssh 文件夹下生成一个 config 文件配置好各个私...">
 
 
 
@@ -368,6 +368,8 @@ netfily 镜像注册账号Netlify 官网网站然后使用 github 账号登录..
         <blockquote>
 <p>由于众所周知的原因,github 经常抽风,偶尔了解到 netlify 可以镜像本网站,于是特记录之….</p>
 </blockquote>
+<h2 id="多个-git-账号同步"><a href="#多个-git-账号同步" class="headerlink" title="多个 git 账号同步"></a>多个 git 账号同步</h2><p>在 .ssh 文件夹下生成一个 config 文件配置好各个私钥.如下示例.</p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">Host</span> <span class="string">gitcafe.com</span></span><br><span class="line"><span class="attr">IdentityFile</span> <span class="string">~/.ssh/gitcafe</span></span><br><span class="line"></span><br><span class="line"><span class="attr">Host</span> <span class="string">github.com</span></span><br><span class="line"><span class="attr">IdentityFile</span> <span class="string">~/.ssh/id_rsa</span></span><br><span class="line"></span><br><span class="line"><span class="attr">Host</span> <span class="string">git.oschina.net</span></span><br><span class="line"><span class="attr">IdentityFile</span> <span class="string">~/.ssh/chitanda_osc</span></span><br></pre></td></tr></table></figure>
 <h2 id="netfily-镜像"><a href="#netfily-镜像" class="headerlink" title="netfily 镜像"></a>netfily 镜像</h2><h3 id="注册账号"><a href="#注册账号" class="headerlink" title="注册账号"></a>注册账号</h3><p><a href="https://app.netlify.com/" target="_blank" rel="noopener">Netlify 官网网站</a>然后使用 github 账号登录</p>
 <h3 id="创建网站"><a href="#创建网站" class="headerlink" title="创建网站"></a>创建网站</h3><ul>
 <li>点击 New site from Git 按钮</li>
@@ -513,7 +515,7 @@ netfily 镜像注册账号Netlify 官网网站然后使用 github 账号登录..
     <div class="widget">
         <h3 class="title">文章目录</h3>
         
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#netfily-镜像"><span class="toc-text">netfily 镜像</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#注册账号"><span class="toc-text">注册账号</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#创建网站"><span class="toc-text">创建网站</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#设置域名，绑定域名"><span class="toc-text">设置域名，绑定域名</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#参考教程"><span class="toc-text">参考教程</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#码云镜像"><span class="toc-text">码云镜像</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#自定义域名解析"><span class="toc-text">自定义域名解析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#注意事项"><span class="toc-text">注意事项</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#支持多个-gitalk-方法"><span class="toc-text">支持多个 gitalk 方法</span></a></li></ol></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#多个-git-账号同步"><span class="toc-text">多个 git 账号同步</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#netfily-镜像"><span class="toc-text">netfily 镜像</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#注册账号"><span class="toc-text">注册账号</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#创建网站"><span class="toc-text">创建网站</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#设置域名，绑定域名"><span class="toc-text">设置域名，绑定域名</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#参考教程"><span class="toc-text">参考教程</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#码云镜像"><span class="toc-text">码云镜像</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#自定义域名解析"><span class="toc-text">自定义域名解析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#注意事项"><span class="toc-text">注意事项</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#支持多个-gitalk-方法"><span class="toc-text">支持多个 gitalk 方法</span></a></li></ol></li></ol>
         
     </div>
 </aside>
