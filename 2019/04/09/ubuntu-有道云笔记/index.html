@@ -472,16 +472,31 @@
 
 <div id="gitalk-container"></div>
 <script type="text/javascript">
-    var gitalk = new Gitalk({
-        // Gitalk配置
-        clientID: "6c31603d4df9afc8351b",
-        clientSecret: "c9e81f3ac1492550170fccb28c0f8bb16e3b7ed1",
-        repo: "blogcomment",
-        owner: "spygg",
-        admin: ["spygg"],
-        id: md5(window.location.pathname),
-        distractionFreeMode: true
-    });
+    var gitalk;
+    if(window.location.host === 'spygg.gitee.io'){
+        gitalk = new Gitalk({
+            // Gitalk配置
+            clientID: "2e6379556d0bea565323",
+            clientSecret: "2feb2ad5f1301351c79e1d0e2b1a177bb0661ed7",
+            repo: "blogcomment",
+            owner: "spygg",
+            admin: ["spygg"],
+            id: md5(window.location.pathname),
+            distractionFreeMode: true
+        });
+    }
+    else{
+        gitalk = new Gitalk({
+            // Gitalk配置
+            clientID: "6c31603d4df9afc8351b",
+            clientSecret: "c9e81f3ac1492550170fccb28c0f8bb16e3b7ed1",
+            repo: "blogcomment",
+            owner: "spygg",
+            admin: ["spygg"],
+            id: md5(window.location.pathname),
+            distractionFreeMode: true
+        });
+    }
     gitalk.render('gitalk-container');
 </script>
 
