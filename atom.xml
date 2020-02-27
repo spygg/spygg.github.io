@@ -5,9 +5,9 @@
   <subtitle>技术引领生活</subtitle>
   <link href="/atom.xml" rel="self"/>
   
-  <link href="https://spygg.github.io/"/>
+  <link href="https://liusblog.top/"/>
   <updated>2020-02-27T11:11:27.003Z</updated>
-  <id>https://spygg.github.io/</id>
+  <id>https://liusblog.top/</id>
   
   <author>
     <name>spygg</name>
@@ -18,8 +18,8 @@
   
   <entry>
     <title>镜像网站和自定义域名</title>
-    <link href="https://spygg.github.io/2020/02/23/%E9%95%9C%E5%83%8F%E7%BD%91%E7%AB%99%E5%92%8C%E8%87%AA%E5%AE%9A%E4%B9%89%E5%9F%9F%E5%90%8D/"/>
-    <id>https://spygg.github.io/2020/02/23/镜像网站和自定义域名/</id>
+    <link href="https://liusblog.top/2020/02/23/%E9%95%9C%E5%83%8F%E7%BD%91%E7%AB%99%E5%92%8C%E8%87%AA%E5%AE%9A%E4%B9%89%E5%9F%9F%E5%90%8D/"/>
+    <id>https://liusblog.top/2020/02/23/镜像网站和自定义域名/</id>
     <published>2020-02-23T14:42:28.000Z</published>
     <updated>2020-02-27T11:11:27.003Z</updated>
     
@@ -37,21 +37,21 @@
     
     </summary>
     
-      <category term="杂谈" scheme="https://spygg.github.io/categories/%E6%9D%82%E8%B0%88/"/>
+      <category term="杂谈" scheme="https://liusblog.top/categories/%E6%9D%82%E8%B0%88/"/>
     
     
-      <category term="netlify" scheme="https://spygg.github.io/tags/netlify/"/>
+      <category term="netlify" scheme="https://liusblog.top/tags/netlify/"/>
     
-      <category term="镜像" scheme="https://spygg.github.io/tags/%E9%95%9C%E5%83%8F/"/>
+      <category term="镜像" scheme="https://liusblog.top/tags/%E9%95%9C%E5%83%8F/"/>
     
-      <category term="加速" scheme="https://spygg.github.io/tags/%E5%8A%A0%E9%80%9F/"/>
+      <category term="加速" scheme="https://liusblog.top/tags/%E5%8A%A0%E9%80%9F/"/>
     
   </entry>
   
   <entry>
     <title>Qt中的矩阵计算库eigen</title>
-    <link href="https://spygg.github.io/2020/02/23/Qt%E4%B8%AD%E7%9A%84%E7%9F%A9%E9%98%B5%E8%AE%A1%E7%AE%97%E5%BA%93eigen/"/>
-    <id>https://spygg.github.io/2020/02/23/Qt中的矩阵计算库eigen/</id>
+    <link href="https://liusblog.top/2020/02/23/Qt%E4%B8%AD%E7%9A%84%E7%9F%A9%E9%98%B5%E8%AE%A1%E7%AE%97%E5%BA%93eigen/"/>
+    <id>https://liusblog.top/2020/02/23/Qt中的矩阵计算库eigen/</id>
     <published>2020-02-23T09:39:16.000Z</published>
     <updated>2020-02-23T10:15:28.898Z</updated>
     
@@ -69,19 +69,19 @@
     
     </summary>
     
-      <category term="Qt" scheme="https://spygg.github.io/categories/Qt/"/>
+      <category term="Qt" scheme="https://liusblog.top/categories/Qt/"/>
     
     
-      <category term="Qt" scheme="https://spygg.github.io/tags/Qt/"/>
+      <category term="Qt" scheme="https://liusblog.top/tags/Qt/"/>
     
-      <category term="矩阵" scheme="https://spygg.github.io/tags/%E7%9F%A9%E9%98%B5/"/>
+      <category term="矩阵" scheme="https://liusblog.top/tags/%E7%9F%A9%E9%98%B5/"/>
     
   </entry>
   
   <entry>
     <title>导出Qt模块DLL给VC调用</title>
-    <link href="https://spygg.github.io/2019/10/22/%E5%AF%BC%E5%87%BAQt%E6%A8%A1%E5%9D%97DLL%E7%BB%99VC%E8%B0%83%E7%94%A8/"/>
-    <id>https://spygg.github.io/2019/10/22/导出Qt模块DLL给VC调用/</id>
+    <link href="https://liusblog.top/2019/10/22/%E5%AF%BC%E5%87%BAQt%E6%A8%A1%E5%9D%97DLL%E7%BB%99VC%E8%B0%83%E7%94%A8/"/>
+    <id>https://liusblog.top/2019/10/22/导出Qt模块DLL给VC调用/</id>
     <published>2019-10-22T10:39:38.000Z</published>
     <updated>2020-02-23T05:43:27.959Z</updated>
     
@@ -99,23 +99,23 @@
     
     </summary>
     
-      <category term="Qt" scheme="https://spygg.github.io/categories/Qt/"/>
+      <category term="Qt" scheme="https://liusblog.top/categories/Qt/"/>
     
     
-      <category term="Qt" scheme="https://spygg.github.io/tags/Qt/"/>
+      <category term="Qt" scheme="https://liusblog.top/tags/Qt/"/>
     
-      <category term="C" scheme="https://spygg.github.io/tags/C/"/>
+      <category term="C" scheme="https://liusblog.top/tags/C/"/>
     
-      <category term="VC 6.0" scheme="https://spygg.github.io/tags/VC-6-0/"/>
+      <category term="VC 6.0" scheme="https://liusblog.top/tags/VC-6-0/"/>
     
-      <category term="MFC" scheme="https://spygg.github.io/tags/MFC/"/>
+      <category term="MFC" scheme="https://liusblog.top/tags/MFC/"/>
     
   </entry>
   
   <entry>
     <title>Qt帮助系统的制作</title>
-    <link href="https://spygg.github.io/2019/07/03/Qt%E5%B8%AE%E5%8A%A9%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%88%B6%E4%BD%9C/"/>
-    <id>https://spygg.github.io/2019/07/03/Qt帮助系统的制作/</id>
+    <link href="https://liusblog.top/2019/07/03/Qt%E5%B8%AE%E5%8A%A9%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%88%B6%E4%BD%9C/"/>
+    <id>https://liusblog.top/2019/07/03/Qt帮助系统的制作/</id>
     <published>2019-07-03T14:58:25.000Z</published>
     <updated>2020-02-23T05:43:27.956Z</updated>
     
@@ -133,19 +133,19 @@
     
     </summary>
     
-      <category term="Qt" scheme="https://spygg.github.io/categories/Qt/"/>
+      <category term="Qt" scheme="https://liusblog.top/categories/Qt/"/>
     
     
-      <category term="帮助系统" scheme="https://spygg.github.io/tags/%E5%B8%AE%E5%8A%A9%E7%B3%BB%E7%BB%9F/"/>
+      <category term="帮助系统" scheme="https://liusblog.top/tags/%E5%B8%AE%E5%8A%A9%E7%B3%BB%E7%BB%9F/"/>
     
-      <category term="QTextBrowser" scheme="https://spygg.github.io/tags/QTextBrowser/"/>
+      <category term="QTextBrowser" scheme="https://liusblog.top/tags/QTextBrowser/"/>
     
   </entry>
   
   <entry>
     <title>Ubuntu环境搭建Qt进行Android开发</title>
-    <link href="https://spygg.github.io/2019/06/28/Ubuntu%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BAQt%E8%BF%9B%E8%A1%8CAndroid%E5%BC%80%E5%8F%91/"/>
-    <id>https://spygg.github.io/2019/06/28/Ubuntu环境搭建Qt进行Android开发/</id>
+    <link href="https://liusblog.top/2019/06/28/Ubuntu%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BAQt%E8%BF%9B%E8%A1%8CAndroid%E5%BC%80%E5%8F%91/"/>
+    <id>https://liusblog.top/2019/06/28/Ubuntu环境搭建Qt进行Android开发/</id>
     <published>2019-06-27T16:07:15.000Z</published>
     <updated>2020-02-23T05:43:27.957Z</updated>
     
@@ -163,21 +163,21 @@
     
     </summary>
     
-      <category term="Qt" scheme="https://spygg.github.io/categories/Qt/"/>
+      <category term="Qt" scheme="https://liusblog.top/categories/Qt/"/>
     
     
-      <category term="软件使用" scheme="https://spygg.github.io/tags/%E8%BD%AF%E4%BB%B6%E4%BD%BF%E7%94%A8/"/>
+      <category term="软件使用" scheme="https://liusblog.top/tags/%E8%BD%AF%E4%BB%B6%E4%BD%BF%E7%94%A8/"/>
     
-      <category term="Android" scheme="https://spygg.github.io/tags/Android/"/>
+      <category term="Android" scheme="https://liusblog.top/tags/Android/"/>
     
-      <category term="Ubuntu" scheme="https://spygg.github.io/tags/Ubuntu/"/>
+      <category term="Ubuntu" scheme="https://liusblog.top/tags/Ubuntu/"/>
     
   </entry>
   
   <entry>
     <title>Qt单实例运行</title>
-    <link href="https://spygg.github.io/2019/06/25/Qt%E5%8D%95%E5%AE%9E%E4%BE%8B%E8%BF%90%E8%A1%8C/"/>
-    <id>https://spygg.github.io/2019/06/25/Qt单实例运行/</id>
+    <link href="https://liusblog.top/2019/06/25/Qt%E5%8D%95%E5%AE%9E%E4%BE%8B%E8%BF%90%E8%A1%8C/"/>
+    <id>https://liusblog.top/2019/06/25/Qt单实例运行/</id>
     <published>2019-06-25T15:05:23.000Z</published>
     <updated>2020-02-23T05:43:27.955Z</updated>
     
@@ -195,21 +195,21 @@
     
     </summary>
     
-      <category term="Qt" scheme="https://spygg.github.io/categories/Qt/"/>
+      <category term="Qt" scheme="https://liusblog.top/categories/Qt/"/>
     
     
-      <category term="单实例" scheme="https://spygg.github.io/tags/%E5%8D%95%E5%AE%9E%E4%BE%8B/"/>
+      <category term="单实例" scheme="https://liusblog.top/tags/%E5%8D%95%E5%AE%9E%E4%BE%8B/"/>
     
-      <category term="QLocalServer" scheme="https://spygg.github.io/tags/QLocalServer/"/>
+      <category term="QLocalServer" scheme="https://liusblog.top/tags/QLocalServer/"/>
     
-      <category term="Designer" scheme="https://spygg.github.io/tags/Designer/"/>
+      <category term="Designer" scheme="https://liusblog.top/tags/Designer/"/>
     
   </entry>
   
   <entry>
     <title>跟随Designer源码学Qt</title>
-    <link href="https://spygg.github.io/2019/06/24/%E8%B7%9F%E9%9A%8FDesigner%E6%BA%90%E7%A0%81%E5%AD%A6Qt/"/>
-    <id>https://spygg.github.io/2019/06/24/跟随Designer源码学Qt/</id>
+    <link href="https://liusblog.top/2019/06/24/%E8%B7%9F%E9%9A%8FDesigner%E6%BA%90%E7%A0%81%E5%AD%A6Qt/"/>
+    <id>https://liusblog.top/2019/06/24/跟随Designer源码学Qt/</id>
     <published>2019-06-24T14:05:06.000Z</published>
     <updated>2020-02-23T05:43:27.960Z</updated>
     
@@ -225,21 +225,21 @@
     
     </summary>
     
-      <category term="Qt" scheme="https://spygg.github.io/categories/Qt/"/>
+      <category term="Qt" scheme="https://liusblog.top/categories/Qt/"/>
     
     
-      <category term="Designer" scheme="https://spygg.github.io/tags/Designer/"/>
+      <category term="Designer" scheme="https://liusblog.top/tags/Designer/"/>
     
-      <category term="开源" scheme="https://spygg.github.io/tags/%E5%BC%80%E6%BA%90/"/>
+      <category term="开源" scheme="https://liusblog.top/tags/%E5%BC%80%E6%BA%90/"/>
     
-      <category term="源码" scheme="https://spygg.github.io/tags/%E6%BA%90%E7%A0%81/"/>
+      <category term="源码" scheme="https://liusblog.top/tags/%E6%BA%90%E7%A0%81/"/>
     
   </entry>
   
   <entry>
     <title>分开旅行</title>
-    <link href="https://spygg.github.io/2019/06/21/%E5%88%86%E5%BC%80%E6%97%85%E8%A1%8C/"/>
-    <id>https://spygg.github.io/2019/06/21/分开旅行/</id>
+    <link href="https://liusblog.top/2019/06/21/%E5%88%86%E5%BC%80%E6%97%85%E8%A1%8C/"/>
+    <id>https://liusblog.top/2019/06/21/分开旅行/</id>
     <published>2019-06-21T09:53:37.000Z</published>
     <updated>2020-02-23T05:43:27.958Z</updated>
     
@@ -257,17 +257,17 @@
     
     </summary>
     
-      <category term="杂谈" scheme="https://spygg.github.io/categories/%E6%9D%82%E8%B0%88/"/>
+      <category term="杂谈" scheme="https://liusblog.top/categories/%E6%9D%82%E8%B0%88/"/>
     
     
-      <category term="心情" scheme="https://spygg.github.io/tags/%E5%BF%83%E6%83%85/"/>
+      <category term="心情" scheme="https://liusblog.top/tags/%E5%BF%83%E6%83%85/"/>
     
   </entry>
   
   <entry>
     <title>Qt数据库removeDatabase注意事项</title>
-    <link href="https://spygg.github.io/2019/06/20/Qt%E6%95%B0%E6%8D%AE%E5%BA%93removeDatabase%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9/"/>
-    <id>https://spygg.github.io/2019/06/20/Qt数据库removeDatabase注意事项/</id>
+    <link href="https://liusblog.top/2019/06/20/Qt%E6%95%B0%E6%8D%AE%E5%BA%93removeDatabase%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9/"/>
+    <id>https://liusblog.top/2019/06/20/Qt数据库removeDatabase注意事项/</id>
     <published>2019-06-20T14:32:35.000Z</published>
     <updated>2020-02-23T05:43:27.956Z</updated>
     
@@ -285,19 +285,19 @@
     
     </summary>
     
-      <category term="Qt" scheme="https://spygg.github.io/categories/Qt/"/>
+      <category term="Qt" scheme="https://liusblog.top/categories/Qt/"/>
     
     
-      <category term="QWidget" scheme="https://spygg.github.io/tags/QWidget/"/>
+      <category term="QWidget" scheme="https://liusblog.top/tags/QWidget/"/>
     
-      <category term="QSqlDatabasePrivate" scheme="https://spygg.github.io/tags/QSqlDatabasePrivate/"/>
+      <category term="QSqlDatabasePrivate" scheme="https://liusblog.top/tags/QSqlDatabasePrivate/"/>
     
   </entry>
   
   <entry>
     <title>ubuntu编译FFMPEG和ffplay</title>
-    <link href="https://spygg.github.io/2019/05/21/ubuntu%E7%BC%96%E8%AF%91FFMPEG%E5%92%8Cffplay/"/>
-    <id>https://spygg.github.io/2019/05/21/ubuntu编译FFMPEG和ffplay/</id>
+    <link href="https://liusblog.top/2019/05/21/ubuntu%E7%BC%96%E8%AF%91FFMPEG%E5%92%8Cffplay/"/>
+    <id>https://liusblog.top/2019/05/21/ubuntu编译FFMPEG和ffplay/</id>
     <published>2019-05-21T12:44:53.000Z</published>
     <updated>2020-02-23T05:43:27.958Z</updated>
     
@@ -315,19 +315,19 @@
     
     </summary>
     
-      <category term="音视频" scheme="https://spygg.github.io/categories/%E9%9F%B3%E8%A7%86%E9%A2%91/"/>
+      <category term="音视频" scheme="https://liusblog.top/categories/%E9%9F%B3%E8%A7%86%E9%A2%91/"/>
     
     
-      <category term="FFMPEG" scheme="https://spygg.github.io/tags/FFMPEG/"/>
+      <category term="FFMPEG" scheme="https://liusblog.top/tags/FFMPEG/"/>
     
-      <category term="C" scheme="https://spygg.github.io/tags/C/"/>
+      <category term="C" scheme="https://liusblog.top/tags/C/"/>
     
   </entry>
   
   <entry>
     <title>发现一个学习英语的软件</title>
-    <link href="https://spygg.github.io/2019/04/27/%E5%8F%91%E7%8E%B0%E4%B8%80%E4%B8%AA%E5%AD%A6%E4%B9%A0%E8%8B%B1%E8%AF%AD%E7%9A%84%E8%BD%AF%E4%BB%B6/"/>
-    <id>https://spygg.github.io/2019/04/27/发现一个学习英语的软件/</id>
+    <link href="https://liusblog.top/2019/04/27/%E5%8F%91%E7%8E%B0%E4%B8%80%E4%B8%AA%E5%AD%A6%E4%B9%A0%E8%8B%B1%E8%AF%AD%E7%9A%84%E8%BD%AF%E4%BB%B6/"/>
+    <id>https://liusblog.top/2019/04/27/发现一个学习英语的软件/</id>
     <published>2019-04-27T12:36:26.000Z</published>
     <updated>2020-02-23T05:43:27.958Z</updated>
     
@@ -345,19 +345,19 @@
     
     </summary>
     
-      <category term="杂谈" scheme="https://spygg.github.io/categories/%E6%9D%82%E8%B0%88/"/>
+      <category term="杂谈" scheme="https://liusblog.top/categories/%E6%9D%82%E8%B0%88/"/>
     
     
-      <category term="软件" scheme="https://spygg.github.io/tags/%E8%BD%AF%E4%BB%B6/"/>
+      <category term="软件" scheme="https://liusblog.top/tags/%E8%BD%AF%E4%BB%B6/"/>
     
-      <category term="英语" scheme="https://spygg.github.io/tags/%E8%8B%B1%E8%AF%AD/"/>
+      <category term="英语" scheme="https://liusblog.top/tags/%E8%8B%B1%E8%AF%AD/"/>
     
   </entry>
   
   <entry>
     <title>linux环境pip3镜像配置</title>
-    <link href="https://spygg.github.io/2019/04/25/linux%E7%8E%AF%E5%A2%83pip3%E9%85%8D%E7%BD%AE/"/>
-    <id>https://spygg.github.io/2019/04/25/linux环境pip3配置/</id>
+    <link href="https://liusblog.top/2019/04/25/linux%E7%8E%AF%E5%A2%83pip3%E9%85%8D%E7%BD%AE/"/>
+    <id>https://liusblog.top/2019/04/25/linux环境pip3配置/</id>
     <published>2019-04-25T14:12:49.000Z</published>
     <updated>2020-02-23T05:43:27.957Z</updated>
     
@@ -375,21 +375,21 @@
     
     </summary>
     
-      <category term="Linux" scheme="https://spygg.github.io/categories/Linux/"/>
+      <category term="Linux" scheme="https://liusblog.top/categories/Linux/"/>
     
     
-      <category term="软件使用" scheme="https://spygg.github.io/tags/%E8%BD%AF%E4%BB%B6%E4%BD%BF%E7%94%A8/"/>
+      <category term="软件使用" scheme="https://liusblog.top/tags/%E8%BD%AF%E4%BB%B6%E4%BD%BF%E7%94%A8/"/>
     
-      <category term="python" scheme="https://spygg.github.io/tags/python/"/>
+      <category term="python" scheme="https://liusblog.top/tags/python/"/>
     
-      <category term="pip3" scheme="https://spygg.github.io/tags/pip3/"/>
+      <category term="pip3" scheme="https://liusblog.top/tags/pip3/"/>
     
   </entry>
   
   <entry>
     <title>给页面所有的图片加上全屏预览功能</title>
-    <link href="https://spygg.github.io/2019/04/21/%E7%BB%99%E9%A1%B5%E9%9D%A2%E6%89%80%E6%9C%89%E7%9A%84%E5%9B%BE%E7%89%87%E5%8A%A0%E4%B8%8A%E5%85%A8%E5%B1%8F%E9%A2%84%E8%A7%88%E5%8A%9F%E8%83%BD/"/>
-    <id>https://spygg.github.io/2019/04/21/给页面所有的图片加上全屏预览功能/</id>
+    <link href="https://liusblog.top/2019/04/21/%E7%BB%99%E9%A1%B5%E9%9D%A2%E6%89%80%E6%9C%89%E7%9A%84%E5%9B%BE%E7%89%87%E5%8A%A0%E4%B8%8A%E5%85%A8%E5%B1%8F%E9%A2%84%E8%A7%88%E5%8A%9F%E8%83%BD/"/>
+    <id>https://liusblog.top/2019/04/21/给页面所有的图片加上全屏预览功能/</id>
     <published>2019-04-21T14:04:52.000Z</published>
     <updated>2020-02-23T05:43:27.959Z</updated>
     
@@ -407,19 +407,19 @@
     
     </summary>
     
-      <category term="杂谈" scheme="https://spygg.github.io/categories/%E6%9D%82%E8%B0%88/"/>
+      <category term="杂谈" scheme="https://liusblog.top/categories/%E6%9D%82%E8%B0%88/"/>
     
     
-      <category term="html" scheme="https://spygg.github.io/tags/html/"/>
+      <category term="html" scheme="https://liusblog.top/tags/html/"/>
     
-      <category term="javascipt" scheme="https://spygg.github.io/tags/javascipt/"/>
+      <category term="javascipt" scheme="https://liusblog.top/tags/javascipt/"/>
     
   </entry>
   
   <entry>
     <title>github傻瓜的食用方法</title>
-    <link href="https://spygg.github.io/2019/04/15/github%E5%82%BB%E7%93%9C%E7%9A%84%E9%A3%9F%E7%94%A8%E6%96%B9%E6%B3%95/"/>
-    <id>https://spygg.github.io/2019/04/15/github傻瓜的食用方法/</id>
+    <link href="https://liusblog.top/2019/04/15/github%E5%82%BB%E7%93%9C%E7%9A%84%E9%A3%9F%E7%94%A8%E6%96%B9%E6%B3%95/"/>
+    <id>https://liusblog.top/2019/04/15/github傻瓜的食用方法/</id>
     <published>2019-04-15T15:06:39.000Z</published>
     <updated>2020-02-23T05:43:27.957Z</updated>
     
@@ -437,19 +437,19 @@
     
     </summary>
     
-      <category term="杂谈" scheme="https://spygg.github.io/categories/%E6%9D%82%E8%B0%88/"/>
+      <category term="杂谈" scheme="https://liusblog.top/categories/%E6%9D%82%E8%B0%88/"/>
     
     
-      <category term="git" scheme="https://spygg.github.io/tags/git/"/>
+      <category term="git" scheme="https://liusblog.top/tags/git/"/>
     
-      <category term="github" scheme="https://spygg.github.io/tags/github/"/>
+      <category term="github" scheme="https://liusblog.top/tags/github/"/>
     
   </entry>
   
   <entry>
     <title>Ubuntu触摸板调教</title>
-    <link href="https://spygg.github.io/2019/04/14/Ubuntu%E8%A7%A6%E6%91%B8%E6%9D%BF%E8%B0%83%E6%95%99/"/>
-    <id>https://spygg.github.io/2019/04/14/Ubuntu触摸板调教/</id>
+    <link href="https://liusblog.top/2019/04/14/Ubuntu%E8%A7%A6%E6%91%B8%E6%9D%BF%E8%B0%83%E6%95%99/"/>
+    <id>https://liusblog.top/2019/04/14/Ubuntu触摸板调教/</id>
     <published>2019-04-14T12:22:49.000Z</published>
     <updated>2020-02-23T05:43:27.957Z</updated>
     
@@ -467,17 +467,17 @@
     
     </summary>
     
-      <category term="Linux" scheme="https://spygg.github.io/categories/Linux/"/>
+      <category term="Linux" scheme="https://liusblog.top/categories/Linux/"/>
     
     
-      <category term="软件使用" scheme="https://spygg.github.io/tags/%E8%BD%AF%E4%BB%B6%E4%BD%BF%E7%94%A8/"/>
+      <category term="软件使用" scheme="https://liusblog.top/tags/%E8%BD%AF%E4%BB%B6%E4%BD%BF%E7%94%A8/"/>
     
   </entry>
   
   <entry>
     <title>Linux下Qt工程文件打开方式关联</title>
-    <link href="https://spygg.github.io/2019/04/13/Linux%E4%B8%8BQt%E5%B7%A5%E7%A8%8B%E6%96%87%E4%BB%B6%E6%89%93%E5%BC%80%E6%96%B9%E5%BC%8F%E5%85%B3%E8%81%94/"/>
-    <id>https://spygg.github.io/2019/04/13/Linux下Qt工程文件打开方式关联/</id>
+    <link href="https://liusblog.top/2019/04/13/Linux%E4%B8%8BQt%E5%B7%A5%E7%A8%8B%E6%96%87%E4%BB%B6%E6%89%93%E5%BC%80%E6%96%B9%E5%BC%8F%E5%85%B3%E8%81%94/"/>
+    <id>https://liusblog.top/2019/04/13/Linux下Qt工程文件打开方式关联/</id>
     <published>2019-04-13T13:53:39.000Z</published>
     <updated>2020-02-23T05:43:27.955Z</updated>
     
@@ -494,19 +494,19 @@
     
     </summary>
     
-      <category term="Linux" scheme="https://spygg.github.io/categories/Linux/"/>
+      <category term="Linux" scheme="https://liusblog.top/categories/Linux/"/>
     
     
-      <category term="Qt" scheme="https://spygg.github.io/tags/Qt/"/>
+      <category term="Qt" scheme="https://liusblog.top/tags/Qt/"/>
     
-      <category term="软件使用" scheme="https://spygg.github.io/tags/%E8%BD%AF%E4%BB%B6%E4%BD%BF%E7%94%A8/"/>
+      <category term="软件使用" scheme="https://liusblog.top/tags/%E8%BD%AF%E4%BB%B6%E4%BD%BF%E7%94%A8/"/>
     
   </entry>
   
   <entry>
     <title>基于snippet主题在github上搭建博客</title>
-    <link href="https://spygg.github.io/2019/04/13/%E5%9F%BA%E4%BA%8Esnippet%E4%B8%BB%E9%A2%98%E5%9C%A8github%E4%B8%8A%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/"/>
-    <id>https://spygg.github.io/2019/04/13/基于snippet主题在github上搭建博客/</id>
+    <link href="https://liusblog.top/2019/04/13/%E5%9F%BA%E4%BA%8Esnippet%E4%B8%BB%E9%A2%98%E5%9C%A8github%E4%B8%8A%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/"/>
+    <id>https://liusblog.top/2019/04/13/基于snippet主题在github上搭建博客/</id>
     <published>2019-04-13T13:16:41.000Z</published>
     <updated>2020-02-23T10:38:07.383Z</updated>
     
@@ -524,21 +524,21 @@
     
     </summary>
     
-      <category term="杂谈" scheme="https://spygg.github.io/categories/%E6%9D%82%E8%B0%88/"/>
+      <category term="杂谈" scheme="https://liusblog.top/categories/%E6%9D%82%E8%B0%88/"/>
     
     
-      <category term="Gitpage" scheme="https://spygg.github.io/tags/Gitpage/"/>
+      <category term="Gitpage" scheme="https://liusblog.top/tags/Gitpage/"/>
     
-      <category term="Hexo" scheme="https://spygg.github.io/tags/Hexo/"/>
+      <category term="Hexo" scheme="https://liusblog.top/tags/Hexo/"/>
     
-      <category term="snippet" scheme="https://spygg.github.io/tags/snippet/"/>
+      <category term="snippet" scheme="https://liusblog.top/tags/snippet/"/>
     
   </entry>
   
   <entry>
     <title>CSDN博客转高清PDF</title>
-    <link href="https://spygg.github.io/2019/04/12/CSDN%E5%8D%9A%E5%AE%A2%E8%BD%AC%E9%AB%98%E6%B8%85PDF/"/>
-    <id>https://spygg.github.io/2019/04/12/CSDN博客转高清PDF/</id>
+    <link href="https://liusblog.top/2019/04/12/CSDN%E5%8D%9A%E5%AE%A2%E8%BD%AC%E9%AB%98%E6%B8%85PDF/"/>
+    <id>https://liusblog.top/2019/04/12/CSDN博客转高清PDF/</id>
     <published>2019-04-12T14:06:14.000Z</published>
     <updated>2020-02-23T05:43:27.954Z</updated>
     
@@ -552,17 +552,17 @@
     
     </summary>
     
-      <category term="Python" scheme="https://spygg.github.io/categories/Python/"/>
+      <category term="Python" scheme="https://liusblog.top/categories/Python/"/>
     
     
-      <category term="爬虫" scheme="https://spygg.github.io/tags/%E7%88%AC%E8%99%AB/"/>
+      <category term="爬虫" scheme="https://liusblog.top/tags/%E7%88%AC%E8%99%AB/"/>
     
   </entry>
   
   <entry>
     <title>Qt版本ubuntu有道云笔记</title>
-    <link href="https://spygg.github.io/2019/04/09/ubuntu-%E6%9C%89%E9%81%93%E4%BA%91%E7%AC%94%E8%AE%B0/"/>
-    <id>https://spygg.github.io/2019/04/09/ubuntu-有道云笔记/</id>
+    <link href="https://liusblog.top/2019/04/09/ubuntu-%E6%9C%89%E9%81%93%E4%BA%91%E7%AC%94%E8%AE%B0/"/>
+    <id>https://liusblog.top/2019/04/09/ubuntu-有道云笔记/</id>
     <published>2019-04-09T14:03:45.000Z</published>
     <updated>2020-02-23T05:43:27.957Z</updated>
     
@@ -580,19 +580,19 @@
     
     </summary>
     
-      <category term="Qt" scheme="https://spygg.github.io/categories/Qt/"/>
+      <category term="Qt" scheme="https://liusblog.top/categories/Qt/"/>
     
     
-      <category term="QWidget" scheme="https://spygg.github.io/tags/QWidget/"/>
+      <category term="QWidget" scheme="https://liusblog.top/tags/QWidget/"/>
     
-      <category term="QWebEngineView" scheme="https://spygg.github.io/tags/QWebEngineView/"/>
+      <category term="QWebEngineView" scheme="https://liusblog.top/tags/QWebEngineView/"/>
     
   </entry>
   
   <entry>
     <title>基于yilia主题在github上搭建博客</title>
-    <link href="https://spygg.github.io/2019/04/07/%E5%9C%A8github%E4%B8%8A%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/"/>
-    <id>https://spygg.github.io/2019/04/07/在github上搭建博客/</id>
+    <link href="https://liusblog.top/2019/04/07/%E5%9C%A8github%E4%B8%8A%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/"/>
+    <id>https://liusblog.top/2019/04/07/在github上搭建博客/</id>
     <published>2019-04-07T11:40:47.000Z</published>
     <updated>2020-02-23T05:43:27.958Z</updated>
     
@@ -606,12 +606,12 @@
     
     </summary>
     
-      <category term="杂谈" scheme="https://spygg.github.io/categories/%E6%9D%82%E8%B0%88/"/>
+      <category term="杂谈" scheme="https://liusblog.top/categories/%E6%9D%82%E8%B0%88/"/>
     
     
-      <category term="Gitpage" scheme="https://spygg.github.io/tags/Gitpage/"/>
+      <category term="Gitpage" scheme="https://liusblog.top/tags/Gitpage/"/>
     
-      <category term="Hexo" scheme="https://spygg.github.io/tags/Hexo/"/>
+      <category term="Hexo" scheme="https://liusblog.top/tags/Hexo/"/>
     
   </entry>
   
