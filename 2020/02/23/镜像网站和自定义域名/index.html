@@ -43,15 +43,15 @@
     <link rel="alternate" href="/atom.xml" title="间客六十" type="application/atom+xml">
 
 
-    <link rel="icon" href="/favicon.ico">
+    <link rel="icon" href="https://spygg.gitee.io/favicon.ico">
 
     
 
 
 
-<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7">
-<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.5.0">
-<link rel="stylesheet" href="/css/style.css?rev=@@hash">
+<link rel="stylesheet" href="https://cdn.bootcss.com/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://spygg.gitee.io/css/style.css">
 
 
 
@@ -241,10 +241,11 @@
 <![endif]-->
 
 <body>
-    <header class="main-header" style="background-image:url(/img/banner.jpg)">
+    <header class="main-header" style="background-image:url(https://spygg.gitee.io/img/banner.jpg)">
     <div class="main-header-box">
         <a class="header-avatar" href="/about" title="spygg">
-            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+            <!--<img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">-->
+            <img src="https://spygg.gitee.io/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
         </a>
         <div class="branding">
         	<!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
@@ -417,6 +418,11 @@
 <li>修改 gitalk.ejs 文件,主要是判断域名来加载不同的 oauth</li>
 </ol>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span> <span class="attr">href</span>=<span class="string">"https://cdn.bootcss.com/gitalk/1.6.0/gitalk.min.css"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"https://cdn.bootcss.com/gitalk/1.6.0/gitalk.min.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"https://cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"gitalk-container"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span></span><br><span class="line"><span class="actionscript">    <span class="keyword">var</span> gitalk;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">if</span>(<span class="built_in">window</span>.location.host === <span class="string">'spygg.gitee.io'</span>)&#123;</span></span><br><span class="line"><span class="actionscript">        gitalk = <span class="keyword">new</span> Gitalk(&#123;</span></span><br><span class="line"><span class="actionscript">            <span class="comment">// Gitalk配置</span></span></span><br><span class="line"><span class="actionscript">            clientID: <span class="string">"&lt;%= theme.gitalkgitee.clientID%&gt;"</span>,</span></span><br><span class="line"><span class="actionscript">            clientSecret: <span class="string">"&lt;%= theme.gitalkgitee.clientSecret%&gt;"</span>,</span></span><br><span class="line"><span class="actionscript">            repo: <span class="string">"&lt;%= theme.gitalkgitee.repo%&gt;"</span>,</span></span><br><span class="line"><span class="actionscript">            owner: <span class="string">"&lt;%= theme.gitalkgitee.owner%&gt;"</span>,</span></span><br><span class="line"><span class="actionscript">            admin: [<span class="string">"&lt;%= theme.gitalkgitee.admin%&gt;"</span>],</span></span><br><span class="line"><span class="handlebars"><span class="xml">            id: md5(<span class="tag">&lt;<span class="name">%=</span> <span class="attr">theme.gitalkgitee.id</span>%&gt;</span>),</span></span></span><br><span class="line"><span class="actionscript">            distractionFreeMode: <span class="literal">true</span></span></span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line"><span class="actionscript">    <span class="keyword">else</span>&#123;</span></span><br><span class="line"><span class="actionscript">        gitalk = <span class="keyword">new</span> Gitalk(&#123;</span></span><br><span class="line"><span class="actionscript">            <span class="comment">// Gitalk配置</span></span></span><br><span class="line"><span class="actionscript">            clientID: <span class="string">"&lt;%= theme.gitalk.clientID%&gt;"</span>,</span></span><br><span class="line"><span class="actionscript">            clientSecret: <span class="string">"&lt;%= theme.gitalk.clientSecret%&gt;"</span>,</span></span><br><span class="line"><span class="actionscript">            repo: <span class="string">"&lt;%= theme.gitalk.repo%&gt;"</span>,</span></span><br><span class="line"><span class="actionscript">            owner: <span class="string">"&lt;%= theme.gitalk.owner%&gt;"</span>,</span></span><br><span class="line"><span class="actionscript">            admin: [<span class="string">"&lt;%= theme.gitalk.admin%&gt;"</span>],</span></span><br><span class="line"><span class="handlebars"><span class="xml">            id: md5(<span class="tag">&lt;<span class="name">%=</span> <span class="attr">theme.gitalk.id</span>%&gt;</span>),</span></span></span><br><span class="line"><span class="actionscript">            distractionFreeMode: <span class="literal">true</span></span></span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line"><span class="actionscript">    gitalk.render(<span class="string">'gitalk-container'</span>);</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="CDN-加速"><a href="#CDN-加速" class="headerlink" title="CDN 加速"></a>CDN 加速</h2><ul>
+<li>在主题的_config.yml 中添加 bootstrap 和 fontAwesome 的 CDN</li>
+<li>替换主页的背景图片和头像为 gittee 的绝对路径链接</li>
+<li>替换 default,tagcanvas,gitment 等 css 到 gitee 的绝对路径链接</li>
+</ul>
 
     </div>
     
@@ -425,12 +431,12 @@
         <div class="reward-box">
             
                 <span class="reward-type">
-                    <img class="alipay" src="/img/zhifubaocode.jpg"><b>支付宝打赏</b>
+                    <img class="alipay" src="https://spygg.gitee.io/img/zhifubaocode.jpg"><b>支付宝打赏</b>
                 </span>
             
             
                 <span class="reward-type">
-                    <img class="wechat" src="/img/weixincode.jpg"><b>微信打赏</b>
+                    <img class="wechat" src="https://spygg.gitee.io/img/weixincode.jpg"><b>微信打赏</b>
                 </span>
             
         </div>
@@ -515,7 +521,7 @@
     <div class="widget">
         <h3 class="title">文章目录</h3>
         
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#多个-git-账号同步"><span class="toc-text">多个 git 账号同步</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#netfily-镜像"><span class="toc-text">netfily 镜像</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#注册账号"><span class="toc-text">注册账号</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#创建网站"><span class="toc-text">创建网站</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#设置域名，绑定域名"><span class="toc-text">设置域名，绑定域名</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#参考教程"><span class="toc-text">参考教程</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#码云镜像"><span class="toc-text">码云镜像</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#自定义域名解析"><span class="toc-text">自定义域名解析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#注意事项"><span class="toc-text">注意事项</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#支持多个-gitalk-方法"><span class="toc-text">支持多个 gitalk 方法</span></a></li></ol></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#多个-git-账号同步"><span class="toc-text">多个 git 账号同步</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#netfily-镜像"><span class="toc-text">netfily 镜像</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#注册账号"><span class="toc-text">注册账号</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#创建网站"><span class="toc-text">创建网站</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#设置域名，绑定域名"><span class="toc-text">设置域名，绑定域名</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#参考教程"><span class="toc-text">参考教程</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#码云镜像"><span class="toc-text">码云镜像</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#自定义域名解析"><span class="toc-text">自定义域名解析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#注意事项"><span class="toc-text">注意事项</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#支持多个-gitalk-方法"><span class="toc-text">支持多个 gitalk 方法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CDN-加速"><span class="toc-text">CDN 加速</span></a></li></ol>
         
     </div>
 </aside>
@@ -574,7 +580,8 @@
 
 
 
-    <script src="/assets/tagcanvas.min.js?rev=2.9"></script>
+    <!--<script src="/assets/tagcanvas.min.js?rev=2.9"></script>-->
+    <script src="https://spygg.gitee.io/assets/tagcanvas.min.js"></script>
     <script>
         var tagOption = {
             textColour: '#444', // 字体颜色
