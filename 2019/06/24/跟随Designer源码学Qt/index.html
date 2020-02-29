@@ -15,22 +15,49 @@
     <meta name="screen-orientation" content="portrait">
     <meta name="google-site-verification" content="NGCFVs-lxT5zTiHxEXzk7fkJl26matl6KfVIgcORvFQ">
     <meta name="msvalidate.01" content="9C33A26895A2A8B80CEE60CD519D1095">
+    
     <link rel="dns-prefetch" href="https://liusblog.top">
     <!--SEO-->
+
     <meta name="keywords" content="Designer,开源,源码">
+
+
     <meta name="description" content="
 Qt说是非常优雅的C++实现,是跨平台的不二选择.在实际学习中,好多人都会遇到学到一个阶段后突然不知道该如何进行下去了.笔者经过连续几个月对着Designer的源码进行艰苦卓绝的奋斗,终于略有...">
+
+
+
 <meta name="robots" content="all">
 <meta name="google" content="all">
 <meta name="googlebot" content="all">
 <meta name="verify" content="all">
+
     <!--Title-->
+
+
 <title>跟随Designer源码学Qt | 间客六十</title>
+
+
     <link rel="alternate" href="/atom.xml" title="间客六十" type="application/atom+xml">
+
+
     <link rel="icon" href="/favicon.ico">
+
+    
+
+
+
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
 <link rel="stylesheet" href="/css/style.css?rev=@@hash">
+
+
+
+    
+
+
+
+
 	<script>
 		(function(i, s, o, g, r, a, m) {
 		    i['GoogleAnalyticsObject'] = r;
@@ -46,6 +73,11 @@ Qt说是非常优雅的C++实现,是跨平台的不二选择.在实际学习中,
 		ga('create', 'true', 'auto');
 		ga('send', 'pageview');
 	</script>
+
+
+    
+
+
 <!--     <script type="text/javascript">
         function IsPC() {
           var userAgentInfo = navigator.userAgent;
@@ -60,6 +92,7 @@ Qt说是非常优雅的C++实现,是跨平台的不二选择.在实际学习中,
           return flag;
         }
     </script> -->
+
 <!-- 	<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 	<script>
 	  (adsbygoogle = window.adsbygoogle || []).push({
@@ -67,19 +100,26 @@ Qt说是非常优雅的C++实现,是跨平台的不二选择.在实际学习中,
 	    enable_page_level_ads: IsPC()
 	  });
 	</script> -->
+
+
+	
     <script type="text/javascript">
         function hasClass(obj, cls) {
             return obj.className.match(new RegExp('(\\s|^)' + cls + '(\\s|$)'));
         }
+         
         function addClass(obj, cls) {
             if (!this.hasClass(obj, cls)) obj.className += " " + cls;
         }
+         
         function removeClass(obj, cls) {
             if (hasClass(obj, cls)) {
                 var reg = new RegExp('(\\s|^)' + cls + '(\\s|$)');
                 obj.className = obj.className.replace(reg, ' ');
             }
         }
+
+
         window.addEventListener('load', function () {
             // 谷歌广告
             // if(IsPC()){
@@ -93,48 +133,64 @@ Qt说是非常优雅的C++实现,是跨平台的不二选择.在实际学习中,
             //                  data-ad-client="ca-pub-7854187021513757"\
             //                  data-ad-slot="4637472251">\
             //             </ins>'
+
             //             var scriptFun = document.createElement("script");
             //             scriptFun.text = "(adsbygoogle = window.adsbygoogle || []).push({});";
             //             googleAds[i].appendChild(scriptFun);
             //             // end
             //         }
             //     }
+           
             // }
+
             var imgAll = document.getElementsByClassName('post-body')[0];
             if(imgAll == undefined){
                 return;
             }
+            
             var imgs = imgAll.getElementsByTagName('img')
             for(var i=0;i<imgs.length;i++){
                 if(hasClass(imgs[i],'class_no_full_screen')){
                     continue;
                 }
+
                 // imgs[i].setAttribute('data-background', 'rgba(10, 10, 10, .6)');
                 // imgs[i].setAttribute('data-lightense-padding', "0");
                 imgs[i].setAttribute('style', "cursor: zoom-in");
                 imgs[i].onclick=function(){
+                
                     var section=document.getElementsByTagName("section")[0];
+
                     var imgView = document.getElementById('imgViewDom');
                     if(imgView == undefined){
                         imgView=document.createElement("div");
                         imgView.id = "imgViewDom";
+
                         section.appendChild(imgView)
+
+
                         imgView.onclick = function(){
                             addClass(imgView, "disnone");
                             imgView.innerHTML="";
                         }
+
                     }
+            
                     imgView.innerHTML="<img id = 'jackslowfuck' src=" + this.src + " style='cursor: zoom-out; max-width: 100%;'" + ">";
                     removeClass(imgView, "disnone");
+
                     var jackslowfuck = document.getElementById('jackslowfuck');
                     jackslowfuck.onclick=function(){
                         addClass(imgView, "disnone");
                         imgView.innerHTML="";
                     }
+
                 }
             }
+            
         }, false);
     </script>
+
     <style type="text/css">
         #imgViewDom {
             display: none;
@@ -163,11 +219,14 @@ Qt说是非常优雅的C++实现,是跨平台的不二选择.在实际学习中,
             box-pack: center;
             cursor: zoom-out;
         }
+
         .disnone{
             display: none !important;
         }
     </style>
+
 </head>
+
 </html>
 <!--[if lte IE 8]>
 <style>
@@ -177,6 +236,7 @@ Qt说是非常优雅的C++实现,是跨平台的不二选择.在实际学习中,
 <!--[if lte IE 9]>
 <div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
 <![endif]-->
+
 <body>
     <header class="main-header" style="background-image:url(/img/banner.jpg)">
     <div class="main-header-box">
@@ -186,7 +246,9 @@ Qt说是非常优雅的C++实现,是跨平台的不二选择.在实际学习中,
         </a>
         <div class="branding">
         	<!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
                 <h2> 技术引领生活! </h2>
+            
     	</div>
     </div>
 </header>
@@ -203,30 +265,39 @@ Qt说是非常优雅的C++实现,是跨平台的不二选择.在实际学习中,
                 </div>
                 <div class="collapse navbar-collapse" id="main-menu">
                     <ul class="menu">
+                        
                             <li role="presentation" class="text-center">
                                 <a href="/"><i class="fa fa-home"></i>首页</a>
                             </li>
+                        
                             <li role="presentation" class="text-center">
                                 <a href="/categories/Qt"><i class="fa "></i>Qt</a>
                             </li>
+                        
                             <li role="presentation" class="text-center">
                                 <a href="/categories/Python"><i class="fa "></i>Python</a>
                             </li>
+                        
                             <li role="presentation" class="text-center">
                                 <a href="/categories/Linux"><i class="fa "></i>Linux</a>
                             </li>
+                        
                             <li role="presentation" class="text-center">
                                 <a href="/categories/音视频"><i class="fa "></i>音视频</a>
                             </li>
+                        
                             <li role="presentation" class="text-center">
                                 <a href="/categories/杂谈"><i class="fa "></i>杂谈</a>
                             </li>
+                        
                             <li role="presentation" class="text-center">
                                 <a href="/archives/"><i class="fa "></i>时间轴</a>
                             </li>
+                        
                             <li role="presentation" class="text-center">
                                 <a href="/about/"><i class="fa "></i>关于</a>
                             </li>
+                        
                     </ul>
                 </div>
             </div>
@@ -241,31 +312,51 @@ Qt说是非常优雅的C++实现,是跨平台的不二选择.在实际学习中,
 <article class="post">
     <div class="post-head">
         <h1 id="跟随Designer源码学Qt">
+            
 	            跟随Designer源码学Qt
+            
         </h1>
         <div class="post-meta">
+    
         <span class="categories-meta fa-wrap">
             <i class="fa fa-folder-open-o"></i>
             <a class="category-link" href="/categories/Qt/">Qt</a>
         </span>
+    
+
+    
         <span class="fa-wrap">
             <i class="fa fa-tags"></i>
             <span class="tags-meta">
+                
                     <a class="tag-link" href="/tags/Designer/">Designer</a> <a class="tag-link" href="/tags/开源/">开源</a> <a class="tag-link" href="/tags/源码/">源码</a>
+                
             </span>
         </span>
+    
+
+    
+        
         <span class="fa-wrap">
             <i class="fa fa-clock-o"></i>
             <span class="date-meta">2019/06/24</span>
         </span>
+        
+    
 </div>
+            
+            
     </div>
+
+    
+    
     <!-- google广告 -->
     <!--
     <div class="googleAd">
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
     </div>
     -->
+
     <div class="post-body post-content">
         <blockquote>
 <p>Qt说是非常优雅的C++实现,是跨平台的不二选择.在实际学习中,好多人都会遇到学到一个阶段后突然不知道该如何进行下去了.笔者经过连续几个月对着Designer的源码进行艰苦卓绝的奋斗,终于略有小成,准备写一个系列文章,希望能给你的学习带来一点思路…</p>
@@ -295,48 +386,70 @@ Qt说是非常优雅的C++实现,是跨平台的不二选择.在实际学习中,
 </ul>
 <p>后面会补上链接</p>
 <h2 id="彩蛋奉上"><a href="#彩蛋奉上" class="headerlink" title="彩蛋奉上"></a>彩蛋奉上</h2><p><img src="/../photos/跟随Designer源码学Qt/彩蛋.gif" alt="彩蛋"><br>敬请期待(to be continue….)</p>
+
     </div>
+    
         <div class="reward" ontouchstart>
     <div class="reward-wrap">赏
         <div class="reward-box">
+            
                 <span class="reward-type">
                     <img class="alipay" src="/img/zhifubaocode.jpg"><b>支付宝打赏</b>
                 </span>
+            
+            
                 <span class="reward-type">
                     <img class="wechat" src="/img/weixincode.jpg"><b>微信打赏</b>
                 </span>
+            
         </div>
     </div>
     <p class="reward-tip">您的支持是我前行的动力!</p>
 </div>
+
+
+    
     <div class="post-footer">
         <div>
+            
                 转载声明：商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="/about" target="_blank">spygg</a>
+            
         </div>
         <div>
+            
         </div>
     </div>
 </article>
+
 <div class="article-nav prev-next-wrap clearfix">
+    
         <a href="/2019/06/25/Qt单实例运行/" class="pre-post btn btn-default" title="Qt单实例运行">
             <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
             <span class="hidden-xs">Qt单实例运行</span>
         </a>
+    
+    
         <a href="/2019/06/21/分开旅行/" class="next-post btn btn-default" title="分开旅行">
             <span class="hidden-lg">下一篇</span>
             <span class="hidden-xs">分开旅行</span><i class="fa fa-angle-right fa-fw"></i>
         </a>
+    
 </div>
+
 <!-- google广告 -->
 <!-- 
 <div class="googleAd">
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 </div>
 -->
+
+
     <div id="comments">
+        
 	<link rel="stylesheet" href="https://cdn.bootcss.com/gitalk/1.6.0/gitalk.min.css">
 <script src="https://cdn.bootcss.com/gitalk/1.6.0/gitalk.min.js"></script>
 <script src="https://cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
+
 <div id="gitalk-container"></div>
 <script type="text/javascript">
     var gitalk;
@@ -366,14 +479,22 @@ Qt说是非常优雅的C++实现,是跨平台的不二选择.在实际学习中,
     }
     gitalk.render('gitalk-container');
 </script>
+
+
     </div>
+
                 </main>
+                
                     <aside id="article-toc" role="navigation" class="col-md-4">
     <div class="widget">
         <h3 class="title">文章目录</h3>
+        
             <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#知识点"><span class="toc-text">知识点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#彩蛋奉上"><span class="toc-text">彩蛋奉上</span></a></li></ol>
+        
     </div>
 </aside>
+
+                
             </div>
         </div>
     </section>
@@ -383,15 +504,22 @@ Qt说是非常优雅的C++实现,是跨平台的不二选择.在实际学习中,
         </div>
     </div>
 </footer>
+
 <a id="back-to-top" class="icon-btn hide">
 	<i class="fa fa-chevron-up"></i>
 </a>
+
+
+
+
     <div class="copyright">
     <div class="container">
         <div class="row">
             <div class="col-sm-12">
                 <div class="busuanzi">
+    
 </div>
+
             </div>
             <div class="col-sm-12">
                 <span>Copyright &copy; 2019
@@ -406,6 +534,10 @@ Qt说是非常优雅的C++实现,是跨平台的不二选择.在实际学习中,
         </div>
     </div>
 </div>
+
+
+
+
     <script src="/assets/tagcanvas.min.js?rev=2.9"></script>
     <script>
         var tagOption = {
@@ -427,6 +559,11 @@ Qt说是非常优雅的C++实现,是跨平台的不二选择.在实际学习中,
         }
         TagCanvas.Start('tag-cloud-3d','',tagOption);
     </script>
+
+
+
+
 <script src="/js/app.js?rev=@@hash"></script>
+
 </body>
 </html>
