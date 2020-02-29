@@ -15,48 +15,21 @@
     <meta name="screen-orientation" content="portrait">
     <meta name="google-site-verification" content="NGCFVs-lxT5zTiHxEXzk7fkJl26matl6KfVIgcORvFQ">
     <meta name="msvalidate.01" content="9C33A26895A2A8B80CEE60CD519D1095">
-    
     <link rel="dns-prefetch" href="https://liusblog.top">
     <!--SEO-->
-
     <meta name="keywords" content="Qt,Linux,Python,Django,爬虫,QML,HTML,JAVASCRIPT">
-
-
     <meta name="description" content="一些技术感悟">
-
-
-
 <meta name="robots" content="all">
 <meta name="google" content="all">
 <meta name="googlebot" content="all">
 <meta name="verify" content="all">
-
     <!--Title-->
-
-
 <title>标签: QWebEngineView | 间客六十</title>
-
-
     <link rel="alternate" href="/atom.xml" title="间客六十" type="application/atom+xml">
-
-
     <link rel="icon" href="/favicon.ico">
-
-    
-
-
-
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
 <link rel="stylesheet" href="/css/style.css?rev=@@hash">
-
-
-
-    
-
-
-
-
 	<script>
 		(function(i, s, o, g, r, a, m) {
 		    i['GoogleAnalyticsObject'] = r;
@@ -72,11 +45,6 @@
 		ga('create', 'true', 'auto');
 		ga('send', 'pageview');
 	</script>
-
-
-    
-
-
 <!--     <script type="text/javascript">
         function IsPC() {
           var userAgentInfo = navigator.userAgent;
@@ -91,7 +59,6 @@
           return flag;
         }
     </script> -->
-
 <!-- 	<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 	<script>
 	  (adsbygoogle = window.adsbygoogle || []).push({
@@ -99,26 +66,19 @@
 	    enable_page_level_ads: IsPC()
 	  });
 	</script> -->
-
-
-	
     <script type="text/javascript">
         function hasClass(obj, cls) {
             return obj.className.match(new RegExp('(\\s|^)' + cls + '(\\s|$)'));
         }
-         
         function addClass(obj, cls) {
             if (!this.hasClass(obj, cls)) obj.className += " " + cls;
         }
-         
         function removeClass(obj, cls) {
             if (hasClass(obj, cls)) {
                 var reg = new RegExp('(\\s|^)' + cls + '(\\s|$)');
                 obj.className = obj.className.replace(reg, ' ');
             }
         }
-
-
         window.addEventListener('load', function () {
             // 谷歌广告
             // if(IsPC()){
@@ -132,64 +92,48 @@
             //                  data-ad-client="ca-pub-7854187021513757"\
             //                  data-ad-slot="4637472251">\
             //             </ins>'
-
             //             var scriptFun = document.createElement("script");
             //             scriptFun.text = "(adsbygoogle = window.adsbygoogle || []).push({});";
             //             googleAds[i].appendChild(scriptFun);
             //             // end
             //         }
             //     }
-           
             // }
-
             var imgAll = document.getElementsByClassName('post-body')[0];
             if(imgAll == undefined){
                 return;
             }
-            
             var imgs = imgAll.getElementsByTagName('img')
             for(var i=0;i<imgs.length;i++){
                 if(hasClass(imgs[i],'class_no_full_screen')){
                     continue;
                 }
-
                 // imgs[i].setAttribute('data-background', 'rgba(10, 10, 10, .6)');
                 // imgs[i].setAttribute('data-lightense-padding', "0");
                 imgs[i].setAttribute('style', "cursor: zoom-in");
                 imgs[i].onclick=function(){
-                
                     var section=document.getElementsByTagName("section")[0];
-
                     var imgView = document.getElementById('imgViewDom');
                     if(imgView == undefined){
                         imgView=document.createElement("div");
                         imgView.id = "imgViewDom";
-
                         section.appendChild(imgView)
-
-
                         imgView.onclick = function(){
                             addClass(imgView, "disnone");
                             imgView.innerHTML="";
                         }
-
                     }
-            
                     imgView.innerHTML="<img id = 'jackslowfuck' src=" + this.src + " style='cursor: zoom-out; max-width: 100%;'" + ">";
                     removeClass(imgView, "disnone");
-
                     var jackslowfuck = document.getElementById('jackslowfuck');
                     jackslowfuck.onclick=function(){
                         addClass(imgView, "disnone");
                         imgView.innerHTML="";
                     }
-
                 }
             }
-            
         }, false);
     </script>
-
     <style type="text/css">
         #imgViewDom {
             display: none;
@@ -218,14 +162,11 @@
             box-pack: center;
             cursor: zoom-out;
         }
-
         .disnone{
             display: none !important;
         }
     </style>
-
 </head>
-
 </html>
 <!--[if lte IE 8]>
 <style>
@@ -235,7 +176,6 @@
 <!--[if lte IE 9]>
 <div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
 <![endif]-->
-
 <body>
     <header class="main-header" style="background-image:url(/img/banner.jpg)">
     <div class="main-header-box">
@@ -245,9 +185,7 @@
         </a>
         <div class="branding">
         	<!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
-            
                 <h2> 技术引领生活! </h2>
-            
     	</div>
     </div>
 </header>
@@ -264,39 +202,30 @@
                 </div>
                 <div class="collapse navbar-collapse" id="main-menu">
                     <ul class="menu">
-                        
                             <li role="presentation" class="text-center">
                                 <a href="/"><i class="fa fa-home"></i>首页</a>
                             </li>
-                        
                             <li role="presentation" class="text-center">
                                 <a href="/categories/Qt"><i class="fa "></i>Qt</a>
                             </li>
-                        
                             <li role="presentation" class="text-center">
                                 <a href="/categories/Python"><i class="fa "></i>Python</a>
                             </li>
-                        
                             <li role="presentation" class="text-center">
                                 <a href="/categories/Linux"><i class="fa "></i>Linux</a>
                             </li>
-                        
                             <li role="presentation" class="text-center">
                                 <a href="/categories/音视频"><i class="fa "></i>音视频</a>
                             </li>
-                        
                             <li role="presentation" class="text-center">
                                 <a href="/categories/杂谈"><i class="fa "></i>杂谈</a>
                             </li>
-                        
                             <li role="presentation" class="text-center">
                                 <a href="/archives/"><i class="fa "></i>时间轴</a>
                             </li>
-                        
                             <li role="presentation" class="text-center">
                                 <a href="/about/"><i class="fa "></i>关于</a>
                             </li>
-                        
                     </ul>
                 </div>
             </div>
@@ -308,19 +237,11 @@
             <div class="row">
                 <main class="col-md-8 main-content ">
                     <ol class="breadcrumb">
-    
-    
         <li>
             QWebEngineView
         </li>
-    
-    
-
 </ol>
-
-
     <article class="post">
-        
         <div class="post-content">
             <div class="post-head home-post-head">
                 <h1 class="post-title">
@@ -333,39 +254,20 @@
                 </div>
             </div>
             <p class="brief">
-                
-                    
 想一键将网页转化成APP吗? 本文也许会有你想要的答案
-
 运行效果运行效果和网页版本的没有区别网易云笔记网页版其实非常好了,但是本人还是比较喜欢客户端一点
 其他作品找到了一个有道云笔记nodejs版 .但是发现有bug(图片有时候显...
-                
             </p>
         </div>
     </article>
- 
-
-
-
-
-
-
-
                 </main>
-                
-                    
     <aside class="col-md-4 sidebar">
-        
-        
     <div class="widget">
         <h3 class="title">搜索</h3>
         <div id="search-form">
             <div id="result-mask" class="hide"></div>
             <div class="search-area">
-                
-                
-                    <form action="//bing.com/search" target="_blank" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Bing Search"><button type="submit" class="search-form-submit">必应搜索</button><input type="hidden" name="q1" value="site:https://liusblog.top"></form>
-                
+                    <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Bing Search"><button type="submit" class="search-form-submit">必应搜索</button><input type="hidden" name="sitesearch" value="https://liusblog.top"></form>
             </div>
             <div id="result-wrap" class="hide">
                 <div id="search-result"></div>
@@ -382,9 +284,6 @@
             </div>
         </div>
     </div>
-
-        
-        
 <div class="widget">
     <h3 class="title">
         网站公告
@@ -399,77 +298,44 @@
 </p>
     </div>
 </div>
-
-        
-        
     <div class="widget">
       <h3 class="title">社交</h3> 
         <div class="content social">
-            
 	            <a href="//github.com/spygg" rel="external nofollow" title="Github" target="_blank">
 			    	<i class="git fa fa-git"></i>
 			    </a>
-            
 	            <a href="mailto:liushidc@163.com" rel="external nofollow" title="邮箱" target="_blank">
 			    	<i class="envelope-o fa fa-envelope-o"></i>
 			    </a>
-            
 	            <a href="/atom.xml" rel="external nofollow" title="RSS" target="_blank">
 			    	<i class="feed fa fa-feed"></i>
 			    </a>
-            
         </div>
     </div>
-
-
-        
-        
     <div class="widget">
         <h3 class="title">分类</h3>
         <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/"><i class="fa" aria-hidden="true">Linux</i></a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/"><i class="fa" aria-hidden="true">Python</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Qt/"><i class="fa" aria-hidden="true">Qt</i></a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/杂谈/"><i class="fa" aria-hidden="true">杂谈</i></a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/音视频/"><i class="fa" aria-hidden="true">音视频</i></a><span class="category-list-count">1</span></li></ul>
     </div>
-
-
-        
-        
     <div class="widget">
         <h3 class="title">归档</h3>
         <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/"><i class="fa" aria-hidden="true">2020年02月</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/"><i class="fa" aria-hidden="true">2019年10月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/"><i class="fa" aria-hidden="true">2019年07月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/"><i class="fa" aria-hidden="true">2019年06月</i></a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/"><i class="fa" aria-hidden="true">2019年05月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/"><i class="fa" aria-hidden="true">2019年04月</i></a><span class="archive-list-count">10</span></li></ul>
     </div>
-
-
-        
-        
   <div class="widget">
     <h3 class="title">标签云</h3>
     <div class="content tag-cloud">
-        
             <canvas width="300" height="300" id="tag-cloud-3d">
                 <a href="/tags/Android/" style="font-size: 10px;">Android</a> <a href="/tags/C/" style="font-size: 13.33px;">C</a> <a href="/tags/Designer/" style="font-size: 13.33px;">Designer</a> <a href="/tags/FFMPEG/" style="font-size: 10px;">FFMPEG</a> <a href="/tags/Gitpage/" style="font-size: 13.33px;">Gitpage</a> <a href="/tags/Hexo/" style="font-size: 13.33px;">Hexo</a> <a href="/tags/MFC/" style="font-size: 10px;">MFC</a> <a href="/tags/QLocalServer/" style="font-size: 10px;">QLocalServer</a> <a href="/tags/QSqlDatabasePrivate/" style="font-size: 10px;">QSqlDatabasePrivate</a> <a href="/tags/QTextBrowser/" style="font-size: 10px;">QTextBrowser</a> <a href="/tags/QWebEngineView/" style="font-size: 10px;">QWebEngineView</a> <a href="/tags/QWidget/" style="font-size: 13.33px;">QWidget</a> <a href="/tags/Qt/" style="font-size: 16.67px;">Qt</a> <a href="/tags/Ubuntu/" style="font-size: 10px;">Ubuntu</a> <a href="/tags/VC-6-0/" style="font-size: 10px;">VC 6.0</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/github/" style="font-size: 10px;">github</a> <a href="/tags/html/" style="font-size: 10px;">html</a> <a href="/tags/javascipt/" style="font-size: 10px;">javascipt</a> <a href="/tags/netlify/" style="font-size: 10px;">netlify</a> <a href="/tags/pip3/" style="font-size: 10px;">pip3</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/snippet/" style="font-size: 10px;">snippet</a> <a href="/tags/加速/" style="font-size: 10px;">加速</a> <a href="/tags/单实例/" style="font-size: 10px;">单实例</a> <a href="/tags/帮助系统/" style="font-size: 10px;">帮助系统</a> <a href="/tags/开源/" style="font-size: 10px;">开源</a> <a href="/tags/心情/" style="font-size: 10px;">心情</a> <a href="/tags/源码/" style="font-size: 10px;">源码</a> <a href="/tags/爬虫/" style="font-size: 10px;">爬虫</a> <a href="/tags/矩阵/" style="font-size: 10px;">矩阵</a> <a href="/tags/英语/" style="font-size: 10px;">英语</a> <a href="/tags/软件/" style="font-size: 10px;">软件</a> <a href="/tags/软件使用/" style="font-size: 20px;">软件使用</a> <a href="/tags/镜像/" style="font-size: 10px;">镜像</a>
             </canvas>
-        
     </div>
   </div>
-
-
-        
-        
     <div class="widget">
         <h3 class="title">友链</h3>
         <div class="content friends-link">
-        
             <a href="https://qtdebug.com/" class="fa" target="_blank">公孙二狗</a>
-        
             <a href="https://www.91h5.cc/" class="fa" target="_blank">snippet主题博主</a>
-        
         </div>
     </div>
-
-
-        
     </aside>
-
-                
             </div>
         </div>
     </section>
@@ -479,20 +345,14 @@
         </div>
     </div>
 </footer>
-
 <a id="back-to-top" class="icon-btn hide">
 	<i class="fa fa-chevron-up"></i>
 </a>
-
-
-
-
     <div class="copyright">
     <div class="container">
         <div class="row">
             <div class="col-sm-12">
                 <div class="busuanzi">
-    
         访问量:
         <strong id="busuanzi_value_site_pv">
             <i class="fa fa-spinner fa-spin"></i>
@@ -502,9 +362,7 @@
         <strong id="busuanzi_value_site_uv">
             <i class="fa fa-spinner fa-spin"></i>
         </strong>
-    
 </div>
-
             </div>
             <div class="col-sm-12">
                 <span>Copyright &copy; 2019
@@ -519,10 +377,6 @@
         </div>
     </div>
 </div>
-
-
-
-
     <script src="/assets/tagcanvas.min.js?rev=2.9"></script>
     <script>
         var tagOption = {
@@ -544,13 +398,7 @@
         }
         TagCanvas.Start('tag-cloud-3d','',tagOption);
     </script>
-
-
-
     <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-
-
 <script src="/js/app.js?rev=@@hash"></script>
-
 </body>
 </html>
