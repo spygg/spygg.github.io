@@ -379,8 +379,16 @@
 </ol>
 <figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">object.h:<span class="number">435</span>: <span class="keyword">error</span>: expected unqualified-<span class="built_in">id</span> <span class="keyword">before</span> ';' token</span><br><span class="line">     PyType_Slot *slots; /* terminated <span class="keyword">by</span> slot==<span class="number">0.</span> */</span><br><span class="line">                       ^</span><br></pre></td></tr></table></figure>
 <ol start="2">
-<li>解决方法为避免使用 QObject 及子类</li>
+<li>解决方法:</li>
 </ol>
+<ul>
+<li>方案 1: 避免使用 QObject 及子类</li>
+<li>方案 2: 在引用 ptyhon.h 的位置前重新定义 slots,详见文末代码工程</li>
+</ul>
+<figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//注意人引入位置</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">undef</span> slots</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;Python.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> slots Q_SLOTS</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>方案 3: 网上一般做法修改 python 的头文件(不推荐)</li>
+</ul>
 <h3 id="打包后运行崩溃"><a href="#打包后运行崩溃" class="headerlink" title="打包后运行崩溃"></a>打包后运行崩溃</h3><ol>
 <li>崩溃为</li>
 </ol>
