@@ -364,7 +364,7 @@ Qt的帮助系统很好看,观察自带的帮助都是HTML格式,当然最好的
 <p>Qt的帮助系统很好看,观察自带的帮助都是HTML格式,当然最好的方法是使用QtWeb模块,但好多Qt版本不支持啊.想到QTextBrowser可以显示图片啥的,一阵乱撸终于搞定,分享之….</p>
 </blockquote>
 <h2 id="系列目录"><a href="#系列目录" class="headerlink" title="系列目录"></a>系列目录</h2><p>本文是系列教程&lt;跟随Designer源码学Qt&gt;中的一篇详见<a href="/2019/06/24/跟随Designer源码学Qt/">跟随Designer源码学Qt</a></p>
-<h2 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h2><p><img src="/../photos/跟随Designer源码学Qt/Qt帮助.png" alt="帮助"></p>
+<h2 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h2><p><img src="/../photos/跟随Designer源码学Qt/Qt帮助.webp" alt="帮助"></p>
 <h2 id="过程"><a href="#过程" class="headerlink" title="过程"></a>过程</h2><p>我是拿Designer的帮助系统来操刀,首先想的是用QTextBrowser直接读取HTML文件后显示,但是悲剧的是页面中的图片全部不能正常显示,突然想到在Designer中明明可以插入图片显示啊.在Designer查看HTML源码视图中发现只能插入<strong>Qt文件系统</strong>的图片恍然大悟,于是突发奇想:如果能将帮助页面中的图片都来源于Qt的文件系统就行了,结果还真是可以!!</p>
 <h2 id="实现步骤"><a href="#实现步骤" class="headerlink" title="实现步骤"></a>实现步骤</h2><ol>
 <li>将要制作的所有文件添加到Qt资源系统中(如果有文件夹,可以添加多次,<strong>务必</strong>全部添加上)</li>

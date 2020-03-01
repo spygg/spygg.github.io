@@ -351,7 +351,7 @@
             
             
             <p class="fa fa-exclamation-triangle warning">
-                本文于<strong>323</strong>天之前发表，文中内容可能已经过时。
+                本文于<strong>324</strong>天之前发表，文中内容可能已经过时。
             </p>
         
     </div>
@@ -370,7 +370,7 @@
 <p>起源:主要是为了学习ffmpeg,然后看到雷神大人的<a href="https://blog.csdn.net/leixiaohua1020" target="_blank" rel="noopener">博客</a>太好了(但是CSDN广告太多了….),就爬取下来了,理论上可以爬取所有的csdn</p>
 </blockquote>
 <a id="more"></a>
-<h2 id="效果"><a href="#效果" class="headerlink" title="效果:"></a>效果:</h2><p>先看疗效—–雷神高清无码博客图<br><img src="/photos/CSDN博客转高清PDF/成果.png" alt="图片"></p>
+<h2 id="效果"><a href="#效果" class="headerlink" title="效果:"></a>效果:</h2><p>先看疗效—–雷神高清无码博客图<br><img src="/photos/CSDN博客转高清PDF/成果.webp" alt="图片"></p>
 <h2 id="用法"><a href="#用法" class="headerlink" title="用法:"></a>用法:</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ python csdn.py</span><br></pre></td></tr></table></figure>
 <h2 id="所需库-标注库除外"><a href="#所需库-标注库除外" class="headerlink" title="所需库:(标注库除外)"></a>所需库:(标注库除外)</h2><ul>
 <li>pdfkit </li>
@@ -381,9 +381,9 @@
 <h2 id="实现步骤"><a href="#实现步骤" class="headerlink" title="实现步骤:"></a>实现步骤:</h2><ol>
 <li><p>获取目标用户名:<br>找到目标博客地址,得到用户名如: <a href="https://blog.csdn.net/leixiaohua1020" target="_blank" rel="noopener">https://blog.csdn.net/leixiaohua1020</a> 的用户名为<em>leixiaohua1020</em></p>
 </li>
-<li><p>获取文章列表:<br>网址格式为: <a href="https://blog.csdn.net/用户名/article/list/页码" target="_blank" rel="noopener">https://blog.csdn.net/用户名/article/list/页码</a>?<br>从1依次增加上述网址中的页码,当出现”空空如也”的时候即超过了最后一页,可作为终止条件(代码中的getPageByIndex函数)<br><img src="/photos/CSDN博客转高清PDF/文章列表.png" alt="文章列表"></p>
+<li><p>获取文章列表:<br>网址格式为: <a href="https://blog.csdn.net/用户名/article/list/页码" target="_blank" rel="noopener">https://blog.csdn.net/用户名/article/list/页码</a>?<br>从1依次增加上述网址中的页码,当出现”空空如也”的时候即超过了最后一页,可作为终止条件(代码中的getPageByIndex函数)<br><img src="/photos/CSDN博客转高清PDF/文章列表.webp" alt="文章列表"></p>
 </li>
-<li><p>获取文章链接:<br> 在上一步中得到的目录页面中通过chrome调试模式可以发现所有文章都在class=”article-list”的div中,而且链接在子div的class=”article-item-box”中的href中(代码中的getArticlesInPage函数)<br> <img src="/photos/CSDN博客转高清PDF/文章链接.png" alt="文章链接"></p>
+<li><p>获取文章链接:<br> 在上一步中得到的目录页面中通过chrome调试模式可以发现所有文章都在class=”article-list”的div中,而且链接在子div的class=”article-item-box”中的href中(代码中的getArticlesInPage函数)<br> <img src="/photos/CSDN博客转高清PDF/文章链接.webp" alt="文章链接"></p>
 </li>
 <li><p>获取文章内容:<br>这一步没啥好说的,拿到网址后直接开干(getArticleByUrl函数)</p>
 </li>

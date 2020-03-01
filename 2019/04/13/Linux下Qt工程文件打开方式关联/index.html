@@ -350,7 +350,7 @@
             
             
             <p class="fa fa-exclamation-triangle warning">
-                本文于<strong>322</strong>天之前发表，文中内容可能已经过时。
+                本文于<strong>323</strong>天之前发表，文中内容可能已经过时。
             </p>
         
     </div>
@@ -368,7 +368,7 @@
         <blockquote>
 <p>亲测可用!!!! 记住一点:技术问题千万不要百度,最好google起码必应<a href="http://www.bing.com" target="_blank" rel="noopener">www.bing.com</a></p>
 </blockquote>
-<h2 id="效果图"><a href="#效果图" class="headerlink" title="效果图"></a>效果图</h2><p>按照惯例先上效果图<br><img src="/photos/Linux下Qt工程文件打开方式关联/效果图.png" alt="效果图"></p>
+<h2 id="效果图"><a href="#效果图" class="headerlink" title="效果图"></a>效果图</h2><p>按照惯例先上效果图<br><img src="/photos/Linux下Qt工程文件打开方式关联/效果图.webp" alt="效果图"></p>
 <p>在linux安装Qt后默认的工程文件.pro是用gedit打开的,而且比较恶心的是右键打开后还选择不了,网上的不少方法要么设置后影响到一般文本文件的打开,要不没有用,根本原因是:linux将.pro文件作为一般的text/plain来处理了</p>
 <h2 id="设置步骤"><a href="#设置步骤" class="headerlink" title="设置步骤"></a>设置步骤</h2><ol>
 <li>建立一个.xml文件,文件名格式必须为xxx-xxx.xml如 <em>DigiaQt-QtProject.xml</em>,内容如下:</li>
@@ -385,7 +385,7 @@
 <figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">text/<span class="attribute">qt</span>=DigiaQt-qtcreator-community.desktop</span><br></pre></td></tr></table></figure>
 <ol start="4">
 <li><p>修改默认pro图标,不然在一堆文件中很难找到</p>
-<p> 4.1 拷贝图片 QT安装路径/Docs/Qt-5.9.1/qtdoc/images/icon_QtCreator_78x78px.png图片到桌面</p>
+<p> 4.1 拷贝图片 QT安装路径/Docs/Qt-5.9.1/qtdoc/images/icon_QtCreator_78x78px.webp图片到桌面</p>
 <p> 4.2 用图片编辑器另存为text-qt.svg  文件名必须和第一步中的mime-type type一致</p>
 <p> 4.3 拷贝图片到目录</p>
  <figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo cp text-qt.svg <span class="meta-keyword">/usr/</span>share<span class="meta-keyword">/icons/</span>Humanity<span class="meta-keyword">/mimes/</span><span class="number">64</span>/    </span><br><span class="line">sudo cp text-qt.svg <span class="meta-keyword">/usr/</span>share<span class="meta-keyword">/icons/</span>Humanity<span class="meta-keyword">/mimes/</span><span class="number">48</span>/ </span><br><span class="line">sudo cp text-qt.svg <span class="meta-keyword">/usr/</span>share<span class="meta-keyword">/icons/</span>Humanity<span class="meta-keyword">/mimes/</span><span class="number">128</span>/</span><br></pre></td></tr></table></figure>

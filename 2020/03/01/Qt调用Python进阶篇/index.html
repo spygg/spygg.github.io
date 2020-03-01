@@ -19,16 +19,13 @@
     <link rel="dns-prefetch" href="https://liusblog.top">
     <!--SEO-->
 
-    <meta name="keywords" content="Qt,Linux,Python,Django,爬虫,QML,HTML,JAVASCRIPT">
+    <meta name="keywords" content="Qt,Python,调用,进阶">
 
 
     <meta name="description" content="
+在上一篇中介绍了 Qt 调用 Python 的入门操作,这一篇中我们来看看还有哪些更高级的用法
 
-
-  
-  
-    window.addEventListener('load', function () {
-      // var imgs=document.getElements...">
+写作原因在实际使用中可能有保密的需求,毕竟谁也不想自己辛辛苦苦写的 Python 代码就这么变...">
 
 
 
@@ -40,7 +37,7 @@
     <!--Title-->
 
 
-<title>间客六十</title>
+<title>Qt调用Python进阶篇 | 间客六十</title>
 
 
     <link rel="alternate" href="/atom.xml" title="间客六十" type="application/atom+xml">
@@ -312,165 +309,164 @@
     <section class="content-wrap">
         <div class="container">
             <div class="row">
-                <main class="col-md-8 main-content ">
-                    <article class="post">
-    <h1 class="post-head"></h1>
-    <div class="post-body">
-        <!doctype html>
-<html lang="en">
-<head><meta name="generator" content="Hexo 3.8.0">
-  <script type="text/javascript" src="lightense.min.js"></script>
-  <script type="text/javascript">
-    window.addEventListener('load', function () {
-      // var imgs=document.getElementsByTagName('img');
-      var imgs = document.getElementsByClassName('post-body')[0].getElementsByTagName('img')
-    for(var i=0;i<imgs.length;i++){
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="Qt调用Python进阶篇">
+            
+	            Qt调用Python进阶篇
+            
+        </h1>
+        <div class="post-meta">
+    
+        <span class="categories-meta fa-wrap">
+            <i class="fa fa-folder-open-o"></i>
+            <a class="category-link" href="/categories/Qt/">Qt</a>
+        </span>
+    
 
-    imgs[i].setAttribute('class','lightense');
-    imgs[i].setAttribute('data-background','rgba(0, 0, 0, .6)');
+    
+        <span class="fa-wrap">
+            <i class="fa fa-tags"></i>
+            <span class="tags-meta">
+                
+                    <a class="tag-link" href="/tags/Python/">Python</a> <a class="tag-link" href="/tags/Qt/">Qt</a> <a class="tag-link" href="/tags/调用/">调用</a> <a class="tag-link" href="/tags/进阶/">进阶</a>
+                
+            </span>
+        </span>
+    
 
+    
+        
+        <span class="fa-wrap">
+            <i class="fa fa-clock-o"></i>
+            <span class="date-meta">2020/03/01</span>
+        </span>
+        
+    
+</div>
+            
+            
+    </div>
 
-    }
-  var el = document.querySelectorAll('img.lightense');
-    Lightense(el);
-  }, false);
+    
+    
+    <!-- google广告 -->
+    <!--
+    <div class="googleAd">
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    </div>
+    -->
 
+    <div class="post-body post-content">
+        <blockquote>
+<p>在上一篇中介绍了 Qt 调用 Python 的入门操作,这一篇中我们来看看还有哪些更高级的用法</p>
+</blockquote>
+<h2 id="写作原因"><a href="#写作原因" class="headerlink" title="写作原因"></a>写作原因</h2><p>在实际使用中可能有保密的需求,毕竟谁也不想自己辛辛苦苦写的 Python 代码就这么变成赤裸的小羔羊,在一篇<a href="/2020/03/01/Qt调用Python并打包发布/index.html">Qt 调用 Python 并打包发布</a>中我们介绍了基本用法,回避这个问题的方法是将 python 文件放到 Qt 的资源系统中去,然后读取文本文件内容调用 python 的最简单的执行函数<em>PyRun_SimpleString</em>,但这很明显不能满足需求,下面就如何解决这个问题记录下.</p>
+<h2 id="其他开源解决方案"><a href="#其他开源解决方案" class="headerlink" title="其他开源解决方案"></a>其他开源解决方案</h2><p>经过一阵搜索找到了一个开源模块叫<a href="https://github.com/MeVisLab/pythonqt" target="_blank" rel="noopener">PythonQt</a>一般来用有点笨重,有兴趣的同学自己可以研究下</p>
 
-  </script>
-</head>
-<body>
-
-
-
-
-<div class="bigPicBox">
-   <div class="bigPic"><img src="新建应用.jpg"></div> 
+    </div>
+    
+        <div class="reward" ontouchstart>
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+                <span class="reward-type">
+                    <img class="alipay" src="/img/zhifubaocode.jpg"><b>支付宝打赏</b>
+                </span>
+            
+            
+                <span class="reward-type">
+                    <img class="wechat" src="/img/weixincode.jpg"><b>微信打赏</b>
+                </span>
+            
+        </div>
+    </div>
+    <p class="reward-tip">您的支持是我前行的动力!</p>
 </div>
 
-</body>
-</html>
+
+    
+    <div class="post-footer">
+        <div>
+            
+                转载声明：商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="/about" target="_blank">spygg</a>
+            
+        </div>
+        <div>
+            
+        </div>
     </div>
 </article>
-                </main>
-                
-                    
-    <aside class="col-md-4 sidebar">
-        
-        
-    <div class="widget">
-        <h3 class="title">搜索</h3>
-        <div id="search-form">
-            <div id="result-mask" class="hide"></div>
-            <div class="search-area">
-                
-                
- 
-                
-                    <form action="//bing.com/search" target="_blank" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Bing Search"><button type="submit" class="search-form-submit">必应搜索</button><input type="hidden" name="q1" value="site:https://liusblog.top"></form>
-                
 
-            </div>
-            <div id="result-wrap" class="hide">
-                <div id="search-result"></div>
-            </div>
-            <div class="hide">
-                <template id="search-tpl">
-                    <div class="item">
-                        <a href="/{path}" title="{title}">
-                            <div class="title">{title}</div>
-                            <div class="content">{content}</div>
-                        </a>
-                    </div>
-                </template>
-            </div>
-        </div>
-    </div>
-
-        
-        
-<div class="widget">
-    <h3 class="title">
-        网站公告
-    </h3>
-    <div class="notification">
-        <p>
-    知乎：<a href="https://www.zhihu.com/people/spygg/activities" title="知乎" target="_blank">spygg知乎</a> <br>
-    Github：<a href="https://github.com/spygg" title target="_blank">我的Gayhub</a> <br>
-    Netfily镜像：<a href="https://spygg.netlify.com/" title target="_blank">Netfily镜像</a> <br>
-    Gitee镜像：<a href="https://spygg.gitee.io/" title target="_blank">Gitee镜像</a> <br>
-    Github镜像：<a href="https://spygg.github.io/" title target="_blank">GithubPage</a>
-</p>
-    </div>
+<div class="article-nav prev-next-wrap clearfix">
+    
+    
+        <a href="/2020/03/01/Qt调用Python并打包发布/" class="next-post btn btn-default" title="Qt调用Python并打包发布">
+            <span class="hidden-lg">下一篇</span>
+            <span class="hidden-xs">Qt调用Python并打包发布</span><i class="fa fa-angle-right fa-fw"></i>
+        </a>
+    
 </div>
 
+<!-- google广告 -->
+<!-- 
+<div class="googleAd">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+</div>
+-->
+
+
+    <div id="comments">
         
-        
+	<link rel="stylesheet" href="https://cdn.bootcss.com/gitalk/1.6.0/gitalk.min.css">
+<script src="https://cdn.bootcss.com/gitalk/1.6.0/gitalk.min.js"></script>
+<script src="https://cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
+
+<div id="gitalk-container"></div>
+<script type="text/javascript">
+    var gitalk;
+    if(window.location.host === 'spygg.gitee.io'){
+        gitalk = new Gitalk({
+            // Gitalk配置
+            clientID: "2e6379556d0bea565323",
+            clientSecret: "2feb2ad5f1301351c79e1d0e2b1a177bb0661ed7",
+            repo: "blogcomment",
+            owner: "spygg",
+            admin: ["spygg"],
+            id: md5(window.location.pathname),
+            distractionFreeMode: true
+        });
+    }
+    else{
+        gitalk = new Gitalk({
+            // Gitalk配置
+            clientID: "6c31603d4df9afc8351b",
+            clientSecret: "c9e81f3ac1492550170fccb28c0f8bb16e3b7ed1",
+            repo: "blogcomment",
+            owner: "spygg",
+            admin: ["spygg"],
+            id: md5(window.location.pathname),
+            distractionFreeMode: true
+        });
+    }
+    gitalk.render('gitalk-container');
+</script>
+
+
+    </div>
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
     <div class="widget">
-      <h3 class="title">社交</h3> 
-        <div class="content social">
-            
-	            <a href="//github.com/spygg" rel="external nofollow" title="Github" target="_blank">
-			    	<i class="git fa fa-git"></i>
-			    </a>
-            
-	            <a href="mailto:liushidc@163.com" rel="external nofollow" title="邮箱" target="_blank">
-			    	<i class="envelope-o fa fa-envelope-o"></i>
-			    </a>
-            
-	            <a href="/atom.xml" rel="external nofollow" title="RSS" target="_blank">
-			    	<i class="feed fa fa-feed"></i>
-			    </a>
-            
-        </div>
-    </div>
-
-
+        <h3 class="title">文章目录</h3>
         
-        
-    <div class="widget">
-        <h3 class="title">分类</h3>
-        <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/"><i class="fa" aria-hidden="true">Linux</i></a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/"><i class="fa" aria-hidden="true">Python</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Qt/"><i class="fa" aria-hidden="true">Qt</i></a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/杂谈/"><i class="fa" aria-hidden="true">杂谈</i></a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/音视频/"><i class="fa" aria-hidden="true">音视频</i></a><span class="category-list-count">1</span></li></ul>
-    </div>
-
-
-        
-        
-    <div class="widget">
-        <h3 class="title">归档</h3>
-        <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/"><i class="fa" aria-hidden="true">2020年03月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/"><i class="fa" aria-hidden="true">2020年02月</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/"><i class="fa" aria-hidden="true">2019年10月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/"><i class="fa" aria-hidden="true">2019年07月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/"><i class="fa" aria-hidden="true">2019年06月</i></a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/"><i class="fa" aria-hidden="true">2019年05月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/"><i class="fa" aria-hidden="true">2019年04月</i></a><span class="archive-list-count">10</span></li></ul>
-    </div>
-
-
-        
-        
-  <div class="widget">
-    <h3 class="title">标签云</h3>
-    <div class="content tag-cloud">
-        
-            <canvas width="300" height="300" id="tag-cloud-3d">
-                <a href="/tags/Android/" style="font-size: 10px;">Android</a> <a href="/tags/C/" style="font-size: 15px;">C</a> <a href="/tags/Designer/" style="font-size: 15px;">Designer</a> <a href="/tags/FFMPEG/" style="font-size: 10px;">FFMPEG</a> <a href="/tags/Gitpage/" style="font-size: 15px;">Gitpage</a> <a href="/tags/Hexo/" style="font-size: 15px;">Hexo</a> <a href="/tags/MFC/" style="font-size: 10px;">MFC</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/QLocalServer/" style="font-size: 10px;">QLocalServer</a> <a href="/tags/QSqlDatabasePrivate/" style="font-size: 10px;">QSqlDatabasePrivate</a> <a href="/tags/QTextBrowser/" style="font-size: 10px;">QTextBrowser</a> <a href="/tags/QWebEngineView/" style="font-size: 10px;">QWebEngineView</a> <a href="/tags/QWidget/" style="font-size: 15px;">QWidget</a> <a href="/tags/Qt/" style="font-size: 20px;">Qt</a> <a href="/tags/Ubuntu/" style="font-size: 10px;">Ubuntu</a> <a href="/tags/VC-6-0/" style="font-size: 10px;">VC 6.0</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/github/" style="font-size: 10px;">github</a> <a href="/tags/html/" style="font-size: 10px;">html</a> <a href="/tags/javascipt/" style="font-size: 10px;">javascipt</a> <a href="/tags/netlify/" style="font-size: 10px;">netlify</a> <a href="/tags/pip3/" style="font-size: 10px;">pip3</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/snippet/" style="font-size: 10px;">snippet</a> <a href="/tags/加速/" style="font-size: 10px;">加速</a> <a href="/tags/单实例/" style="font-size: 10px;">单实例</a> <a href="/tags/帮助系统/" style="font-size: 10px;">帮助系统</a> <a href="/tags/开源/" style="font-size: 10px;">开源</a> <a href="/tags/心情/" style="font-size: 10px;">心情</a> <a href="/tags/打包/" style="font-size: 10px;">打包</a> <a href="/tags/源码/" style="font-size: 10px;">源码</a> <a href="/tags/爬虫/" style="font-size: 10px;">爬虫</a> <a href="/tags/矩阵/" style="font-size: 10px;">矩阵</a> <a href="/tags/英语/" style="font-size: 10px;">英语</a> <a href="/tags/软件/" style="font-size: 10px;">软件</a> <a href="/tags/软件使用/" style="font-size: 20px;">软件使用</a> <a href="/tags/镜像/" style="font-size: 10px;">镜像</a>
-            </canvas>
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#写作原因"><span class="toc-text">写作原因</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#其他开源解决方案"><span class="toc-text">其他开源解决方案</span></a></li></ol>
         
     </div>
-  </div>
-
-
-        
-        
-    <div class="widget">
-        <h3 class="title">友链</h3>
-        <div class="content friends-link">
-        
-            <a href="https://qtdebug.com/" class="fa" target="_blank">公孙二狗</a>
-        
-            <a href="https://www.91h5.cc/" class="fa" target="_blank">snippet主题博主</a>
-        
-        </div>
-    </div>
-
-
-        
-    </aside>
+</aside>
 
                 
             </div>

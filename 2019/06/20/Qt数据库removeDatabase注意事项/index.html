@@ -364,7 +364,7 @@
 <p>起源:最近在研究一个项目, 其中用到了数据库,在数据库断开重连时会给出警告,经过一系列尝试终于搞定,网上找的方法大多数都是抄来抄去,很是无语…</p>
 </blockquote>
 <h2 id="警告示例"><a href="#警告示例" class="headerlink" title="警告示例"></a>警告示例</h2><p>内容为:<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">QSqlDatabasePrivate::removeDatabase:<span class="built_in"> connection </span><span class="string">'qt_sql_default_connection'</span> is still <span class="keyword">in</span> use, all queries will cease <span class="keyword">to</span> work</span><br></pre></td></tr></table></figure></p>
-<p>如下图所示<br><img src="/photos/Qt数据库removeDatabase注意事项/警告.png" alt="图片"></p>
+<p>如下图所示<br><img src="/photos/Qt数据库removeDatabase注意事项/警告.webp" alt="图片"></p>
 <h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><ul>
 <li>在每一次数据库打开时先把原有连接关闭,</li>
 <li>特别值得注意的是,在<strong>打开失败</strong>时也要关闭连接</li>
