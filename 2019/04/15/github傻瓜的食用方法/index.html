@@ -26,8 +26,10 @@
 github 作为全球最大的同性交友网站,是作为程序员的我们必备网站之一,本文就简单的使用做个介绍
 
 
-配置Git
-首先在本地创建ssh key；1$ ssh-keygen -t rsa -C...">
+配置 Git
+首先在本地创建 ssh key；
+
+1$ ssh-keygen -t rs...">
 
 
 
@@ -369,37 +371,37 @@ github 作为全球最大的同性交友网站,是作为程序员的我们必备
         <blockquote>
 <p>github 作为全球最大的同性交友网站,是作为程序员的我们必备网站之一,本文就简单的使用做个介绍</p>
 </blockquote>
-<p><img src="/photos/github傻瓜的食用方法/git和github.jpeg" alt="git"></p>
-<h2 id="配置Git"><a href="#配置Git" class="headerlink" title="配置Git"></a>配置Git</h2><ol>
-<li>首先在本地创建ssh key；<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>ssh-keygen -t rsa -C <span class="string">"your_email@youremail.com"</span></span><br></pre></td></tr></table></figure>
-</li>
+<p><img src="/photos/github傻瓜的食用方法/git和github.webp" alt="git"></p>
+<h2 id="配置-Git"><a href="#配置-Git" class="headerlink" title="配置 Git"></a>配置 Git</h2><ol>
+<li>首先在本地创建 ssh key；</li>
 </ol>
-<p>后面的<a href="mailto:your_email@youremail.com" target="_blank" rel="noopener">your_email@youremail.com</a>改为你在github上注册的邮箱,之后会要求确认路径和输入密码,我们这使用默认的一路回车就行.成功的话会在~/下生成.ssh文件夹,进去,打开id_rsa.pub,复制里面的key.</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>ssh-keygen -t rsa -C <span class="string">"your_email@youremail.com"</span></span><br></pre></td></tr></table></figure>
+<p>后面的 <a href="mailto:your_email@youremail.com" target="_blank" rel="noopener">your_email@youremail.com</a> 改为你在 github 上注册的邮箱,之后会要求确认路径和输入密码,我们这使用默认的一路回车就行.成功的话会在~/下生成.ssh 文件夹,进去,打开 id_rsa.pub,复制里面的 key.</p>
 <ol start="2">
-<li><p>回到github上,进入 Account Settings（账户配置）,左边选择SSH Keys,Add SSH Key,title随便填,粘贴在你电脑上生成的key.</p>
+<li><p>回到 github 上,进入 Account Settings（账户配置）,左边选择 SSH Keys,Add SSH Key,title 随便填,粘贴在你电脑上生成的 key.</p>
 </li>
-<li><p>为了验证是否成功,在git bash下输入：</p>
-<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>ssh -T git<span class="variable">@github</span>.com</span><br></pre></td></tr></table></figure>
+<li><p>为了验证是否成功,在 git bash 下输入：</p>
 </li>
 </ol>
-<p>如果是第一次的会提示是否continue,输入yes就会看到：You’ve successfully authenticated, but GitHub does not provide shell access .这就表示已成功连上github.</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>ssh -T git<span class="variable">@github</span>.com</span><br></pre></td></tr></table></figure>
+<p>如果是第一次的会提示是否 continue,输入 yes 就会看到：You’ve successfully authenticated, but GitHub does not provide shell access .这就表示已成功连上 github.</p>
 <ol start="4">
-<li>接下来我们要做的就是把本地仓库传到github上去,在此之前还需要设置username和email,因为github每次commit都会记录他们.</li>
+<li>接下来我们要做的就是把本地仓库传到 github 上去,在此之前还需要设置 username 和 email,因为 github 每次 commit 都会记录他们.</li>
 </ol>
 <figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git<span class="built_in"> config </span>--global user.name <span class="string">"your name"</span></span><br><span class="line">$ git<span class="built_in"> config </span>--global user.email <span class="string">"your_email@youremail.com"</span></span><br></pre></td></tr></table></figure>
-<h2 id="将一个已有的工程上传到github的最简便方法"><a href="#将一个已有的工程上传到github的最简便方法" class="headerlink" title="将一个已有的工程上传到github的最简便方法"></a>将一个已有的工程上传到github的最简便方法</h2><ul>
-<li>到github上去新建一个当前工程命名的仓库</li>
-<li><p>执行git clone 新建的仓库地址</p>
-<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="keyword">clone</span> <span class="title">git</span>@github.com:spygg/xxxx.git</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>将工程下的所有文件拷贝到上一步xxx目录中</p>
-</li>
-<li>执行命令三部曲<figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git <span class="keyword">add</span> .</span><br><span class="line">git comment -m <span class="string">"说明xxxxxxxxxx"</span></span><br><span class="line">git <span class="keyword">push</span></span><br></pre></td></tr></table></figure>
-</li>
+<h2 id="将一个已有的工程上传到-github-的最简便方法"><a href="#将一个已有的工程上传到-github-的最简便方法" class="headerlink" title="将一个已有的工程上传到 github 的最简便方法"></a>将一个已有的工程上传到 github 的最简便方法</h2><ul>
+<li>到 github 上去新建一个当前工程命名的仓库</li>
+<li>执行 git clone 新建的仓库地址</li>
 </ul>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="keyword">clone</span> <span class="title">git</span>@github.com:spygg/xxxx.git</span><br></pre></td></tr></table></figure>
+<ul>
+<li>将工程下的所有文件拷贝到上一步 xxx 目录中</li>
+<li>执行命令三部曲</li>
+</ul>
+<figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git <span class="keyword">add</span> .</span><br><span class="line">git comment -m <span class="string">"说明xxxxxxxxxx"</span></span><br><span class="line">git <span class="keyword">push</span></span><br></pre></td></tr></table></figure>
 <h2 id="ps"><a href="#ps" class="headerlink" title="ps"></a>ps</h2><ul>
 <li>更新仓库还是命令三部曲</li>
-<li>如果系统是windows请自行安装git(我是ubuntu自带的,自豪一下(<em>^__^</em>)</li>
+<li>如果系统是 windows 请自行安装 git(我是 ubuntu 自带的,自豪一下(_^__^_)</li>
 </ul>
 
     </div>
@@ -504,7 +506,7 @@ github 作为全球最大的同性交友网站,是作为程序员的我们必备
     <div class="widget">
         <h3 class="title">文章目录</h3>
         
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#配置Git"><span class="toc-text">配置Git</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#将一个已有的工程上传到github的最简便方法"><span class="toc-text">将一个已有的工程上传到github的最简便方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ps"><span class="toc-text">ps</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#配置-Git"><span class="toc-text">配置 Git</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#将一个已有的工程上传到-github-的最简便方法"><span class="toc-text">将一个已有的工程上传到 github 的最简便方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ps"><span class="toc-text">ps</span></a></li></ol>
         
     </div>
 </aside>
