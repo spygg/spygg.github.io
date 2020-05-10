@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://liusblog.top/"/>
-  <updated>2020-05-06T12:28:11.099Z</updated>
+  <updated>2020-05-10T01:48:25.783Z</updated>
   <id>https://liusblog.top/</id>
   
   <author>
@@ -15,6 +15,40 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Linux简单运维</title>
+    <link href="https://liusblog.top/2020/05/10/Linux%E7%AE%80%E5%8D%95%E8%BF%90%E7%BB%B4/"/>
+    <id>https://liusblog.top/2020/05/10/Linux简单运维/</id>
+    <published>2020-05-10T01:23:28.000Z</published>
+    <updated>2020-05-10T01:48:25.783Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p>运行环境 cetos 7.8 中文界面</p></blockquote><h2 id="安装远程桌面"><a href="#安装远程桌面" class="headerlink" title="安装远程桌面"></a>安装远程桌面</h2><ol><li>ssh 登录</li></ol><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh root@192.168.1.xxx</span><br></pre></td></tr></table></figure><ol start="2"><li>安装远程桌面</li></ol><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install tigervnc-server tigervnc</span><br></pre></td></tr></table></figure><ol start="3"><li>设置 vnc 密码</li></ol><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vncpasswd</span><br></pre></td></tr></table></figure><p>根据提示输入 vnc 密码(可以和登录密码<strong>不同</strong>)</p><ol start="4"><li>启动 vncserver</li></ol><p>冒号后的数字要记住,后面登录用,网上说默认登录端口 57900,其实不用管</p><figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">vncserver</span> :<span class="string">2</span></span><br><span class="line"><span class="attr">vncserver</span> <span class="string">-list</span></span><br></pre></td></tr></table></figure><ol start="5"><li>停止防火墙</li></ol><figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl <span class="built_in">stop</span> firewalld.service</span><br></pre></td></tr></table></figure><ol start="6"><li>在 windows 上下载 tigervnc</li></ol><p>需要注意的是登陆地址需要填写端口数字为启动时的那个,如 2<br><img src="/photos/Linux简单运维/windows登录.webp" alt="远程登录"></p><h2 id="中文输入法"><a href="#中文输入法" class="headerlink" title="中文输入法"></a>中文输入法</h2><p>这里吐槽下网上的都是一大抄,很是恶心,在找不到 Chinese(Intelligent Pinyin)时应该通过下属命令看下依赖,一般是缺少 table 表造成的</p><figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">rpm -qa | grep ibus</span><br><span class="line">yum install ibus-<span class="keyword">table</span>-chinese-*</span><br></pre></td></tr></table></figure><h2 id="文件共享-Samba"><a href="#文件共享-Samba" class="headerlink" title="文件共享 Samba"></a>文件共享 Samba</h2><p>继续更新中…</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;blockquote&gt;
+&lt;p&gt;运行环境 cetos 7.8 中文界面&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&quot;安装远程桌面&quot;&gt;&lt;a href=&quot;#安装远程桌面&quot; class=&quot;headerlink&quot; title=&quot;安装远程桌面&quot;&gt;&lt;/a&gt;安装远程桌面&lt;/h2&gt;&lt;ol
+      
+    
+    </summary>
+    
+      <category term="运维" scheme="https://liusblog.top/categories/%E8%BF%90%E7%BB%B4/"/>
+    
+      <category term="远程桌面" scheme="https://liusblog.top/categories/%E8%BF%90%E7%BB%B4/%E8%BF%9C%E7%A8%8B%E6%A1%8C%E9%9D%A2/"/>
+    
+      <category term="文件共享" scheme="https://liusblog.top/categories/%E8%BF%90%E7%BB%B4/%E8%BF%9C%E7%A8%8B%E6%A1%8C%E9%9D%A2/%E6%96%87%E4%BB%B6%E5%85%B1%E4%BA%AB/"/>
+    
+      <category term="输入法" scheme="https://liusblog.top/categories/%E8%BF%90%E7%BB%B4/%E8%BF%9C%E7%A8%8B%E6%A1%8C%E9%9D%A2/%E6%96%87%E4%BB%B6%E5%85%B1%E4%BA%AB/%E8%BE%93%E5%85%A5%E6%B3%95/"/>
+    
+    
+      <category term="Linux" scheme="https://liusblog.top/tags/Linux/"/>
+    
+  </entry>
   
   <entry>
     <title>Qt下的Websocket</title>
@@ -605,34 +639,6 @@
       <category term="git" scheme="https://liusblog.top/tags/git/"/>
     
       <category term="github" scheme="https://liusblog.top/tags/github/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Ubuntu触摸板调教</title>
-    <link href="https://liusblog.top/2019/04/14/Ubuntu%E8%A7%A6%E6%91%B8%E6%9D%BF%E8%B0%83%E6%95%99/"/>
-    <id>https://liusblog.top/2019/04/14/Ubuntu触摸板调教/</id>
-    <published>2019-04-14T12:22:49.000Z</published>
-    <updated>2020-03-01T15:11:32.098Z</updated>
-    
-    <content type="html"><![CDATA[<blockquote><p>本文主要解决笔记本打字时误触的问题,并且在没有鼠标的时候自动识别</p></blockquote><h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><ol><li>安装touchpad-indicator(这个因为好久的项目,貌似在鼠标插拔时有bug)</li></ol><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo add-apt-repository ppa:atareao/atareao</span><br><span class="line">sudo apt update</span><br><span class="line">sudo apt install touchpad-indicator</span><br></pre></td></tr></table></figure><p>可以设置为开机自启动,当检测到鼠标插入的时候禁用触摸板,或者只是打字的时候禁用就行非常方便(不推荐)</p><ol start="2"><li><p>使用命令行</p><figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">sudo</span> <span class="string">rmmod psmouse    这个是禁用的</span></span><br><span class="line"><span class="attr">sudo</span> <span class="string">modprobe psmouse 这个是启用的</span></span><br></pre></td></tr></table></figure></li><li><p>使用GNOME Shell Extension安装(推荐)</p></li></ol><p>在Ubuntu软件中心里搜索 Touchpad Indicator的扩展,并安装,非常简单易用</p><p>下图是我的设置供参考<br><img src="/photos/Ubuntu触摸板调教/设置图.webp" alt="设置图"></p><h2 id="编程"><a href="#编程" class="headerlink" title="编程"></a>编程</h2><p>作为一个程序员,首先关心的就是能否自己实现,下面分两种系统进行浅析</p><ol><li><p>Linux 系统</p><ul><li><p>命令行:</p>  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">xinput --list 获取所有设备列表</span><br><span class="line">或者cat /proc/bus/input/devices获取所有设备详细信息</span><br><span class="line"></span><br><span class="line">禁用设备:xinput <span class="built_in">set</span>-prop <span class="string">"id"</span> <span class="string">"Device Enabled"</span> 0</span><br><span class="line">启用设备:xinput <span class="built_in">set</span>-prop <span class="string">"10"</span> <span class="string">"Device Enabled"</span> 1</span><br></pre></td></tr></table></figure><p>通过上述命令然后定时获取鼠标的在线情况,然后启动或者禁用触摸板,或者通过事件机制</p></li><li><p>编程: 大致分为两步</p><p>  ①通过netlinksocket</p><p>  ②使用udev编写规则</p><p>C语言代码实现</p><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;ctype.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/un.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/ioctl.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/socket.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;linux/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;linux/netlink.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;errno.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> UEVENT_BUFFER_SIZE 2048</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">init_hotplug_sock</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">sockaddr_nl</span> <span class="title">snl</span>;</span></span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">int</span> buffer_size = <span class="number">16</span> * <span class="number">1024</span> * <span class="number">1024</span>;</span><br><span class="line">    <span class="keyword">int</span> retval = <span class="number">0</span>;</span><br><span class="line">    <span class="built_in">memset</span>(&amp;snl, <span class="number">0</span>, <span class="keyword">sizeof</span>(snl));</span><br><span class="line">    snl.nl_family = AF_NETLINK;</span><br><span class="line">    snl.nl_pid = getpid();</span><br><span class="line">    snl.nl_groups = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> hotplug_sock = socket(PF_NETLINK, SOCK_DGRAM, NETLINK_KOBJECT_UEVENT);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(hotplug_sock == <span class="number">-1</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"error gettting socket %s\n"</span>, strerror(errno));</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    setsockopt(hotplug_sock, SOL_SOCKET, SO_RCVBUFFORCE, &amp;buffer_size, <span class="keyword">sizeof</span>(buffer_size));</span><br><span class="line"></span><br><span class="line">    retval = bind(hotplug_sock, (struct sockaddr *)&amp;snl, <span class="keyword">sizeof</span>(struct sockaddr_nl));</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(retval &lt; <span class="number">0</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"bind failed %s\n"</span>, strerror(errno));</span><br><span class="line">        <span class="built_in">close</span>(hotplug_sock);</span><br><span class="line">        hotplug_sock = <span class="number">-1</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> hotplug_sock;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"Hello Deivce!\n"</span>);</span><br><span class="line">    <span class="keyword">int</span> hotplug_sock = init_hotplug_sock();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span>(<span class="number">1</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">char</span> buf[UEVENT_BUFFER_SIZE * <span class="number">2</span>] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">        recv(hotplug_sock, &amp;buf, <span class="keyword">sizeof</span>(buf), <span class="number">0</span>);</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"%s\n"</span>, buf);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li></ul></li><li><p>window系统</p><ul><li><p>通过注册表</p></li><li><p>通过消息WM_DEVICECHANGE OndeviceChange()实现</p></li></ul></li></ol>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;blockquote&gt;
-&lt;p&gt;本文主要解决笔记本打字时误触的问题,并且在没有鼠标的时候自动识别&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h2 id=&quot;解决方案&quot;&gt;&lt;a href=&quot;#解决方案&quot; class=&quot;headerlink&quot; title=&quot;解决方案&quot;&gt;&lt;/a&gt;解决方案&lt;/h
-      
-    
-    </summary>
-    
-      <category term="Linux" scheme="https://liusblog.top/categories/Linux/"/>
-    
-    
-      <category term="软件使用" scheme="https://liusblog.top/tags/%E8%BD%AF%E4%BB%B6%E4%BD%BF%E7%94%A8/"/>
     
   </entry>
   
