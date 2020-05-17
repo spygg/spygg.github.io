@@ -332,16 +332,67 @@ ssh 登录
 <p>冒号后的数字要记住,后面登录用,网上说默认登录端口 57900,其实不用管</p>
 <figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">vncserver</span> :<span class="string">2</span></span><br><span class="line"><span class="attr">vncserver</span> <span class="string">-list</span></span><br></pre></td></tr></table></figure>
 <ol start="5">
-<li>停止防火墙</li>
+<li>防火墙</li>
 </ol>
-<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl <span class="built_in">stop</span> firewalld.service</span><br></pre></td></tr></table></figure>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo firewall-cmd --permanent <span class="attribute">--zone</span>=public <span class="attribute">--add-port</span>=5901-5905/tcp</span><br><span class="line">sudo systemctl restart firewalld.service</span><br></pre></td></tr></table></figure>
 <ol start="6">
+<li>开机自启</li>
+</ol>
+<p>注意这里的@后面的数字就是将来登录的<strong>端口</strong></p>
+<figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo cp /<span class="class"><span class="keyword">lib</span>/<span class="title">systemd</span>/<span class="title">system</span>/<span class="title">vncserver</span>@.<span class="title">service</span> /<span class="title">lib</span>/<span class="title">systemd</span>/<span class="title">system</span>/<span class="title">vncserver</span>@:1.<span class="title">service</span></span></span><br><span class="line">sudo vim /<span class="class"><span class="keyword">lib</span>/<span class="title">systemd</span>/<span class="title">system</span>/<span class="title">vncserver</span>@:1.<span class="title">service</span></span></span><br></pre></td></tr></table></figure>
+<p>内容如下注意替换 lenovo 为你的用户名</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[Unit]</span><br><span class="line"><span class="attribute">Description</span>=Remote desktop<span class="built_in"> service </span>(VNC)</span><br><span class="line"><span class="attribute">After</span>=syslog.target network.target</span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line"><span class="attribute">Type</span>=forking</span><br><span class="line"><span class="attribute">ExecStartPre</span>=/bin/sh -c <span class="string">'/usr/bin/vncserver -kill %i &gt; /dev/null 2&gt;&amp;1 || :'</span></span><br><span class="line"><span class="attribute">ExecStart</span>=/sbin/runuser -l lenovo -c <span class="string">"/usr/bin/vncserver %i -geometry 1280x720"</span></span><br><span class="line"><span class="attribute">PIDFile</span>=/home/lenovo/.vnc/%H%i.pid</span><br><span class="line"><span class="attribute">ExecStop</span>=/bin/sh -c <span class="string">'/usr/bin/vncserver -kill %i &gt; /dev/null 2&gt;&amp;1 || :'</span></span><br><span class="line"></span><br><span class="line">[Install]</span><br><span class="line"><span class="attribute">WantedBy</span>=multi-user.target</span><br></pre></td></tr></table></figure>
+<p>设置开机自动</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl enable <span class="symbol">vncserver@</span>:<span class="number">1.</span>service</span><br></pre></td></tr></table></figure>
+<ol start="7">
 <li>在 windows 上下载 tigervnc</li>
 </ol>
-<p>需要注意的是登陆地址需要填写端口数字为启动时的那个,如 2<br><img src="/photos/Linux简单运维/windows登录.webp" alt="远程登录"></p>
+<p>需要注意的是登陆地址需要填写端口数字为启动时的那个,如 2(如果上一步设置成功为 1)<br><img src="/photos/Linux简单运维/windows登录.webp" alt="远程登录"></p>
 <h2 id="中文输入法"><a href="#中文输入法" class="headerlink" title="中文输入法"></a>中文输入法</h2><p>这里吐槽下网上的都是一大抄,很是恶心,在找不到 Chinese(Intelligent Pinyin)时应该通过下属命令看下依赖,一般是缺少 table 表造成的</p>
 <figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">rpm -qa | grep ibus</span><br><span class="line">yum install ibus-<span class="keyword">table</span>-chinese-*</span><br></pre></td></tr></table></figure>
 <h2 id="文件共享-Samba"><a href="#文件共享-Samba" class="headerlink" title="文件共享 Samba"></a>文件共享 Samba</h2><p>继续更新中…</p>
+<h2 id="安装-ftpd-服务"><a href="#安装-ftpd-服务" class="headerlink" title="安装 ftpd 服务"></a>安装 ftpd 服务</h2><p>参考文章<a href="https://blog.csdn.net/zwd926/article/details/89884089" target="_blank" rel="noopener">Linux 安装 vsftpd（ftp 服务器）及配置详解</a></p>
+<ol>
+<li>安装 vsftpd</li>
+</ol>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo yum -y <span class="keyword">install</span> vsftpd</span><br></pre></td></tr></table></figure>
+<p>2.设置开机自启</p>
+<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chkconfig vsftpd <span class="keyword">on</span></span><br></pre></td></tr></table></figure>
+<p>3.开启服务</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">systemctl</span> <span class="selector-tag">stop</span> <span class="selector-tag">vsftpd</span><span class="selector-class">.service</span></span><br><span class="line"><span class="selector-tag">systemctl</span> <span class="selector-tag">start</span> <span class="selector-tag">vsftpd</span><span class="selector-class">.service</span></span><br><span class="line"><span class="selector-tag">systemctl</span> <span class="selector-tag">status</span> <span class="selector-tag">vsftpd</span><span class="selector-class">.service</span></span><br></pre></td></tr></table></figure>
+<p>4.创建 ftp 虚拟用户</p>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo <span class="built_in">mkdir</span> -p /<span class="built_in">home</span>/ftproot/ftptest</span><br><span class="line">sudo useradd -d /<span class="built_in">home</span>/ftproot/ftptest -g ftp -s /sbin/nologin ftptest</span><br></pre></td></tr></table></figure>
+<p>5.设置用户权限</p>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo chown -R ftptest /<span class="built_in">home</span>/ftproot/ftptest</span><br><span class="line">sudo chmod -R <span class="number">777</span> /<span class="built_in">home</span>/ftproot/ftptest</span><br></pre></td></tr></table></figure>
+<p>6.设置用户密码</p>
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">sudo passwd ftptest</span></span><br></pre></td></tr></table></figure>
+<p>7.配置 vsftp.conf</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo <span class="keyword">vim</span> /etc/vsftpd/vsftpd.<span class="keyword">conf</span></span><br></pre></td></tr></table></figure>
+<p>关键点如下:</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">anonymous_enable</span>=<span class="literal">NO</span></span><br><span class="line"><span class="attr">chroot_list_enable</span>=<span class="literal">YES</span></span><br><span class="line"><span class="attr">chroot_list_file</span>=/etc/vsftpd/chroot_list</span><br><span class="line"><span class="attr">allow_writeable_chroot</span>=<span class="literal">YES</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#下面几句不知道有用没有</span></span><br><span class="line"><span class="attr">pasv_enable</span>=<span class="literal">YES</span></span><br><span class="line"><span class="attr">pasv_min_port</span>=<span class="number">30000</span></span><br><span class="line"><span class="attr">pasv_max_port</span>=<span class="number">30010</span></span><br></pre></td></tr></table></figure>
+<p>8.添加用户列表</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vim <span class="regexp">/etc/</span>vsftpd<span class="regexp">/chroot_list</span></span><br></pre></td></tr></table></figure>
+<p>在文件中添加</p>
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">ftptest</span></span><br></pre></td></tr></table></figure>
+<p>9.修改 ftp 用户权限</p>
+<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo vim <span class="string">/etc/pam.d/vsftpd</span></span><br><span class="line"><span class="comment">#auth required pam_shells.so</span></span><br></pre></td></tr></table></figure>
+<p>或者增加/sbin/nologin</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo vim <span class="regexp">/etc/</span>shells</span><br><span class="line"><span class="regexp">/sbin/</span>nologin</span><br></pre></td></tr></table></figure>
+<p>10.重启服务</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo<span class="built_in"> service </span>vsftpd restart</span><br></pre></td></tr></table></figure>
+<p>11.错误调试</p>
+<p>确保 ftp_home_dir 和 allow_ftpd_full_access 必须为 on</p>
+<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl status vsftpd.service</span><br><span class="line">getsebool -<span class="keyword">a</span> | grep <span class="keyword">ftp</span></span><br><span class="line">setsebool -P allow_ftpd_full_access <span class="keyword">on</span></span><br><span class="line">setsebool -P tftp_home_dir <span class="keyword">on</span></span><br></pre></td></tr></table></figure>
+<h2 id="开机自启"><a href="#开机自启" class="headerlink" title="开机自启"></a>开机自启</h2><ol>
+<li>编写开机自启脚本</li>
+</ol>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo <span class="keyword">vim</span> /etc/init.d/tomcatauto.<span class="keyword">sh</span></span><br></pre></td></tr></table></figure>
+<p>写入以下内容注意<strong>前三行</strong>格式一定,如下所示</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/sh</span></span><br><span class="line"><span class="comment">#chkconfig: 2345 80 90</span></span><br><span class="line"><span class="comment">#description:auto_run</span></span><br><span class="line"></span><br><span class="line">/home/lenovo/wbfsj/apache-tomcat-7.0.103/bin/startup.sh</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>开机自启</li>
+</ol>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">chmod +x /etc/init.<span class="keyword">d</span>/tomcatauto.<span class="keyword">sh</span></span><br><span class="line">sudo chkconfig tomcatauto.<span class="keyword">sh</span> <span class="keyword">on</span></span><br></pre></td></tr></table></figure>
 
     </div>
     
@@ -434,7 +485,7 @@ ssh 登录
     <div class="widget">
         <h3 class="title">文章目录</h3>
         
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#安装远程桌面"><span class="toc-text">安装远程桌面</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#中文输入法"><span class="toc-text">中文输入法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#文件共享-Samba"><span class="toc-text">文件共享 Samba</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#安装远程桌面"><span class="toc-text">安装远程桌面</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#中文输入法"><span class="toc-text">中文输入法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#文件共享-Samba"><span class="toc-text">文件共享 Samba</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装-ftpd-服务"><span class="toc-text">安装 ftpd 服务</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#开机自启"><span class="toc-text">开机自启</span></a></li></ol>
         
     </div>
 </aside>
