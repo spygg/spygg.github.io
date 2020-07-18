@@ -303,7 +303,7 @@ github 作为全球最大的同性交友网站,是作为程序员的我们必备
             
             
             <p class="fa fa-exclamation-triangle warning">
-                本文于<strong>440</strong>天之前发表，文中内容可能已经过时。
+                本文于<strong>460</strong>天之前发表，文中内容可能已经过时。
             </p>
         
     </div>
@@ -366,6 +366,23 @@ github 作为全球最大的同性交友网站,是作为程序员的我们必备
 </ol>
 <figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">git</span> <span class="keyword">push </span>origin [<span class="keyword">branch </span>name]</span><br></pre></td></tr></table></figure>
 <h3 id="克隆分支到本地"><a href="#克隆分支到本地" class="headerlink" title="克隆分支到本地"></a>克隆分支到本地</h3><figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="keyword">clone</span> <span class="title">-b</span> [branch name] git@github.com:spygg/xxxx.git</span><br></pre></td></tr></table></figure>
+<h3 id="文本回车换行"><a href="#文本回车换行" class="headerlink" title="文本回车换行"></a>文本回车换行</h3><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git<span class="built_in"> config </span>--global core.autocrlf <span class="literal">false</span></span><br><span class="line">git<span class="built_in"> config </span>--global core.safecrlf <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+<h4 id="AutoCRLF-自动换行"><a href="#AutoCRLF-自动换行" class="headerlink" title="AutoCRLF(自动换行)"></a>AutoCRLF(自动换行)</h4><ul>
+<li><p>提交时转换为 LF，检出时转换为 CRLF<br>git config –global core.autocrlf true</p>
+</li>
+<li><p>提交时转换为 LF，检出时不转换<br>git config –global core.autocrlf input</p>
+</li>
+<li><p>提交检出均不转换<br>git config –global core.autocrlf false</p>
+</li>
+</ul>
+<h4 id="SafeCRLF-安全换行"><a href="#SafeCRLF-安全换行" class="headerlink" title="SafeCRLF(安全换行)"></a>SafeCRLF(安全换行)</h4><ul>
+<li><p>拒绝提交包含混合换行符的文件<br>git config –global core.safecrlf true</p>
+</li>
+<li><p>允许提交包含混合换行符的文件<br>git config –global core.safecrlf false</p>
+</li>
+<li><p>提交包含混合换行符的文件时给出警告<br>git config –global core.safecrlf warn</p>
+</li>
+</ul>
 
     </div>
     
@@ -463,7 +480,7 @@ github 作为全球最大的同性交友网站,是作为程序员的我们必备
     <div class="widget">
         <h3 class="title">文章目录</h3>
         
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#配置-Git"><span class="toc-text">配置 Git</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#将一个已有的工程上传到-github-的最简便方法"><span class="toc-text">将一个已有的工程上传到 github 的最简便方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#黑科技"><span class="toc-text">黑科技</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#强制覆盖本地版本"><span class="toc-text">强制覆盖本地版本</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ps"><span class="toc-text">ps</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#高级用法"><span class="toc-text">高级用法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#新增分支"><span class="toc-text">新增分支</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#克隆分支到本地"><span class="toc-text">克隆分支到本地</span></a></li></ol></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#配置-Git"><span class="toc-text">配置 Git</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#将一个已有的工程上传到-github-的最简便方法"><span class="toc-text">将一个已有的工程上传到 github 的最简便方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#黑科技"><span class="toc-text">黑科技</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#强制覆盖本地版本"><span class="toc-text">强制覆盖本地版本</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ps"><span class="toc-text">ps</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#高级用法"><span class="toc-text">高级用法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#新增分支"><span class="toc-text">新增分支</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#克隆分支到本地"><span class="toc-text">克隆分支到本地</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#文本回车换行"><span class="toc-text">文本回车换行</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#AutoCRLF-自动换行"><span class="toc-text">AutoCRLF(自动换行)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#SafeCRLF-安全换行"><span class="toc-text">SafeCRLF(安全换行)</span></a></li></ol></li></ol></li></ol>
         
     </div>
 </aside>
