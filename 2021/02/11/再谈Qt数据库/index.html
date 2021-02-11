@@ -1,0 +1,491 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="间客六十">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="google-site-verification" content="NGCFVs-lxT5zTiHxEXzk7fkJl26matl6KfVIgcORvFQ">
+    <meta name="msvalidate.01" content="9C33A26895A2A8B80CEE60CD519D1095">
+
+    <link rel="dns-prefetch" href="https://liusblog.top">
+    <!--SEO-->
+
+    <meta name="keywords" content="Qt,QSqlDatabase,多线程,数据库,QSqlQuery,单例,事务">
+
+
+    <meta name="description" content="
+以前写的Qt数据退出时提示异常的情况,经历时间的摧残,再战数据库
+
+多线程支持一个函数在不同线程中调用,可通过 QThread::currentThread()来区分所以可声明一个单例函数1s...">
+
+
+
+<meta name="robots" content="all">
+<meta name="google" content="all">
+<meta name="googlebot" content="all">
+<meta name="verify" content="all">
+
+    <!--Title-->
+
+
+<title>再谈Qt数据库 | 间客六十</title>
+
+
+    <link rel="alternate" href="/atom.xml" title="间客六十" type="application/atom+xml">
+
+
+    <link rel="icon" href="/favicon.ico">
+
+    
+
+
+
+<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.6.3/css/font-awesome.min.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash">
+
+
+
+    
+
+
+
+
+	<script>
+		(function(i, s, o, g, r, a, m) {
+		    i['GoogleAnalyticsObject'] = r;
+		    i[r] = i[r] || function() {
+		        (i[r].q = i[r].q || []).push(arguments)
+		    }, i[r].l = 1 * new Date();
+		    a = s.createElement(o),
+		    m = s.getElementsByTagName(o)[0];
+		    a.async = 1;
+		    a.src = g;
+		    m.parentNode.insertBefore(a, m)
+		})(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+		ga('create', 'true', 'auto');
+		ga('send', 'pageview');
+	</script>
+
+
+    
+
+	
+    <script type="text/javascript">
+        function hasClass(obj, cls) {
+            return obj.className.match(new RegExp('(\\s|^)' + cls + '(\\s|$)'));
+        }
+         
+        function addClass(obj, cls) {
+            if (!this.hasClass(obj, cls)) obj.className += " " + cls;
+        }
+         
+        function removeClass(obj, cls) {
+            if (hasClass(obj, cls)) {
+                var reg = new RegExp('(\\s|^)' + cls + '(\\s|$)');
+                obj.className = obj.className.replace(reg, ' ');
+            }
+        }
+
+
+        window.addEventListener('load', function () {
+            var imgAll = document.getElementsByClassName('post-body')[0];
+            if(imgAll == undefined){
+                return;
+            }
+            
+            var imgs = imgAll.getElementsByTagName('img')
+            for(var i=0;i<imgs.length;i++){
+                if(hasClass(imgs[i],'class_no_full_screen')){
+                    continue;
+                }
+
+                imgs[i].setAttribute('style', "cursor: zoom-in");
+                imgs[i].onclick=function(){
+                
+                    var section=document.getElementsByTagName("section")[0];
+
+                    var imgView = document.getElementById('imgViewDom');
+                    if(imgView == undefined){
+                        imgView=document.createElement("div");
+                        imgView.id = "imgViewDom";
+
+                        section.appendChild(imgView)
+
+
+                        imgView.onclick = function(){
+                            addClass(imgView, "disnone");
+                            imgView.innerHTML="";
+                        }
+
+                    }
+            
+                    imgView.innerHTML="<img id = 'jackslowfuck' src=" + this.src + " style='cursor: zoom-out; max-width: 100%;'" + ">";
+                    removeClass(imgView, "disnone");
+
+                    var jackslowfuck = document.getElementById('jackslowfuck');
+                    jackslowfuck.onclick=function(){
+                        addClass(imgView, "disnone");
+                        imgView.innerHTML="";
+                    }
+
+                }
+            }
+            
+        }, false);
+    </script>
+
+    <style type="text/css">
+        #imgViewDom {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            z-index: 99999999;
+            background: rgba(0, 0, 0,0.7);
+            overflow: auto;
+            display: -webkit-box;
+            -webkit-box-align: center;
+            -webkit-box-pack: center;
+            display: -moz-box;
+            -moz-box-align: center;
+            -moz-box-pack: center;
+            display: -o-box;
+            -o-box-align: center;
+            -o-box-pack: center;
+            display: -ms-box;
+            -ms-box-align: center;
+            -ms-box-pack: center;
+            display: box;
+            box-align: center;
+            box-pack: center;
+            cursor: zoom-out;
+        }
+
+        .disnone{
+            display: none !important;
+        }
+    </style>
+
+</head>
+
+</html>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+
+<body>
+    <header class="main-header" style="background-image:url(/img/banner.webp)">
+    <div class="main-header-box">
+        <a class="header-avatar" href="/about" title="spygg">
+            <img src="/img/avatar.webp" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+        	<!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+                <h2> 技术引领生活! </h2>
+            
+    	</div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                    <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <!---<a class="navbar-brand" href="https://liusblog.top">间客六十</a>--->
+                    <a class="navbar-brand" href="/">间客六十</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/"><i class="fa fa-home"></i>首页</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/Qt"><i class="fa "></i>Qt</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/Python"><i class="fa "></i>Python</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/Linux"><i class="fa "></i>Linux</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/音视频"><i class="fa "></i>音视频</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/网站开发"><i class="fa "></i>网站开发</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/杂谈"><i class="fa "></i>杂谈</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/archives/"><i class="fa "></i>时间轴</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/about/"><i class="fa "></i>关于</a>
+                            </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="再谈Qt数据库">
+            
+	            再谈Qt数据库
+            
+        </h1>
+        <div class="post-meta">
+    
+        <span class="categories-meta fa-wrap">
+            <i class="fa fa-folder-open-o"></i>
+            <a class="category-link" href="/categories/Qt/">Qt</a>
+        </span>
+    
+
+    
+        <span class="fa-wrap">
+            <i class="fa fa-tags"></i>
+            <span class="tags-meta">
+                
+                    <a class="tag-link" href="/tags/QSqlDatabase/">QSqlDatabase</a> <a class="tag-link" href="/tags/QSqlQuery/">QSqlQuery</a> <a class="tag-link" href="/tags/Qt/">Qt</a> <a class="tag-link" href="/tags/事务/">事务</a> <a class="tag-link" href="/tags/单例/">单例</a>
+                
+            </span>
+        </span>
+    
+
+    
+        
+        <span class="fa-wrap">
+            <i class="fa fa-clock-o"></i>
+            <span class="date-meta">2021/02/11</span>
+        </span>
+        
+    
+</div>
+            
+            
+    </div>
+
+    
+
+    <div class="post-body post-content">
+        <blockquote>
+<p>以前写的Qt数据退出时提示异常的情况,经历时间的摧残,再战数据库</p>
+</blockquote>
+<h2 id="多线程支持"><a href="#多线程支持" class="headerlink" title="多线程支持"></a>多线程支持</h2><p>一个函数在不同线程中调用,可通过 <strong>QThread::currentThread()</strong>来区分<br>所以可声明一个单例函数<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> QSqlDatabase <span class="title">dataBase</span><span class="params">()</span></span>;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">QSqlDatabase <span class="title">DataBaseManager::dataBase</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    QString name = QString::number((quint64)QThread::currentThread(), <span class="number">16</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//如果已经连接并且数据库名没有变化,则返回</span></span><br><span class="line">    <span class="keyword">if</span>(QSqlDatabase::contains(name))&#123;</span><br><span class="line">        QSqlDatabase db = QSqlDatabase::database(name);</span><br><span class="line">        <span class="keyword">if</span>(db.databaseName() == m_dbName)&#123;</span><br><span class="line">            <span class="keyword">return</span> db;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    &#123;</span><br><span class="line">        closeDataBase(name);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">auto</span> db = QSqlDatabase::addDatabase(m_driver, name);</span><br><span class="line"></span><br><span class="line">        db.setHostName(m_host);</span><br><span class="line">        db.setPort(m_port);</span><br><span class="line">        db.setUserName(m_userName);</span><br><span class="line">        db.setPassword(m_passWord);</span><br><span class="line">        db.setDatabaseName(m_dbName);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (!db.<span class="built_in">open</span>()) &#123;</span><br><span class="line">            <span class="comment">//关闭数据库,必须这样..</span></span><br><span class="line">            closeDataBase(name);</span><br><span class="line">            qDebug() &lt;&lt; <span class="string">"数据库打开失败!"</span> &lt;&lt; m_dbName &lt;&lt; name;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            qDebug() &lt;&lt; QString(<span class="string">"数据库%1打开成功, 连接名: %2"</span>).arg(m_dbName).arg(name);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        emit DataBaseManager::instance()-&gt;databaseTableChanged(db.tables());</span><br><span class="line">        <span class="keyword">return</span> db;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="信号发送"><a href="#信号发送" class="headerlink" title="信号发送"></a>信号发送</h2><p>声明一个静态单例模式函数,然后调用即可<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> DataBaseManager* <span class="title">instance</span><span class="params">()</span></span>;</span><br></pre></td></tr></table></figure></p>
+<p>在需要发射信号的地方<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">emit DataBaseManager::instance()-&gt;databaseTableChanged(db.tables());</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">DataBaseManager *<span class="title">DataBaseManager::instance</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">static</span> DataBaseManager qinstance;</span><br><span class="line">    <span class="keyword">return</span> &amp;qinstance;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="事务支持"><a href="#事务支持" class="headerlink" title="事务支持"></a>事务支持</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">DataBaseManager::startTransaction</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">//开启事务</span></span><br><span class="line">    <span class="keyword">if</span>(dataBase().isOpen()</span><br><span class="line">            &amp;&amp; dataBase().driver()-&gt;hasFeature(QSqlDriver::Transactions))&#123;</span><br><span class="line">        <span class="comment">//QMutexLocker locker(&amp;m_mutex);</span></span><br><span class="line">        <span class="keyword">if</span>(!m_isTransactioned)&#123;</span><br><span class="line">            <span class="keyword">bool</span> ok = dataBase().transaction();</span><br><span class="line">            <span class="keyword">if</span>(ok)&#123;</span><br><span class="line">                m_isTransactioned = <span class="literal">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span>&#123;</span><br><span class="line">                qDebug() &lt;&lt; <span class="string">"transaction失败"</span>;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> ok;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">DataBaseManager::commit</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">//开启事务</span></span><br><span class="line">    <span class="keyword">if</span>(dataBase().isOpen() &amp;&amp; dataBase().driver()-&gt;hasFeature(QSqlDriver::Transactions))&#123;</span><br><span class="line">        <span class="keyword">if</span>(m_isTransactioned)&#123;</span><br><span class="line">            <span class="keyword">bool</span> ok = dataBase().commit();</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span>(ok)&#123;</span><br><span class="line">                m_isTransactioned = <span class="literal">false</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span>&#123;</span><br><span class="line">                qDebug() &lt;&lt; <span class="string">"commit 失败!"</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> ok;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="调用"><a href="#调用" class="headerlink" title="调用"></a>调用</h2><p>使用QSqlQuery执行sql语句的时,需要在构造函数中传入一个数据库</p>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">QSqlQuery query(<span class="name">DataBaseManager</span>:<span class="symbol">:dataBase</span>())<span class="comment">;</span></span><br></pre></td></tr></table></figure>
+<h2 id="执行sql文件"><a href="#执行sql文件" class="headerlink" title="执行sql文件"></a>执行sql文件</h2><p>一般情况下,数据库不支持多行模式,特别有些文件还有注释等,所以执行sql文件的核心思想就是解析文本文件,去掉注释变成多次单行模式<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//该函数从开源软件中扒拉出来的</span></span><br><span class="line"><span class="function">QStringList <span class="title">DataBaseManager::quickSplitQueries</span><span class="params">(<span class="keyword">const</span> QString&amp; sql, <span class="keyword">bool</span> keepEmptyQueries, <span class="keyword">bool</span> removeComments)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    QChar c;</span><br><span class="line">    <span class="keyword">bool</span> inString = <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">bool</span> inMultiLineComment = <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">bool</span> inSingleLineComment = <span class="literal">false</span>;</span><br><span class="line">    QStringList queries;</span><br><span class="line">    QString query;</span><br><span class="line">    QString trimmed;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>, total = sql.<span class="built_in">size</span>(); i &lt; total; ++i)&#123;</span><br><span class="line">        c = sql[i];</span><br><span class="line"></span><br><span class="line">        <span class="comment">// String</span></span><br><span class="line">        <span class="keyword">if</span> (inString)&#123;</span><br><span class="line">            query += c;</span><br><span class="line">            <span class="keyword">if</span> (c == <span class="string">'\''</span>)&#123;</span><br><span class="line">                inString = <span class="literal">false</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// One-line comment</span></span><br><span class="line">        <span class="keyword">if</span> (inSingleLineComment)&#123;</span><br><span class="line">            <span class="keyword">if</span> (!removeComments)</span><br><span class="line">                query += c;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (c == <span class="string">'\r'</span> &amp;&amp; (i + <span class="number">1</span>) &lt; total &amp;&amp; sql[i+<span class="number">1</span>] == <span class="string">'\n'</span>)&#123;</span><br><span class="line">                <span class="keyword">if</span> (!removeComments)</span><br><span class="line">                    query += <span class="string">'\n'</span>;</span><br><span class="line"></span><br><span class="line">                i++;</span><br><span class="line">                inSingleLineComment = <span class="literal">false</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span> (c == <span class="string">'\n'</span> || c == <span class="string">'\r'</span>)</span><br><span class="line">                inSingleLineComment = <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Multi-line comment</span></span><br><span class="line">        <span class="keyword">if</span> (inMultiLineComment)&#123;</span><br><span class="line">            <span class="keyword">if</span> (!removeComments)</span><br><span class="line">                query += c;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (c == <span class="string">'*'</span> &amp;&amp; (i + <span class="number">1</span>) &lt; total &amp;&amp; sql[i+<span class="number">1</span>] == <span class="string">'/'</span>)&#123;</span><br><span class="line">                <span class="keyword">if</span> (!removeComments)</span><br><span class="line">                    query += <span class="string">'/'</span>;</span><br><span class="line"></span><br><span class="line">                i++;</span><br><span class="line">                inMultiLineComment = <span class="literal">false</span>;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Everything rest</span></span><br><span class="line">        <span class="keyword">if</span> (c == <span class="string">'\''</span>)&#123;</span><br><span class="line">            query += c;</span><br><span class="line">            inString = <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (c == <span class="string">'-'</span> &amp;&amp; (i + <span class="number">1</span>) &lt; total &amp;&amp; sql[i+<span class="number">1</span>] == <span class="string">'-'</span>)&#123;</span><br><span class="line">            inSingleLineComment = <span class="literal">true</span>;</span><br><span class="line">            i++;</span><br><span class="line">            <span class="keyword">if</span> (!removeComments)</span><br><span class="line">                query += <span class="string">"--"</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (c == <span class="string">'/'</span> &amp;&amp; (i + <span class="number">1</span>) &lt; total &amp;&amp; sql[i+<span class="number">1</span>] == <span class="string">'*'</span>)&#123;</span><br><span class="line">            inMultiLineComment = <span class="literal">true</span>;</span><br><span class="line">            i++;</span><br><span class="line">            <span class="keyword">if</span> (!removeComments)</span><br><span class="line">                query += <span class="string">"/*"</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (c == <span class="string">';'</span>)&#123;</span><br><span class="line">            query += c;</span><br><span class="line">            <span class="keyword">if</span> (keepEmptyQueries || (!(trimmed = query.trimmed()).isEmpty() &amp;&amp; trimmed != <span class="string">";"</span>))</span><br><span class="line">                queries &lt;&lt; query;</span><br><span class="line"></span><br><span class="line">            query.<span class="built_in">clear</span>();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            query += c;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (!query.isNull() &amp;&amp; (!(trimmed = query.trimmed()).isEmpty() &amp;&amp; trimmed != <span class="string">";"</span>))</span><br><span class="line">        queries &lt;&lt; query;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> queries;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
+    </div>
+    
+        <div class="reward" ontouchstart>
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+                <span class="reward-type">
+                    <img class="alipay" src="/img/zhifubaocode.webp"><b>支付宝打赏</b>
+                </span>
+            
+            
+                <span class="reward-type">
+                    <img class="wechat" src="/img/weixincode.webp"><b>微信打赏</b>
+                </span>
+            
+        </div>
+    </div>
+    <p class="reward-tip">您的支持是我前行的动力!</p>
+</div>
+
+
+    
+    <div class="post-footer">
+        <div>
+            
+                转载声明：商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="/about" target="_blank">spygg</a>
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+    
+        <a href="/2020/11/14/网站升级浏览器提示/" class="next-post btn btn-default" title="网站升级浏览器提示">
+            <span class="hidden-lg">下一篇</span>
+            <span class="hidden-xs">网站升级浏览器提示</span><i class="fa fa-angle-right fa-fw"></i>
+        </a>
+    
+</div>
+
+
+
+    <div id="comments">
+        
+	<link rel="stylesheet" href="https://cdn.bootcss.com/gitalk/1.6.2/gitalk.min.css">
+<script src="https://cdn.bootcss.com/gitalk/1.6.2/gitalk.min.js"></script>
+<script src="https://cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
+
+<div id="gitalk-container"></div>
+<script type="text/javascript">
+    var gitalk;
+    if(window.location.host === 'spygg.gitee.io'){
+        gitalk = new Gitalk({
+            // Gitalk配置
+            clientID: "2e6379556d0bea565323",
+            clientSecret: "2feb2ad5f1301351c79e1d0e2b1a177bb0661ed7",
+            repo: "blogcomment",
+            owner: "spygg",
+            admin: ["spygg"],
+            id: md5(window.location.pathname),
+            distractionFreeMode: true
+        });
+    }
+    else{
+        gitalk = new Gitalk({
+            // Gitalk配置
+            clientID: "6c31603d4df9afc8351b",
+            clientSecret: "c9e81f3ac1492550170fccb28c0f8bb16e3b7ed1",
+            repo: "blogcomment",
+            owner: "spygg",
+            admin: ["spygg"],
+            id: md5(window.location.pathname),
+            distractionFreeMode: true
+        });
+    }
+    gitalk.render('gitalk-container');
+</script>
+
+
+    </div>
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">文章目录</h3>
+        
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#多线程支持"><span class="toc-text">多线程支持</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#信号发送"><span class="toc-text">信号发送</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#事务支持"><span class="toc-text">事务支持</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#调用"><span class="toc-text">调用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#执行sql文件"><span class="toc-text">执行sql文件</span></a></li></ol>
+        
+    </div>
+</aside>
+
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+
+<a id="back-to-top" class="icon-btn hide">
+	<i class="fa fa-chevron-up"></i>
+</a>
+
+
+
+
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+</div>
+
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy; 2019
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+    <script src="/assets/tagcanvas.min.js?rev=2.9"></script>
+    <script>
+        var tagOption = {
+            textColour: '#444', // 字体颜色
+            outlineMethod: 'block', // 选中模式
+            outlineColour: '#FFDAB9', // 选中模式的颜色
+            interval: 30 || 30, // 动画帧之间的时间间隔，值越大，转动幅度越大
+            textHeight: 13,
+            outlineRadius: 3,
+            freezeActive: true || '', // 选中的标签是否继续滚动
+            frontSelect: true || '', // 不选标签云后部的标签
+            initial: [0.1, -0.1],
+            depth: 0.5,
+            decel: 0.95,
+            maxSpeed: 0.03,
+            reverse: true || '', // 是否反向触发
+            fadeIn: 500, // 进入动画时间
+            wheelZoom: false || '' // 是否启用鼠标滚轮
+        }
+        TagCanvas.Start('tag-cloud-3d','',tagOption);
+    </script>
+
+
+
+
+<script src="/js/app.js?rev=@@hash"></script>
+
+</body>
+</html>
