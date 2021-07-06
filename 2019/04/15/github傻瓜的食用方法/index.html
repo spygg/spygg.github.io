@@ -324,9 +324,9 @@ github 作为全球最大的同性交友网站,是作为程序员的我们必备
 <h2 id="配置-Git"><a href="#配置-Git" class="headerlink" title="配置 Git"></a>配置 Git</h2><ol>
 <li>首先在本地创建 ssh key；</li>
 </ol>
-<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>ssh-keygen -t rsa -C <span class="string">"your_email@youremail.com"</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>ssh-keygen -t rsa -C <span class="string">&quot;your_email@youremail.com&quot;</span></span><br></pre></td></tr></table></figure>
 
-<p>后面的 <a href="mailto:&#121;&#x6f;&#117;&#114;&#95;&#x65;&#109;&#x61;&#x69;&#x6c;&#64;&#x79;&#x6f;&#117;&#x72;&#x65;&#x6d;&#x61;&#105;&#108;&#x2e;&#x63;&#x6f;&#109;" target="_blank" rel="noopener">&#121;&#x6f;&#117;&#114;&#95;&#x65;&#109;&#x61;&#x69;&#x6c;&#64;&#x79;&#x6f;&#117;&#x72;&#x65;&#x6d;&#x61;&#105;&#108;&#x2e;&#x63;&#x6f;&#109;</a> 改为你在 github 上注册的邮箱,之后会要求确认路径和输入密码,我们这使用默认的一路回车就行.成功的话会在~/下生成.ssh 文件夹,进去,打开 id_rsa.pub,复制里面的 key.</p>
+<p>后面的 <a href="mailto:&#121;&#111;&#x75;&#x72;&#x5f;&#x65;&#109;&#97;&#x69;&#x6c;&#64;&#121;&#111;&#117;&#114;&#x65;&#109;&#x61;&#x69;&#x6c;&#x2e;&#x63;&#x6f;&#109;">&#121;&#111;&#x75;&#x72;&#x5f;&#x65;&#109;&#97;&#x69;&#x6c;&#64;&#121;&#111;&#117;&#114;&#x65;&#109;&#x61;&#x69;&#x6c;&#x2e;&#x63;&#x6f;&#109;</a> 改为你在 github 上注册的邮箱,之后会要求确认路径和输入密码,我们这使用默认的一路回车就行.成功的话会在~/下生成.ssh 文件夹,进去,打开 id_rsa.pub,复制里面的 key.</p>
 <ol start="2">
 <li><p>回到 github 上,进入 Account Settings（账户配置）,左边选择 SSH Keys,Add SSH Key,title 随便填,粘贴在你电脑上生成的 key.</p>
 </li>
@@ -339,7 +339,7 @@ github 作为全球最大的同性交友网站,是作为程序员的我们必备
 <ol start="4">
 <li>接下来我们要做的就是把本地仓库传到 github 上去,在此之前还需要设置 username 和 email,因为 github 每次 commit 都会记录他们.</li>
 </ol>
-<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git<span class="built_in"> config </span>--global user.name <span class="string">"your name"</span></span><br><span class="line">$ git<span class="built_in"> config </span>--global user.email <span class="string">"your_email@youremail.com"</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git <span class="keyword">config</span> --<span class="keyword">global</span> user<span class="variable">.name</span> <span class="string">&quot;your name&quot;</span></span><br><span class="line">$ git <span class="keyword">config</span> --<span class="keyword">global</span> user<span class="variable">.email</span> <span class="string">&quot;your_email@youremail.com&quot;</span></span><br></pre></td></tr></table></figure>
 
 <h2 id="将一个已有的工程上传到-github-的最简便方法"><a href="#将一个已有的工程上传到-github-的最简便方法" class="headerlink" title="将一个已有的工程上传到 github 的最简便方法"></a>将一个已有的工程上传到 github 的最简便方法</h2><ul>
 <li>到 github 上去新建一个当前工程命名的仓库</li>
@@ -354,9 +354,9 @@ github 作为全球最大的同性交友网站,是作为程序员的我们必备
 <li>将工程下的所有文件拷贝到上一步 xxx 目录中</li>
 <li>执行命令三部曲</li>
 </ul>
-<figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git <span class="keyword">add</span> .</span><br><span class="line">git comment -m <span class="string">"说明xxxxxxxxxx"</span></span><br><span class="line">git <span class="keyword">push</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git <span class="keyword">add</span> .</span><br><span class="line">git comment -m <span class="string">&quot;说明xxxxxxxxxx&quot;</span></span><br><span class="line">git <span class="keyword">push</span></span><br></pre></td></tr></table></figure>
 
-<h2 id="强制覆盖本地版本"><a href="#强制覆盖本地版本" class="headerlink" title="强制覆盖本地版本"></a>强制覆盖本地版本</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git  fetch <span class="comment">--all</span></span><br><span class="line">git <span class="keyword">reset</span> <span class="comment">--hard origin/master</span></span><br></pre></td></tr></table></figure>
+<h2 id="强制覆盖本地版本"><a href="#强制覆盖本地版本" class="headerlink" title="强制覆盖本地版本"></a>强制覆盖本地版本</h2><figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git  <span class="keyword">fetch</span> <span class="comment">--all</span></span><br><span class="line">git <span class="keyword">reset</span> <span class="comment">--hard origin/master</span></span><br></pre></td></tr></table></figure>
 
 <h2 id="ps"><a href="#ps" class="headerlink" title="ps"></a>ps</h2><ul>
 <li>更新仓库还是命令三部曲</li>
@@ -365,12 +365,12 @@ github 作为全球最大的同性交友网站,是作为程序员的我们必备
 <h2 id="高级用法"><a href="#高级用法" class="headerlink" title="高级用法"></a>高级用法</h2><h3 id="新增分支"><a href="#新增分支" class="headerlink" title="新增分支"></a>新增分支</h3><ol>
 <li>查看所有分支</li>
 </ol>
-<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">git</span> <span class="keyword">branch </span>-a</span><br></pre></td></tr></table></figure>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git branch -<span class="selector-tag">a</span></span><br></pre></td></tr></table></figure>
 
 <ol start="2">
 <li>创建本地分支</li>
 </ol>
-<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">git</span> <span class="keyword">branch </span>[<span class="keyword">branch </span>name]</span><br></pre></td></tr></table></figure>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="keyword">branch </span>[<span class="keyword">branch </span>name]</span><br></pre></td></tr></table></figure>
 
 <ol start="3">
 <li>切换分支</li>
@@ -380,11 +380,11 @@ github 作为全球最大的同性交友网站,是作为程序员的我们必备
 <ol start="4">
 <li>更新到指定分支</li>
 </ol>
-<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">git</span> <span class="keyword">push </span>origin [<span class="keyword">branch </span>name]</span><br></pre></td></tr></table></figure>
+<figure class="highlight maxima"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">push</span> <span class="built_in">origin</span> [branch name]</span><br></pre></td></tr></table></figure>
 
 <h3 id="克隆分支到本地"><a href="#克隆分支到本地" class="headerlink" title="克隆分支到本地"></a>克隆分支到本地</h3><figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="keyword">clone</span> <span class="title">-b</span> [branch name] git@github.com:spygg/xxxx.git</span><br></pre></td></tr></table></figure>
 
-<h3 id="文本回车换行"><a href="#文本回车换行" class="headerlink" title="文本回车换行"></a>文本回车换行</h3><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git<span class="built_in"> config </span>--global core.autocrlf <span class="literal">false</span></span><br><span class="line">git<span class="built_in"> config </span>--global core.safecrlf <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+<h3 id="文本回车换行"><a href="#文本回车换行" class="headerlink" title="文本回车换行"></a>文本回车换行</h3><figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global core.autocrlf <span class="literal">false</span></span><br><span class="line">git config --global core.safecrlf <span class="literal">true</span></span><br></pre></td></tr></table></figure>
 
 <h4 id="AutoCRLF-自动换行"><a href="#AutoCRLF-自动换行" class="headerlink" title="AutoCRLF(自动换行)"></a>AutoCRLF(自动换行)</h4><ul>
 <li><p>提交时转换为 LF，检出时转换为 CRLF<br>git config –global core.autocrlf true</p>

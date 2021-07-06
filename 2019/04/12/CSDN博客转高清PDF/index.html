@@ -317,12 +317,12 @@
 
     <div class="post-body post-content">
         <blockquote>
-<p>起源:主要是为了学习ffmpeg,然后看到雷神大人的<a href="https://blog.csdn.net/leixiaohua1020" target="_blank" rel="noopener">博客</a>太好了(但是CSDN广告太多了….),就爬取下来了,理论上可以爬取所有的csdn</p>
+<p>起源:主要是为了学习ffmpeg,然后看到雷神大人的<a target="_blank" rel="noopener" href="https://blog.csdn.net/leixiaohua1020">博客</a>太好了(但是CSDN广告太多了….),就爬取下来了,理论上可以爬取所有的csdn</p>
 </blockquote>
-<a id="more"></a>
+<span id="more"></span>
 
 <h2 id="效果"><a href="#效果" class="headerlink" title="效果:"></a>效果:</h2><p>先看疗效—–雷神高清无码博客图<br><img src="/photos/CSDN%E5%8D%9A%E5%AE%A2%E8%BD%AC%E9%AB%98%E6%B8%85PDF/%E6%88%90%E6%9E%9C.webp" alt="图片"></p>
-<h2 id="用法"><a href="#用法" class="headerlink" title="用法:"></a>用法:</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ python csdn.py</span><br></pre></td></tr></table></figure>
+<h2 id="用法"><a href="#用法" class="headerlink" title="用法:"></a>用法:</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ python csdn.py </span><br></pre></td></tr></table></figure>
 
 <h2 id="所需库-标注库除外"><a href="#所需库-标注库除外" class="headerlink" title="所需库:(标注库除外)"></a>所需库:(标注库除外)</h2><ul>
 <li>pdfkit </li>
@@ -331,9 +331,9 @@
 </ul>
 <p><strong>致敬雷神大人!!!!</strong></p>
 <h2 id="实现步骤"><a href="#实现步骤" class="headerlink" title="实现步骤:"></a>实现步骤:</h2><ol>
-<li><p>获取目标用户名:<br>找到目标博客地址,得到用户名如: <a href="https://blog.csdn.net/leixiaohua1020" target="_blank" rel="noopener">https://blog.csdn.net/leixiaohua1020</a> 的用户名为<em>leixiaohua1020</em></p>
+<li><p>获取目标用户名:<br>找到目标博客地址,得到用户名如: <a target="_blank" rel="noopener" href="https://blog.csdn.net/leixiaohua1020">https://blog.csdn.net/leixiaohua1020</a> 的用户名为<em>leixiaohua1020</em></p>
 </li>
-<li><p>获取文章列表:<br>网址格式为: <a href="https://blog.csdn.net/%E7%94%A8%E6%88%B7%E5%90%8D/article/list/%E9%A1%B5%E7%A0%81" target="_blank" rel="noopener">https://blog.csdn.net/用户名/article/list/页码</a>?<br>从1依次增加上述网址中的页码,当出现”空空如也”的时候即超过了最后一页,可作为终止条件(代码中的getPageByIndex函数)<br><img src="/photos/CSDN%E5%8D%9A%E5%AE%A2%E8%BD%AC%E9%AB%98%E6%B8%85PDF/%E6%96%87%E7%AB%A0%E5%88%97%E8%A1%A8.webp" alt="文章列表"></p>
+<li><p>获取文章列表:<br>网址格式为: <a target="_blank" rel="noopener" href="https://blog.csdn.net/%E7%94%A8%E6%88%B7%E5%90%8D/article/list/%E9%A1%B5%E7%A0%81">https://blog.csdn.net/用户名/article/list/页码</a>?<br>从1依次增加上述网址中的页码,当出现”空空如也”的时候即超过了最后一页,可作为终止条件(代码中的getPageByIndex函数)<br><img src="/photos/CSDN%E5%8D%9A%E5%AE%A2%E8%BD%AC%E9%AB%98%E6%B8%85PDF/%E6%96%87%E7%AB%A0%E5%88%97%E8%A1%A8.webp" alt="文章列表"></p>
 </li>
 <li><p>获取文章链接:<br> 在上一步中得到的目录页面中通过chrome调试模式可以发现所有文章都在class=”article-list”的div中,而且链接在子div的class=”article-item-box”中的href中(代码中的getArticlesInPage函数)<br> <img src="/photos/CSDN%E5%8D%9A%E5%AE%A2%E8%BD%AC%E9%AB%98%E6%B8%85PDF/%E6%96%87%E7%AB%A0%E9%93%BE%E6%8E%A5.webp" alt="文章链接"></p>
 </li>
@@ -352,8 +352,8 @@
 <li><p>数据库:<br> 为了减少服务器压力使用了数据库(同时也方便我们自己,只需要爬取一次)</p>
 </li>
 </ol>
-<h2 id="代码"><a href="#代码" class="headerlink" title="代码:"></a>代码:</h2><p>代码在我的github中就有了<a href="https://github.com/spygg/csdn/" target="_blank" rel="noopener">https://github.com/spygg/csdn/</a></p>
-<h2 id="ps"><a href="#ps" class="headerlink" title="ps:"></a>ps:</h2><p>因为CSDN可能会进行<strong>反爬</strong>所以请随时关注<a href="https://github.com/spygg/csdn/" target="_blank" rel="noopener">本人github</a></p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码:"></a>代码:</h2><p>代码在我的github中就有了<a target="_blank" rel="noopener" href="https://github.com/spygg/csdn/">https://github.com/spygg/csdn/</a></p>
+<h2 id="ps"><a href="#ps" class="headerlink" title="ps:"></a>ps:</h2><p>因为CSDN可能会进行<strong>反爬</strong>所以请随时关注<a target="_blank" rel="noopener" href="https://github.com/spygg/csdn/">本人github</a></p>
 <h2 id="pps"><a href="#pps" class="headerlink" title="pps:"></a>pps:</h2><p>请低调使用!</p>
 <h2 id="后记"><a href="#后记" class="headerlink" title="后记:"></a>后记:</h2><blockquote>
 <p>话说这个项目也折腾了我好几天,刚开始把所有的html弄到一个页面中想使用chrome导出为PDF功能,谁知道在本人的8g内存i7处理器的电脑上连续跑了几天后电脑直接卡死,试了几次均无效后<strong>痛定思痛</strong>才想起了化整为零,后面为了加快转化进度开辟了几十个线程来搞也是不错的</p>

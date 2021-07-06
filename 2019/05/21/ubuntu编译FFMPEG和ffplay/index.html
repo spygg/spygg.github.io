@@ -27,7 +27,8 @@
 
 下载源码到官网上下载,FFMPEG官网
 准备
-不管三七二十一直接开干1./c..." />
+不管三七二十一直接开干
+1./..." />
 
 
 
@@ -307,7 +308,7 @@
             
             
             <p class="fa fa-exclamation-triangle warning">
-                本文于<strong>776</strong>天之前发表，文中内容可能已经过时。
+                本文于<strong>777</strong>天之前发表，文中内容可能已经过时。
             </p>
         
     </div>
@@ -318,26 +319,25 @@
         <blockquote>
 <p>最近突然又想研究音视频了,当然作为音视频领域必备技能FFMPEG是要了解的,本文从编译开始,希望这次能有点建树…</p>
 </blockquote>
-<h2 id="下载源码"><a href="#下载源码" class="headerlink" title="下载源码"></a>下载源码</h2><p>到官网上下载,<a href="https://ffmpeg.org/download.html" target="_blank" rel="noopener">FFMPEG官网</a></p>
+<h2 id="下载源码"><a href="#下载源码" class="headerlink" title="下载源码"></a>下载源码</h2><p>到官网上下载,<a target="_blank" rel="noopener" href="https://ffmpeg.org/download.html">FFMPEG官网</a></p>
 <h2 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h2><ol>
-<li>不管三七二十一直接开干<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">./configure</span></span><br></pre></td></tr></table></figure></li>
-</ol>
+<li><p>不管三七二十一直接开干</p>
+<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">./configure</span> </span><br></pre></td></tr></table></figure>
 <p><img src="/photos/ubuntu%E7%BC%96%E8%AF%91FFMPEG%E5%92%8Cffplay/%E6%8F%90%E7%A4%BA%E5%AE%89%E8%A3%85yasm.webp" alt="提示错误"></p>
-<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt <span class="keyword">install</span> yasm</span><br></pre></td></tr></table></figure>
-
-<ol start="2">
-<li>安装SDL<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt <span class="keyword">install</span> libsdl2-dev</span><br></pre></td></tr></table></figure></li>
-</ol>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt <span class="keyword">install</span> yasm</span><br></pre></td></tr></table></figure></li>
+<li><p>安装SDL</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">sudo</span> apt install libsdl<span class="number">2</span>-dev </span><br></pre></td></tr></table></figure>
 <p>安装完后再配置会自动的能产生ffplay</p>
+</li>
+</ol>
 <h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">./configure</span></span><br></pre></td></tr></table></figure>
-
 <p>如果想支持ssl请加上  –enable-openssl 并且安装 openssl, libssl-dev</p>
 <h2 id="编译"><a href="#编译" class="headerlink" title="编译"></a>编译</h2><p>为了加快编译速度,加上-j参数</p>
-<figure class="highlight gauss"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">make</span> -j8</span><br></pre></td></tr></table></figure>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">make</span> -j<span class="number">8</span></span><br></pre></td></tr></table></figure>
 
 <h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo make <span class="keyword">install</span></span><br></pre></td></tr></table></figure>
 
-<h2 id="测试程序"><a href="#测试程序" class="headerlink" title="测试程序"></a>测试程序</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//命令行测试:ffmpeg -version</span></span><br><span class="line"><span class="comment">//文件名:   helloFFmpeg.c</span></span><br><span class="line"><span class="comment">//编译命令: gcc -o helloFFmpeg helloFFmpeg.c -lavcodec -lavdevice  -lswresample -lavformat -lavcodec -lavutil -lswscale  -lGL -lm -lz -lpthread `pkg-config --cflags --libs sdl2`</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"libavcodec/avcodec.h"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>* argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%s"</span>, avcodec_configuration());</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="测试程序"><a href="#测试程序" class="headerlink" title="测试程序"></a>测试程序</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//命令行测试:ffmpeg -version</span></span><br><span class="line"><span class="comment">//文件名:   helloFFmpeg.c</span></span><br><span class="line"><span class="comment">//编译命令: gcc -o helloFFmpeg helloFFmpeg.c -lavcodec -lavdevice  -lswresample -lavformat -lavcodec -lavutil -lswscale  -lGL -lm -lz -lpthread `pkg-config --cflags --libs sdl2`</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;libavcodec/avcodec.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>* argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%s&quot;</span>, <span class="built_in">avcodec_configuration</span>());</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
     </div>
     
         <div class="reward" ontouchstart>
