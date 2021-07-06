@@ -1,0 +1,576 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="间客六十">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="google-site-verification" content="NGCFVs-lxT5zTiHxEXzk7fkJl26matl6KfVIgcORvFQ" />
+    <meta name="msvalidate.01" content="9C33A26895A2A8B80CEE60CD519D1095" />
+
+    <link rel="dns-prefetch" href="https://liusblog.top">
+    <!--SEO-->
+
+    <meta name="keywords" content="netlify,镜像,加速" />
+
+
+    <meta name="description" content="
+由于众所周知的原因,github 经常抽风,偶尔了解到 netlify 可以镜像本网站,于是特记录之….
+
+多个 git 账号同步利用
+-t rsa -C "your_email@yourem..." />
+
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+
+    <!--Title-->
+
+
+<title>镜像网站和自定义域名 | 间客六十</title>
+
+
+    <link rel="alternate" href="/atom.xml" title="间客六十" type="application/atom+xml">
+
+
+    <link rel="icon" href="/favicon.ico">
+
+    
+
+
+
+
+<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.6.3/css/font-awesome.min.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash.css">
+
+
+
+
+    
+
+
+
+
+	<script>
+		(function(i, s, o, g, r, a, m) {
+		    i['GoogleAnalyticsObject'] = r;
+		    i[r] = i[r] || function() {
+		        (i[r].q = i[r].q || []).push(arguments)
+		    }, i[r].l = 1 * new Date();
+		    a = s.createElement(o),
+		    m = s.getElementsByTagName(o)[0];
+		    a.async = 1;
+		    a.src = g;
+		    m.parentNode.insertBefore(a, m)
+		})(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+		ga('create', 'true', 'auto');
+		ga('send', 'pageview');
+	</script>
+
+
+    
+
+	
+    <script type="text/javascript">
+        function hasClass(obj, cls) {
+            return obj.className.match(new RegExp('(\\s|^)' + cls + '(\\s|$)'));
+        }
+         
+        function addClass(obj, cls) {
+            if (!this.hasClass(obj, cls)) obj.className += " " + cls;
+        }
+         
+        function removeClass(obj, cls) {
+            if (hasClass(obj, cls)) {
+                var reg = new RegExp('(\\s|^)' + cls + '(\\s|$)');
+                obj.className = obj.className.replace(reg, ' ');
+            }
+        }
+
+
+        window.addEventListener('load', function () {
+            var imgAll = document.getElementsByClassName('post-body')[0];
+            if(imgAll == undefined){
+                return;
+            }
+            
+            var imgs = imgAll.getElementsByTagName('img')
+            for(var i=0;i<imgs.length;i++){
+                if(hasClass(imgs[i],'class_no_full_screen')){
+                    continue;
+                }
+
+                imgs[i].setAttribute('style', "cursor: zoom-in");
+                imgs[i].onclick=function(){
+                
+                    var section=document.getElementsByTagName("section")[0];
+
+                    var imgView = document.getElementById('imgViewDom');
+                    if(imgView == undefined){
+                        imgView=document.createElement("div");
+                        imgView.id = "imgViewDom";
+
+                        section.appendChild(imgView)
+
+
+                        imgView.onclick = function(){
+                            addClass(imgView, "disnone");
+                            imgView.innerHTML="";
+                        }
+
+                    }
+            
+                    imgView.innerHTML="<img id = 'jackslowfuck' src=" + this.src + " style='cursor: zoom-out; max-width: 100%;'" + ">";
+                    removeClass(imgView, "disnone");
+
+                    var jackslowfuck = document.getElementById('jackslowfuck');
+                    jackslowfuck.onclick=function(){
+                        addClass(imgView, "disnone");
+                        imgView.innerHTML="";
+                    }
+
+                }
+            }
+            
+        }, false);
+    </script>
+
+    <style type="text/css">
+        #imgViewDom {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            z-index: 99999999;
+            background: rgba(0, 0, 0,0.7);
+            overflow: auto;
+            display: -webkit-box;
+            -webkit-box-align: center;
+            -webkit-box-pack: center;
+            display: -moz-box;
+            -moz-box-align: center;
+            -moz-box-pack: center;
+            display: -o-box;
+            -o-box-align: center;
+            -o-box-pack: center;
+            display: -ms-box;
+            -ms-box-align: center;
+            -ms-box-pack: center;
+            display: box;
+            box-align: center;
+            box-pack: center;
+            cursor: zoom-out;
+        }
+
+        .disnone{
+            display: none !important;
+        }
+    </style>
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+
+<body>
+    <header class="main-header"  style="background-image:url(/img/banner.webp)"  >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/about" title='spygg'>
+            <img src="/img/avatar.webp" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+        	<!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+                <h2> 技术引领生活! </h2>
+            
+    	</div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                    <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <!---<a class="navbar-brand" href="https://liusblog.top">间客六十</a>--->
+                    <a class="navbar-brand" href="/">间客六十</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/"><i class="fa fa-home"></i>首页</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/Qt"><i class="fa "></i>Qt</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/Python"><i class="fa "></i>Python</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/Linux"><i class="fa "></i>Linux</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/音视频"><i class="fa "></i>音视频</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/网站开发"><i class="fa "></i>网站开发</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/杂谈"><i class="fa "></i>杂谈</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/archives/"><i class="fa "></i>时间轴</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/about/"><i class="fa "></i>关于</a>
+                            </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="镜像网站和自定义域名">
+            
+	            镜像网站和自定义域名
+            
+        </h1>
+        <div class="post-meta">
+    
+        <span class="categories-meta fa-wrap">
+            <i class="fa fa-folder-open-o"></i>
+            <a class="category-link" href="/categories/%E6%9D%82%E8%B0%88/">杂谈</a>
+        </span>
+    
+
+    
+        <span class="fa-wrap">
+            <i class="fa fa-tags"></i>
+            <span class="tags-meta">
+                
+                    <a class="tag-none-link" href="/tags/netlify/" rel="tag">netlify</a> <a class="tag-none-link" href="/tags/%E5%8A%A0%E9%80%9F/" rel="tag">加速</a> <a class="tag-none-link" href="/tags/%E9%95%9C%E5%83%8F/" rel="tag">镜像</a>
+                
+            </span>
+        </span>
+    
+
+    
+        
+        <span class="fa-wrap">
+            <i class="fa fa-clock-o"></i>
+            <span class="date-meta">2020/02/23</span>
+        </span>
+        
+    
+</div>
+            
+            
+            <p class="fa fa-exclamation-triangle warning">
+                本文于<strong>498</strong>天之前发表，文中内容可能已经过时。
+            </p>
+        
+    </div>
+
+    
+
+    <div class="post-body post-content">
+        <blockquote>
+<p>由于众所周知的原因,github 经常抽风,偶尔了解到 netlify 可以镜像本网站,于是特记录之….</p>
+</blockquote>
+<h2 id="多个-git-账号同步"><a href="#多个-git-账号同步" class="headerlink" title="多个 git 账号同步"></a>多个 git 账号同步</h2><p>利用</p>
+<figure class="highlight plain"><figcaption><span>-t rsa -C "your_email@youremail.com"``` 命令</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">在 ~/.ssh 文件夹下生成多个_rsa文件,上传到各自的网站ssh公钥中</span><br><span class="line">然后编辑 config 文件配置好各个私钥.如下示例.</span><br></pre></td></tr></table></figure>
+
+<p>Host github.com<br>IdentityFile ~/.ssh/id_rsa</p>
+<p>Host gitee.com<br>IdentityFile ~/.ssh/gitee_rsa</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line">## netfily 镜像</span><br><span class="line"></span><br><span class="line">### 注册账号</span><br><span class="line"></span><br><span class="line">[Netlify 官网网站](https://app.netlify.com/)然后使用 github 账号登录</span><br><span class="line"></span><br><span class="line">### 创建网站</span><br><span class="line"></span><br><span class="line">- 点击 New site from Git 按钮</span><br><span class="line">- 选择你需要部署的仓库(就是那个 username.github.io )</span><br><span class="line">- 完成之后点击途中 deploy site 按钮</span><br><span class="line"></span><br><span class="line">### 设置域名，绑定域名</span><br><span class="line"></span><br><span class="line">- 可以看到 netlify 为我们随机生成了一个 netlify 下的域名，这里我们可以更改其前缀，并绑定到我们自己的域名下：</span><br><span class="line"></span><br><span class="line">- 更改 netlify 域名前缀：点击上图中 Site settings 按钮，然后在下方点击 Change site name 按钮，然后在弹出框中输入自己需要更改的前缀名，点击保存即可，如下图所示：</span><br><span class="line"></span><br><span class="line">![图片](/photos/镜像网站和自定义域名/更改名称.webp)</span><br><span class="line"></span><br><span class="line">- 如果有自定义域名可以使用 https 加密之类的,本屌就到这里就行...</span><br><span class="line"></span><br><span class="line">### 参考教程</span><br><span class="line"></span><br><span class="line">[手把手教你使用 netlify 实现前端的 自动部署 + HTTPS](https://www.cnblogs.com/codernie/p/9062104.html)</span><br><span class="line"></span><br><span class="line">最牛逼的是在 github 上部署完毕后,netlify 会**自动更新同步**....</span><br><span class="line"></span><br><span class="line">---</span><br><span class="line"></span><br><span class="line">## 码云镜像</span><br><span class="line"></span><br><span class="line">- 方法一:(必须码云和 github 同一个邮箱)</span><br><span class="line">  修改\_config.yml 配置文件中添加码云</span><br></pre></td></tr></table></figure>
+
+<p>  repo:<br>      github: <a href="mailto:&#103;&#105;&#116;&#x40;&#x67;&#x69;&#116;&#104;&#117;&#x62;&#x2e;&#99;&#111;&#x6d;" target="_blank" rel="noopener">&#103;&#105;&#116;&#x40;&#x67;&#x69;&#116;&#104;&#117;&#x62;&#x2e;&#99;&#111;&#x6d;</a>:spygg/spygg.github.io.git<br>      ##gitee: <a href="mailto:&#x67;&#105;&#x74;&#x40;&#103;&#x69;&#x74;&#101;&#x65;&#x2e;&#99;&#x6f;&#x6d;" target="_blank" rel="noopener">&#x67;&#105;&#x74;&#x40;&#103;&#x69;&#x74;&#101;&#x65;&#x2e;&#99;&#x6f;&#x6d;</a>:spygg/spygg.git</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="bullet">- </span>方法二:</span><br><span class="line">  在码云中新建一个和你用户名一样的库,<span class="strong">**新建的时候选择导入库**</span> 导入的地址就是你 github 这个地址</span><br><span class="line">  如https://github.com/spygg/spygg.github.io</span><br><span class="line"></span><br><span class="line"><span class="section">## 自定义域名解析</span></span><br><span class="line"></span><br><span class="line"><span class="bullet">- </span>到阿里云购买一个域名</span><br><span class="line"><span class="bullet">- </span>在阿里控制台中添加域名解析</span><br><span class="line"><span class="bullet">- </span>在 github 工程设置中设置解析地址</span><br><span class="line"><span class="bullet">- </span>设置 CNAME</span><br><span class="line"><span class="bullet">  1. </span>将 CNAME 放到 source 根目录下</span><br><span class="line"><span class="bullet">  2. </span>内容只有一个(知乎上搜的是错误示范)</span><br></pre></td></tr></table></figure>
+
+<p>  liusblog.top<br>  <figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">### 注意事项</span><br><span class="line"></span><br><span class="line">要重新设置 gitalk 的回调主页为最新域名</span><br><span class="line"></span><br><span class="line">### 支持多个 gitalk 方法</span><br><span class="line"></span><br><span class="line"><span class="number">1.</span> 在 github 上新申请一个 **OAuth Apps**</span><br><span class="line"><span class="number">2.</span> 修改主题目录下的\_config.yml 文件,添加一条 gitee 的记录</span><br></pre></td></tr></table></figure></p>
+<h2 id="Gitalk评论"><a href="#Gitalk评论" class="headerlink" title="Gitalk评论"></a>Gitalk评论</h2><p>gitalk:<br>   enable: true<br>   clientID: 6c31603d4df9afc8351b<br>   clientSecret: c9e81f3ac1492550170fccb28c0f8bb16e3b7ed1<br>   repo: blogcomment<br>   owner: spygg<br>   admin: spygg<br>   id: window.location.pathname</p>
+<h1 id="perPage"><a href="#perPage" class="headerlink" title="perPage:"></a>perPage:</h1><p>gitalkgitee:<br>   enable: true<br>   clientID: 2e6379556d0bea565323<br>   clientSecret: 2feb2ad5f1301351c79e1d0e2b1a177bb0661ed7<br>   repo: blogcomment<br>   owner: spygg<br>   admin: spygg<br>   id: window.location.pathname</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">3. 修改 <span class="selector-tag">gitalk</span><span class="selector-class">.ejs</span> 文件,主要是判断域名来加载不同的 <span class="selector-tag">oauth</span></span><br></pre></td></tr></table></figure>
+
+<link rel="stylesheet" href="https://cdn.bootcss.com/gitalk/1.6.0/gitalk.min.css">
+<script src="https://cdn.bootcss.com/gitalk/1.6.0/gitalk.min.js"></script>
+<script src="https://cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
+
+<div id="gitalk-container"></div>
+<script type="text/javascript">
+    var gitalk;
+    if(window.location.host === 'spygg.gitee.io'){
+        gitalk = new Gitalk({
+            // Gitalk配置
+            clientID: "<%= theme.gitalkgitee.clientID%>",
+            clientSecret: "<%= theme.gitalkgitee.clientSecret%>",
+            repo: "<%= theme.gitalkgitee.repo%>",
+            owner: "<%= theme.gitalkgitee.owner%>",
+            admin: ["<%= theme.gitalkgitee.admin%>"],
+            id: md5(<%= theme.gitalkgitee.id%>),
+            distractionFreeMode: true
+        });
+    }
+    else{
+        gitalk = new Gitalk({
+            // Gitalk配置
+            clientID: "<%= theme.gitalk.clientID%>",
+            clientSecret: "<%= theme.gitalk.clientSecret%>",
+            repo: "<%= theme.gitalk.repo%>",
+            owner: "<%= theme.gitalk.owner%>",
+            admin: ["<%= theme.gitalk.admin%>"],
+            id: md5(<%= theme.gitalk.id%>),
+            distractionFreeMode: true
+        });
+    }
+    gitalk.render('gitalk-container');
+</script>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="section">## CDN 加速</span></span><br><span class="line"></span><br><span class="line"><span class="bullet">- </span>在主题的\_config.yml 中添加 bootstrap 和 fontAwesome 的 CDN</span><br><span class="line"><span class="bullet">- </span>替换主页的背景图片和头像为 gittee 的绝对路径链接</span><br><span class="line"><span class="bullet">- </span>替换 default,tagcanvas,gitment 等 css 到 gitee 的绝对路径链接</span><br><span class="line"></span><br><span class="line"><span class="section">###优化图片</span></span><br><span class="line"></span><br><span class="line"><span class="bullet">- </span>参考[<span class="string">使用 FFMPEG 压缩 png 图片 与 tinypng 压缩结果对比</span>](<span class="link">https://www.cnblogs.com/toumingbai/p/8298289.html</span>)</span><br></pre></td></tr></table></figure>
+
+<p>好吧 看来需要优化一下调色板</p>
+<p>ffmpeg -i in.webp -vf palettegen=max_colors=256:stats_mode=single -y out_3.webp</p>
+<p>这里的输出结果是一个调色板 并不是完整图像 由于这是单张静图所以mode使用的是single</p>
+<p>这个参数有几种具体区别可以看文档 <a href="http://ffmpeg.org/ffmpeg-all.html#palettegen-1" target="_blank" rel="noopener">http://ffmpeg.org/ffmpeg-all.html#palettegen-1</a></p>
+<p>再用优化过的调色板去转换 得到结果 116 KB</p>
+<p>ffmpeg -i in.webp -i out_3.webp -lavfi “[0][1:v] paletteuse” -pix_fmt pal8 -y out_4.webp</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="bullet">- </span>批量转化 webp 脚本</span><br><span class="line"></span><br><span class="line"><span class="bullet">1. </span>下载 google 的 [<span class="string">cwebp</span>](<span class="link">https://developers.google.com/speed/webp/download</span>)</span><br><span class="line"><span class="bullet">2. </span>编写脚本</span><br></pre></td></tr></table></figure>
+
+<p>import os</p>
+<p>def walk(path):<br>    for root, dirs, files in os.walk(path, topdown=False):<br>        for name in files:</p>
+<pre><code>        filename = os.path.join(root, name)
+
+        picname = os.path.splitext(filename)[0]
+        ext = os.path.splitext(filename)[-1][1:]
+
+
+        cmd = &quot;cwebp -q 20 %s -o %s.webp&quot; % (filename, picname)
+        if ext == &#39;png&#39; or ext == &#39;jpg&#39; or ext == &#39;jpeg&#39;:
+            print(cmd)
+            output = os.popen(cmd)
+            print(output.read())
+</code></pre>
+<p>walk(‘./source’)</p>
+<pre><code>
+## 去掉影响大户
+
+经过 chrome 和 google console 控制台测试发现除了图片大问题外,还有就是**卜算子**访客统计导致网页刷新出来缓慢,去掉后基本秒开....
+</code></pre>
+
+    </div>
+    
+        <div class="reward" ontouchstart>
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+                <span class="reward-type">
+                    <img class="alipay" src="/img/zhifubaocode.webp"><b>支付宝打赏</b>
+                </span>
+            
+            
+                <span class="reward-type">
+                    <img class="wechat" src="/img/weixincode.webp"><b>微信打赏</b>
+                </span>
+            
+        </div>
+    </div>
+    <p class="reward-tip">您的支持是我前行的动力!</p>
+</div>
+
+
+    
+    <div class="post-footer">
+        <div>
+            
+                转载声明：商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="/about" target="_blank">spygg</a>
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+        <a href="/2020/03/01/Qt%E8%B0%83%E7%94%A8Python%E5%B9%B6%E6%89%93%E5%8C%85%E5%8F%91%E5%B8%83/" class="pre-post btn btn-default" title='Qt调用Python并打包发布'>
+            <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+            <span class="hidden-xs">Qt调用Python并打包发布</span>
+        </a>
+    
+    
+        <a href="/2019/10/22/%E5%AF%BC%E5%87%BAQt%E6%A8%A1%E5%9D%97DLL%E7%BB%99VC%E8%B0%83%E7%94%A8/" class="next-post btn btn-default" title='导出Qt模块DLL给VC调用'>
+            <span class="hidden-lg">下一篇</span>
+            <span class="hidden-xs">导出Qt模块DLL给VC调用</span><i class="fa fa-angle-right fa-fw"></i>
+        </a>
+    
+</div>
+
+
+
+    <div id="comments">
+        
+	<link rel="stylesheet" href="https://cdn.bootcss.com/gitalk/1.6.2/gitalk.min.css">
+<script src="https://cdn.bootcss.com/gitalk/1.6.2/gitalk.min.js"></script>
+<script src="https://cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
+
+<div id="gitalk-container"></div>
+<script type="text/javascript">
+    var gitalk;
+    if(window.location.host === 'spygg.gitee.io'){
+        gitalk = new Gitalk({
+            // Gitalk配置
+            clientID: "2e6379556d0bea565323",
+            clientSecret: "2feb2ad5f1301351c79e1d0e2b1a177bb0661ed7",
+            repo: "blogcomment",
+            owner: "spygg",
+            admin: ["spygg"],
+            id: md5(window.location.pathname),
+            distractionFreeMode: true
+        });
+    }
+    else{
+        gitalk = new Gitalk({
+            // Gitalk配置
+            clientID: "6c31603d4df9afc8351b",
+            clientSecret: "c9e81f3ac1492550170fccb28c0f8bb16e3b7ed1",
+            repo: "blogcomment",
+            owner: "spygg",
+            admin: ["spygg"],
+            id: md5(window.location.pathname),
+            distractionFreeMode: true
+        });
+    }
+    gitalk.render('gitalk-container');
+</script>
+
+
+    </div>
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">文章目录</h3>
+        
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%9A%E4%B8%AA-git-%E8%B4%A6%E5%8F%B7%E5%90%8C%E6%AD%A5"><span class="toc-text">多个 git 账号同步</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Gitalk%E8%AF%84%E8%AE%BA"><span class="toc-text">Gitalk评论</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#perPage"><span class="toc-text">perPage:</span></a>
+        
+    </div>
+</aside>
+
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+
+<a id="back-to-top" class="icon-btn hide">
+	<i class="fa fa-chevron-up"></i>
+</a>
+
+
+
+
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+</div>
+
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy; 2019
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+    
+<script src="/assets/tagcanvas.min.js?rev=2.9.js"></script>
+
+    <script>
+        var tagOption = {
+            textColour: '#444', // 字体颜色
+            outlineMethod: 'block', // 选中模式
+            outlineColour: '#FFDAB9', // 选中模式的颜色
+            interval: 30 || 30, // 动画帧之间的时间间隔，值越大，转动幅度越大
+            textHeight: 13,
+            outlineRadius: 3,
+            freezeActive: true || '', // 选中的标签是否继续滚动
+            frontSelect: true || '', // 不选标签云后部的标签
+            initial: [0.1, -0.1],
+            depth: 0.5,
+            decel: 0.95,
+            maxSpeed: 0.03,
+            reverse: true || '', // 是否反向触发
+            fadeIn: 500, // 进入动画时间
+            wheelZoom: false || '' // 是否启用鼠标滚轮
+        }
+        TagCanvas.Start('tag-cloud-3d','',tagOption);
+    </script>
+
+
+
+
+
+<script src="/js/app.js?rev=@@hash.js"></script>
+
+
+</body>
+</html>
