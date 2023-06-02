@@ -1,0 +1,637 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="间客六十">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="google-site-verification" content="NGCFVs-lxT5zTiHxEXzk7fkJl26matl6KfVIgcORvFQ" />
+    <meta name="msvalidate.01" content="9C33A26895A2A8B80CEE60CD519D1095" />
+
+    <link rel="dns-prefetch" href="https://liusblog.top">
+    <!--SEO-->
+
+    <meta name="keywords" content="Qt,QtCreator" />
+
+
+    <meta name="description" content="windows下QtCreator的大内存改造(32位)因为要查看Qt的源代码,因为我用的Qt版本是5.7.0是32位的,所以会出现加载文件过多而崩溃的现象,方法为
+1editbin /larg..." />
+
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+
+        <!--Title-->
+
+
+<title>有关Qt的一些记录 | 间客六十</title>
+
+
+    <link rel="alternate" href="/atom.xml" title="间客六十" type="application/atom+xml">
+
+
+    <link rel="icon" href="/favicon.ico">
+
+            
+
+
+
+
+<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.6.3/css/font-awesome.min.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash.css">
+
+
+
+
+                
+
+
+
+
+	<script>
+		(function(i, s, o, g, r, a, m) {
+		    i['GoogleAnalyticsObject'] = r;
+		    i[r] = i[r] || function() {
+		        (i[r].q = i[r].q || []).push(arguments)
+		    }, i[r].l = 1 * new Date();
+		    a = s.createElement(o),
+		    m = s.getElementsByTagName(o)[0];
+		    a.async = 1;
+		    a.src = g;
+		    m.parentNode.insertBefore(a, m)
+		})(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+		ga('create', 'true', 'auto');
+		ga('send', 'pageview');
+	</script>
+
+
+                    
+
+                        <script type="text/javascript">
+                            function hasClass(obj, cls) {
+                                return obj.className.match(new RegExp('(\\s|^)' + cls + '(\\s|$)'));
+                            }
+
+                            function addClass(obj, cls) {
+                                if (!this.hasClass(obj, cls)) obj.className += " " + cls;
+                            }
+
+                            function removeClass(obj, cls) {
+                                if (hasClass(obj, cls)) {
+                                    var reg = new RegExp('(\\s|^)' + cls + '(\\s|$)');
+                                    obj.className = obj.className.replace(reg, ' ');
+                                }
+                            }
+
+                            function copyToClip(event) {
+                                let cb = event.target.parentNode
+                                var cls = cb.getElementsByClassName("line");
+
+                                var pt = ""
+                                for (var k = 0; k < cls.length; k++) {
+                                    var cl = (cls[k].textContent || cls[k].innerHTML);
+                                    cl = cl.replace(`<span class="css"></span>`, "\n")
+                                    cl = cl.replace(`<span class="javascript"></span>`, "\n")
+
+                                    pt += cl
+                                    pt += "\n";
+                                }
+                                const textarea = document.createElement('textarea');
+                                textarea.value = pt;
+                                document.body.appendChild(textarea);
+                                textarea.select();
+                                if (document.execCommand('copy')) {
+                                    document.execCommand('copy');
+                                }
+                                document.body.removeChild(textarea);
+                                alert("复制成功");
+                            }
+
+                            function doAddCopyCode() {
+                                var codeBlocks = document.getElementsByClassName('code');
+                                for (var i = 0; i < codeBlocks.length; i++) {
+                                    //创建一个div
+                                    var divCopy = document.createElement("div");
+                                    divCopy.innerHTML = "点击复制"
+                                    //为div创建属性class = "test"
+                                    var divattr = document.createAttribute("class");
+                                    divattr.value = "copy_my_code";
+
+                                    //把属性class = "test"添加到div
+                                    divCopy.setAttributeNode(divattr);
+                                    codeBlocks[i].appendChild(divCopy)
+
+                                    var code = codeBlocks[i].getElementsByTagName("pre")[1];
+                                    //hack事件冒泡
+                                    codeBlocks[i].onclick = (e) => {
+                                        copyToClip(e);
+                                    }
+                                }
+                            }
+
+                            function doAddImg() {
+                                var imgAll = document.getElementsByClassName('post-body')[0];
+                                if (imgAll == undefined) {
+                                    return;
+                                }
+
+                                var imgs = imgAll.getElementsByTagName('img')
+                                for (var i = 0; i < imgs.length; i++) {
+                                    if (hasClass(imgs[i], 'class_no_full_screen')) {
+                                        continue;
+                                    }
+
+                                    imgs[i].setAttribute('style', "cursor: zoom-in");
+                                    imgs[i].onclick = function () {
+
+                                        var section = document.getElementsByTagName("section")[0];
+
+                                        var imgView = document.getElementById('imgViewDom');
+                                        if (imgView == undefined) {
+                                            imgView = document.createElement("div");
+                                            imgView.id = "imgViewDom";
+
+                                            section.appendChild(imgView)
+
+
+                                            imgView.onclick = function () {
+                                                addClass(imgView, "disnone");
+                                                imgView.innerHTML = "";
+                                            }
+
+                                        }
+
+                                        imgView.innerHTML = "<img id = 'jackslowfuck' src=" + this.src + " style='cursor: zoom-out; max-width: 100%;'" + ">";
+                                        removeClass(imgView, "disnone");
+
+                                        var jackslowfuck = document.getElementById('jackslowfuck');
+                                        jackslowfuck.onclick = function () {
+                                            addClass(imgView, "disnone");
+                                            imgView.innerHTML = "";
+                                        }
+
+                                    }
+                                }
+                            }
+
+                            window.addEventListener('load', function () {
+                                doAddImg();
+                                // doAddCopyCode();
+                            }, false);
+                        </script>
+
+                        <style type="text/css">
+                            .copy_my_code {
+                                position: absolute;
+                                top: 0;
+                                right: 0;
+                                border: 1px solid;
+                                background: #555;
+                                color: #fff;
+                                margin: 1px;
+                                padding: 0px 5px;
+                                cursor: pointer;
+                            }
+
+                            #imgViewDom {
+                                display: none;
+                                position: fixed;
+                                top: 0;
+                                left: 0;
+                                height: 100%;
+                                width: 100%;
+                                z-index: 99999999;
+                                background: rgba(0, 0, 0, 0.7);
+                                overflow: auto;
+                                display: -webkit-box;
+                                -webkit-box-align: center;
+                                -webkit-box-pack: center;
+                                display: -moz-box;
+                                -moz-box-align: center;
+                                -moz-box-pack: center;
+                                display: -o-box;
+                                -o-box-align: center;
+                                -o-box-pack: center;
+                                display: -ms-box;
+                                -ms-box-align: center;
+                                -ms-box-pack: center;
+                                display: box;
+                                box-align: center;
+                                box-pack: center;
+                                cursor: zoom-out;
+                            }
+
+                            .disnone {
+                                display: none !important;
+                            }
+                        </style>
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+
+<body>
+    <header class="main-header"  style="background-image:url(/img/banner.webp)"  >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/about" title='spygg'>
+            <img src="/img/avatar.webp" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+        	<!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+                <h2> 技术引领生活! </h2>
+            
+    	</div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                    <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <!---<a class="navbar-brand" href="https://liusblog.top">间客六十</a>--->
+                    <a class="navbar-brand" href="/">间客六十</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/"><i class="fa fa-home"></i>首页</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/Qt"><i class="fa "></i>Qt</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/Golang"><i class="fa "></i>Golang</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/Python"><i class="fa "></i>Python</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/Linux"><i class="fa "></i>Linux</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/音视频"><i class="fa "></i>音视频</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/网站开发"><i class="fa "></i>网站开发</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/杂谈"><i class="fa "></i>杂谈</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/archives/"><i class="fa "></i>时间轴</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/about/"><i class="fa "></i>关于</a>
+                            </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="有关Qt的一些记录">
+            
+	            有关Qt的一些记录
+            
+        </h1>
+        <div class="post-meta">
+    
+        <span class="categories-meta fa-wrap">
+            <i class="fa fa-folder-open-o"></i>
+            <a class="category-link" href="/categories/Qt/">Qt</a>
+        </span>
+    
+
+    
+        <span class="fa-wrap">
+            <i class="fa fa-tags"></i>
+            <span class="tags-meta">
+                
+                    <a class="tag-none-link" href="/tags/Qt/" rel="tag">Qt</a> <a class="tag-none-link" href="/tags/QtCreator/" rel="tag">QtCreator</a>
+                
+            </span>
+        </span>
+    
+
+    
+        
+        <span class="fa-wrap">
+            <i class="fa fa-clock-o"></i>
+            <span class="date-meta">2022/01/02</span>
+        </span>
+        
+    
+</div>
+            
+            
+            <p class="fa fa-exclamation-triangle warning">
+                本文于<strong>516</strong>天之前发表，文中内容可能已经过时。
+            </p>
+        
+    </div>
+
+    
+
+    <div class="post-body post-content">
+        <h2 id="windows下QtCreator的大内存改造-32位"><a href="#windows下QtCreator的大内存改造-32位" class="headerlink" title="windows下QtCreator的大内存改造(32位)"></a>windows下QtCreator的大内存改造(32位)</h2><p>因为要查看Qt的源代码,因为我用的Qt版本是5.7.0是32位的,所以会出现加载文件过多而崩溃的现象,方法为</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">editbin /largeaddressaware qtcreator.exe</span><br></pre></td></tr></table></figure>
+
+<p>修改前先备份原程序,修改好以后通过dumpbin /headers来查看是否多了一条Application can handle large (&gt;2GB) addresses</p>
+<h2 id="Unable-to-set-geometry的bug修复"><a href="#Unable-to-set-geometry的bug修复" class="headerlink" title="Unable to set geometry的bug修复"></a>Unable to set geometry的bug修复</h2><p>Qt有个bug:当使用QSystemTrayIcon时,可能会用到拦截关闭按钮后隐藏的需求,此时如果最大化后点击关闭按钮那么恢复窗口时则会出现setGeometry: Unable to set geometry的问题.官方的示例也存在该问题.折腾了好久才勉强解决<br>开始想重载窗口的close()函数,直接调用hide()函数,结果失败,通过阅读帮助发现该函数底层不管如何会首先发送一个QCloseEvent时间(在重载函数调用之前)这就尴尬了.</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">QWidget::close</span><span class="params">()</span></span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>Closes this widget. Returns true if the widget was closed; otherwise returns false.<br>First it sends the widget a QCloseEvent. The widget is hidden if it accepts the close event. If it ignores the event, nothing happens. The default implementation of QWidget::closeEvent() accepts the close event.</p>
+</blockquote>
+<p>经过一阵乱撸找到最终的解决方案如下,在隐藏前需要改变窗口的状态(或者调用showNormal()也可)</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//拦截关闭事件</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">MainWidget::closeEvent</span><span class="params">(QCloseEvent *event)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">//隐藏之前记录是否为最大化</span></span><br><span class="line">    m_lastIsMax = <span class="built_in">isMaximized</span>();</span><br><span class="line"></span><br><span class="line">    <span class="comment">//必须黑科技一把,清除掉最大化状态....</span></span><br><span class="line">    <span class="built_in">setWindowState</span>(<span class="built_in">windowState</span>() &amp; ~Qt::WindowMaximized);</span><br><span class="line">    <span class="comment">//showNormal();</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">//显示为正常窗口之后才能隐藏,否则会导致最大化窗口的问题...</span></span><br><span class="line">    <span class="built_in">hide</span>();</span><br><span class="line">    event-&gt;<span class="built_in">ignore</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//恢复时,先判断是否最后关闭时为最大化</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">MainWidget::showWindowNormal</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(m_lastIsMax)&#123;</span><br><span class="line">        <span class="built_in">showMaximized</span>();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span>&#123;</span><br><span class="line">       <span class="built_in">show</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">activateWindow</span>();</span><br><span class="line">    <span class="built_in">raise</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="程序带上Qt源码调试"><a href="#程序带上Qt源码调试" class="headerlink" title="程序带上Qt源码调试"></a>程序带上Qt源码调试</h2><p>打开QtCreator,在工具-&gt;选项-&gt;调试器-&gt;概要 找到添加Qt源码…然后点击找到Qt安装目录下的Src文件夹即可<br><img src="/photos/%E6%9C%89%E5%85%B3Qt%E7%9A%84%E4%B8%80%E4%BA%9B%E8%AE%B0%E5%BD%95/%E5%8A%A0%E5%85%A5Qt%E6%BA%90%E7%A0%81%E8%B0%83%E8%AF%95.webp" alt="加入Qt源码"></p>
+<h2 id="崩溃收集"><a href="#崩溃收集" class="headerlink" title="崩溃收集"></a>崩溃收集</h2><ol start="0">
+<li><p>如果是Linux环境请下载<a target="_blank" rel="noopener" href="https://github.com/adelshokhy112/linux-syscall-support">linux_syscall_support.h</a>放到<strong>src/third_party/lss</strong>目录下</p>
+</li>
+<li><p>使用谷歌的breakpad<br><a target="_blank" rel="noopener" href="https://github.com/google/breakpad">google的breakpad</a></p>
+</li>
+<li><p>编写一个.pri文件</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ***************************************************************************</span></span><br><span class="line"><span class="comment"># Implemented using http://blog.inventic.eu/2012/08/qt-and-google-breakpad/</span></span><br><span class="line"><span class="comment"># as a the reference.</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># Get Google Breakpad here: https://code.google.com/p/google-breakpad/</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># The required breakpad sources have been copied into /src in order to make</span></span><br><span class="line"><span class="comment"># integration with the application smooth and easy.</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># To use source from Google Breakpad SVN checkout instead, change $$PWD/src</span></span><br><span class="line"><span class="comment"># to path where it was checked out. </span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># ***************************************************************************</span></span><br><span class="line"><span class="comment"># 更新linux下的配置</span></span><br><span class="line"><span class="comment"># convert_UTF.c-&gt;convert_UTF.cc</span></span><br><span class="line"><span class="comment"># + breakpad_getcontext.S</span></span><br><span class="line"><span class="comment"># + microdump_writer.cc</span></span><br><span class="line"><span class="comment"># + ucontext_reader.cc</span></span><br><span class="line"><span class="comment"># + thread_info.cc</span></span><br><span class="line"></span><br><span class="line">HEADERS += $$PWD/crashhandler.h</span><br><span class="line">SOURCES += $$PWD/crashhandler.cpp</span><br><span class="line"> </span><br><span class="line">INCLUDEPATH += $$PWD</span><br><span class="line">INCLUDEPATH += $$PWD/src</span><br><span class="line"></span><br><span class="line"><span class="comment"># Windows</span></span><br><span class="line"><span class="section">win32:HEADERS += $$PWD/src/common/windows/string_utils-inl.h</span></span><br><span class="line"><span class="section">win32:HEADERS += $$PWD/src/common/windows/guid_string.h</span></span><br><span class="line"><span class="section">win32:HEADERS += $$PWD/src/client/windows/handler/exception_handler.h</span></span><br><span class="line"><span class="section">win32:HEADERS += $$PWD/src/client/windows/common/ipc_protocol.h</span></span><br><span class="line"><span class="section">win32:HEADERS += $$PWD/src/google_breakpad/common/minidump_format.h</span></span><br><span class="line"><span class="section">win32:HEADERS += $$PWD/src/google_breakpad/common/breakpad_types.h</span></span><br><span class="line"><span class="section">win32:HEADERS += $$PWD/src/client/windows/crash_generation/crash_generation_client.h</span></span><br><span class="line"><span class="section">win32:HEADERS += $$PWD/src/common/scoped_ptr.h</span></span><br><span class="line"><span class="section">win32:SOURCES += $$PWD/src/client/windows/handler/exception_handler.cc</span></span><br><span class="line"><span class="section">win32:SOURCES += $$PWD/src/common/windows/string_utils.cc</span></span><br><span class="line"><span class="section">win32:SOURCES += $$PWD/src/common/windows/guid_string.cc</span></span><br><span class="line"><span class="section">win32:SOURCES += $$PWD/src/client/windows/crash_generation/crash_generation_client.cc</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Linux</span></span><br><span class="line"><span class="section">unix:HEADERS += $$PWD/src/client/linux/minidump_writer/cpu_set.h</span></span><br><span class="line"><span class="section">unix:HEADERS += $$PWD/src/client/linux/minidump_writer/proc_cpuinfo_reader.h</span></span><br><span class="line"><span class="section">unix:HEADERS += $$PWD/src/client/linux/handler/exception_handler.h</span></span><br><span class="line"><span class="section">unix:HEADERS += $$PWD/src/client/linux/crash_generation/crash_generation_client.h</span></span><br><span class="line"><span class="section">unix:HEADERS += $$PWD/src/client/linux/handler/minidump_descriptor.h</span></span><br><span class="line"><span class="section">unix:HEADERS += $$PWD/src/client/linux/minidump_writer/minidump_writer.h</span></span><br><span class="line"><span class="section">unix:HEADERS += $$PWD/src/client/linux/minidump_writer/line_reader.h</span></span><br><span class="line"><span class="section">unix:HEADERS += $$PWD/src/client/linux/minidump_writer/linux_dumper.h</span></span><br><span class="line"><span class="section">unix:HEADERS += $$PWD/src/client/linux/minidump_writer/linux_ptrace_dumper.h</span></span><br><span class="line"><span class="section">unix:HEADERS += $$PWD/src/client/linux/minidump_writer/directory_reader.h</span></span><br><span class="line"><span class="section">unix:HEADERS += $$PWD/src/client/linux/log/log.h</span></span><br><span class="line"><span class="section">unix:HEADERS += $$PWD/src/client/minidump_file_writer-inl.h</span></span><br><span class="line"><span class="section">unix:HEADERS += $$PWD/src/client/minidump_file_writer.h</span></span><br><span class="line"><span class="section">unix:HEADERS += $$PWD/src/common/linux/linux_libc_support.h</span></span><br><span class="line"><span class="section">unix:HEADERS += $$PWD/src/common/linux/eintr_wrapper.h</span></span><br><span class="line"><span class="section">unix:HEADERS += $$PWD/src/common/linux/ignore_ret.h</span></span><br><span class="line"><span class="section">unix:HEADERS += $$PWD/src/common/linux/file_id.h</span></span><br><span class="line"><span class="section">unix:HEADERS += $$PWD/src/common/linux/memory_mapped_file.h</span></span><br><span class="line"><span class="section">unix:HEADERS += $$PWD/src/common/linux/safe_readlink.h</span></span><br><span class="line"><span class="section">unix:HEADERS += $$PWD/src/common/linux/guid_creator.h</span></span><br><span class="line"><span class="section">unix:HEADERS += $$PWD/src/common/linux/elfutils.h</span></span><br><span class="line"><span class="section">unix:HEADERS += $$PWD/src/common/linux/elfutils-inl.h</span></span><br><span class="line"><span class="section">unix:HEADERS += $$PWD/src/common/linux/elf_gnu_compat.h</span></span><br><span class="line"><span class="section">unix:HEADERS += $$PWD/src/common/using_std_string.h</span></span><br><span class="line"><span class="section">unix:HEADERS += $$PWD/src/common/memory.h</span></span><br><span class="line"><span class="section">unix:HEADERS += $$PWD/src/common/basictypes.h</span></span><br><span class="line"><span class="section">unix:HEADERS += $$PWD/src/common/memory_range.h</span></span><br><span class="line"><span class="section">unix:HEADERS += $$PWD/src/common/string_conversion.h</span></span><br><span class="line"><span class="section">unix:HEADERS += $$PWD/src/common/convert_UTF.h</span></span><br><span class="line"><span class="section">unix:HEADERS += $$PWD/src/google_breakpad/common/minidump_format.h</span></span><br><span class="line"><span class="section">unix:HEADERS += $$PWD/src/google_breakpad/common/minidump_size.h</span></span><br><span class="line"><span class="section">unix:HEADERS += $$PWD/src/google_breakpad/common/breakpad_types.h</span></span><br><span class="line"><span class="section">unix:HEADERS += $$PWD/src/common/scoped_ptr.h</span></span><br><span class="line"><span class="section">unix:HEADERS += $$PWD/src/third_party/lss/linux_syscall_support.h</span></span><br><span class="line"><span class="section">unix:SOURCES += $$PWD/src/client/linux/crash_generation/crash_generation_client.cc</span></span><br><span class="line"><span class="section">unix:SOURCES += $$PWD/src/client/linux/handler/exception_handler.cc</span></span><br><span class="line"><span class="section">unix:SOURCES += $$PWD/src/client/linux/handler/minidump_descriptor.cc</span></span><br><span class="line"><span class="section">unix:SOURCES += $$PWD/src/client/linux/minidump_writer/minidump_writer.cc</span></span><br><span class="line"><span class="section">unix:SOURCES += $$PWD/src/client/linux/minidump_writer/linux_dumper.cc</span></span><br><span class="line"><span class="section">unix:SOURCES += $$PWD/src/client/linux/minidump_writer/linux_ptrace_dumper.cc</span></span><br><span class="line"><span class="section">unix:SOURCES += $$PWD/src/client/linux/log/log.cc</span></span><br><span class="line"><span class="section">unix:SOURCES += $$PWD/src/client/minidump_file_writer.cc</span></span><br><span class="line"><span class="section">unix:SOURCES += $$PWD/src/common/linux/linux_libc_support.cc</span></span><br><span class="line"><span class="section">unix:SOURCES += $$PWD/src/common/linux/file_id.cc</span></span><br><span class="line"><span class="section">unix:SOURCES += $$PWD/src/common/linux/memory_mapped_file.cc</span></span><br><span class="line"><span class="section">unix:SOURCES += $$PWD/src/common/linux/safe_readlink.cc</span></span><br><span class="line"><span class="section">unix:SOURCES += $$PWD/src/common/linux/guid_creator.cc</span></span><br><span class="line"><span class="section">unix:SOURCES += $$PWD/src/common/linux/elfutils.cc</span></span><br><span class="line"><span class="section">unix:SOURCES += $$PWD/src/common/string_conversion.cc</span></span><br><span class="line"><span class="section">unix:SOURCES += $$PWD/src/common/convert_UTF.cc</span></span><br><span class="line"><span class="section">unix:SOURCES += $$PWD/src/common/linux/breakpad_getcontext.S</span></span><br><span class="line"><span class="section">unix:SOURCES += $$PWD/src/client/linux/microdump_writer/microdump_writer.cc</span></span><br><span class="line"><span class="section">unix:SOURCES += $$PWD/src/client/linux/dump_writer_common/ucontext_reader.cc</span></span><br><span class="line"><span class="section">unix:SOURCES += $$PWD/src/client/linux/dump_writer_common/thread_info.cc</span></span><br><span class="line"><span class="comment">#breakpad app need debug info inside binaries</span></span><br><span class="line"><span class="section">unix:QMAKE_CXXFLAGS+=-g</span></span><br></pre></td></tr></table></figure></li>
+<li><p>添加头文件crashhandler.h</p>
+<figure class="highlight h"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> once</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QtCore/QString&gt;</span></span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">namespace</span> Breakpad &#123;</span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">CrashHandlerPrivate</span>;</span></span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">CrashHandler</span></span></span><br><span class="line"><span class="class">    &#123;</span></span><br><span class="line">    <span class="keyword">public</span>:</span><br><span class="line">        <span class="function"><span class="keyword">static</span> CrashHandler* <span class="title">instance</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Init</span><span class="params">(<span class="keyword">const</span> QString&amp;  reportPath)</span></span>;</span><br><span class="line">    </span><br><span class="line">        <span class="function"><span class="keyword">void</span> <span class="title">setReportCrashesToSystem</span><span class="params">(<span class="keyword">bool</span> report)</span></span>;</span><br><span class="line">        <span class="function"><span class="keyword">bool</span> <span class="title">writeMinidump</span><span class="params">()</span></span>;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">private</span>:</span><br><span class="line">        CrashHandler();</span><br><span class="line">        ~CrashHandler();</span><br><span class="line">        Q_DISABLE_COPY(CrashHandler)</span><br><span class="line">        CrashHandlerPrivate* d;</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>编写cpp文件crashhandler.cpp</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;crashhandler.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QtCore/QDir&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QtCore/QProcess&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QtCore/QCoreApplication&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QString&gt;</span></span></span><br><span class="line"> </span><br><span class="line"><span class="meta">#<span class="meta-keyword">if</span> defined(Q_OS_LINUX)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;client/linux/handler/exception_handler.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">elif</span> defined(Q_OS_WIN32)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;client/windows/handler/exception_handler.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">namespace</span> Breakpad &#123;</span><br><span class="line">    <span class="comment">/************************************************************************/</span></span><br><span class="line">    <span class="comment">/* CrashHandlerPrivate                                                  */</span></span><br><span class="line">    <span class="comment">/************************************************************************/</span></span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">CrashHandlerPrivate</span></span></span><br><span class="line"><span class="class">    &#123;</span></span><br><span class="line">    <span class="keyword">public</span>:</span><br><span class="line">        <span class="built_in">CrashHandlerPrivate</span>()</span><br><span class="line">        &#123;</span><br><span class="line">            pHandler = <span class="literal">NULL</span>;</span><br><span class="line">        &#125;</span><br><span class="line"> </span><br><span class="line">        ~<span class="built_in">CrashHandlerPrivate</span>()</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">delete</span> pHandler;</span><br><span class="line">        &#125;</span><br><span class="line"> </span><br><span class="line">        <span class="function"><span class="keyword">void</span> <span class="title">InitCrashHandler</span><span class="params">(<span class="keyword">const</span> QString&amp; dumpPath)</span></span>;</span><br><span class="line">        <span class="keyword">static</span> google_breakpad::ExceptionHandler* pHandler;</span><br><span class="line">        <span class="keyword">static</span> <span class="keyword">bool</span> bReportCrashesToSystem;</span><br><span class="line">    &#125;;</span><br><span class="line"> </span><br><span class="line">    google_breakpad::ExceptionHandler* CrashHandlerPrivate::pHandler = <span class="literal">NULL</span>;</span><br><span class="line">    <span class="keyword">bool</span> CrashHandlerPrivate::bReportCrashesToSystem = <span class="literal">false</span>;</span><br><span class="line"> </span><br><span class="line">    <span class="comment">/************************************************************************/</span></span><br><span class="line">    <span class="comment">/* DumpCallback                                                         */</span></span><br><span class="line">    <span class="comment">/************************************************************************/</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">if</span> defined(Q_OS_WIN32)</span></span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">DumpCallback</span><span class="params">(<span class="keyword">const</span> <span class="keyword">wchar_t</span>* _dump_dir,<span class="keyword">const</span> <span class="keyword">wchar_t</span>* _minidump_id,<span class="keyword">void</span>* context,EXCEPTION_POINTERS* exinfo,MDRawAssertionInfo* assertion,<span class="keyword">bool</span> success)</span></span></span><br><span class="line"><span class="function"><span class="meta">#<span class="meta-keyword">elif</span> defined(Q_OS_LINUX)</span></span></span><br><span class="line"><span class="function">    <span class="keyword">bool</span> <span class="title">DumpCallback</span><span class="params">(<span class="keyword">const</span> google_breakpad::MinidumpDescriptor &amp;md,<span class="keyword">void</span> *context, <span class="keyword">bool</span> success)</span></span></span><br><span class="line"><span class="function"><span class="meta">#<span class="meta-keyword">endif</span></span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="built_in">Q_UNUSED</span>(context);</span><br><span class="line"><span class="meta">#<span class="meta-keyword">if</span> defined(Q_OS_WIN32)</span></span><br><span class="line">        <span class="built_in">Q_UNUSED</span>(_dump_dir);</span><br><span class="line">        <span class="built_in">Q_UNUSED</span>(_minidump_id);</span><br><span class="line">        <span class="built_in">Q_UNUSED</span>(assertion);</span><br><span class="line">        <span class="built_in">Q_UNUSED</span>(exinfo);</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line">        <span class="built_in">qDebug</span>(<span class="string">&quot;BreakpadQt crash&quot;</span>);</span><br><span class="line"> </span><br><span class="line">        <span class="comment">/*</span></span><br><span class="line"><span class="comment">        NO STACK USE, NO HEAP USE THERE !!!</span></span><br><span class="line"><span class="comment">        Creating QString&#x27;s, using qDebug, etc. - everything is crash-unfriendly.</span></span><br><span class="line"><span class="comment">        */</span></span><br><span class="line">        <span class="keyword">return</span> CrashHandlerPrivate::bReportCrashesToSystem ? success : <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">CrashHandlerPrivate::InitCrashHandler</span><span class="params">(<span class="keyword">const</span> QString&amp; dumpPath)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> ( pHandler != <span class="literal">NULL</span> )</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line"> </span><br><span class="line"><span class="meta">#<span class="meta-keyword">if</span> defined(Q_OS_WIN32)</span></span><br><span class="line">        std::wstring pathAsStr = (<span class="keyword">const</span> <span class="keyword">wchar_t</span>*)dumpPath.<span class="built_in">utf16</span>();</span><br><span class="line">        pHandler = <span class="keyword">new</span> google_breakpad::<span class="built_in">ExceptionHandler</span>(</span><br><span class="line">            pathAsStr,</span><br><span class="line">            <span class="comment">/*FilterCallback*/</span> <span class="number">0</span>,</span><br><span class="line">            DumpCallback,</span><br><span class="line">            <span class="comment">/*context*/</span></span><br><span class="line">            <span class="number">0</span>,</span><br><span class="line">            <span class="literal">true</span></span><br><span class="line">            );</span><br><span class="line"><span class="meta">#<span class="meta-keyword">elif</span> defined(Q_OS_LINUX)</span></span><br><span class="line">        std::string pathAsStr = dumpPath.<span class="built_in">toStdString</span>();</span><br><span class="line">        <span class="function">google_breakpad::MinidumpDescriptor <span class="title">md</span><span class="params">(pathAsStr)</span></span>;</span><br><span class="line">        pHandler = <span class="keyword">new</span> google_breakpad::<span class="built_in">ExceptionHandler</span>(</span><br><span class="line">            md,</span><br><span class="line">            <span class="comment">/*FilterCallback*/</span> <span class="number">0</span>,</span><br><span class="line">            DumpCallback,</span><br><span class="line">            <span class="comment">/*context*/</span> <span class="number">0</span>,</span><br><span class="line">            <span class="literal">true</span>,</span><br><span class="line">            <span class="number">-1</span></span><br><span class="line">            );</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="comment">/************************************************************************/</span></span><br><span class="line">    <span class="comment">/* CrashHandler                                                         */</span></span><br><span class="line">    <span class="comment">/************************************************************************/</span></span><br><span class="line">    <span class="function">CrashHandler* <span class="title">CrashHandler::instance</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">static</span> CrashHandler globalHandler;</span><br><span class="line">        <span class="keyword">return</span> &amp;globalHandler;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    CrashHandler::<span class="built_in">CrashHandler</span>()</span><br><span class="line">    &#123;</span><br><span class="line">        d = <span class="keyword">new</span> <span class="built_in">CrashHandlerPrivate</span>();</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    CrashHandler::~<span class="built_in">CrashHandler</span>()</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">delete</span> d;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">CrashHandler::setReportCrashesToSystem</span><span class="params">(<span class="keyword">bool</span> report)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        d-&gt;bReportCrashesToSystem = report;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">CrashHandler::writeMinidump</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">bool</span> res = d-&gt;pHandler-&gt;<span class="built_in">WriteMinidump</span>();</span><br><span class="line">        <span class="keyword">if</span> (res) &#123;</span><br><span class="line">            <span class="built_in">qDebug</span>(<span class="string">&quot;BreakpadQt: writeMinidump() success.&quot;</span>);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="built_in">qWarning</span>(<span class="string">&quot;BreakpadQt: writeMinidump() failed.&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">CrashHandler::Init</span><span class="params">( <span class="keyword">const</span> QString&amp; reportPath )</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        d-&gt;<span class="built_in">InitCrashHandler</span>(reportPath);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<ol start="5">
+<li>测试程序<br>新建一个工程在将breakpad拷贝到3rdparty目录下,然后pro文件中添加<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">include</span>($$PWD/3rdparty/breakpad/breakpad.pri)</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p>测试程序main.cpp</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;crashhandler.h&quot;</span></span></span><br><span class="line"><span class="comment">//see https://github.com/JPNaude/dev_notes/wiki/Using-Google-Breakpad-with-Qt</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">buggyFunc</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">delete</span> <span class="keyword">reinterpret_cast</span>&lt;QString*&gt;(<span class="number">0xFEE1DEAD</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="function">QApplication <span class="title">a</span><span class="params">(argc, argv)</span></span>;</span><br><span class="line">    <span class="comment">// We put the dumps in the user&#x27;s home directory for this example:</span></span><br><span class="line">    Breakpad::CrashHandler::<span class="built_in">instance</span>()-&gt;<span class="built_in">Init</span>(QCoreApplication::<span class="built_in">applicationDirPath</span>());</span><br><span class="line">	</span><br><span class="line">	<span class="built_in">buggyFunc</span>();</span><br><span class="line">	<span class="keyword">return</span> a.<span class="built_in">exec</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//more</span></span><br><span class="line"><span class="comment">//minidump_stackwalk.exe xxxx.dmp symbols &gt; foo.txt 2&gt;&amp;1</span></span><br></pre></td></tr></table></figure>
+
+<ol start="6">
+<li>运行minidump_stackwalk.exe程序分析dmp文件<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">minidump_stackwalk.exe xxxx.dmp symbols &gt; foo.txt 2&gt;&amp;1</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p>7.打开 foo.txt文件<br>记住该文件下跟exe相关的地方,找到如下图中的eip寄存器地址(该寄存器应该为堆栈地址指针)<br><img src="/photos/%E6%9C%89%E5%85%B3Qt%E7%9A%84%E4%B8%80%E4%BA%9B%E8%AE%B0%E5%BD%95/%E8%BD%AC%E5%AD%98%E6%96%87%E4%BB%B6.webp" alt="加入Qt源码"></p>
+<ol start="8">
+<li>重新编译文件</li>
+</ol>
+<p>在.pro工程中添加以下内容后重新编译</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">QMAKE_CXXFLAGS_RELEASE += -g</span><br><span class="line"></span><br><span class="line">QMAKE_CFLAGS_RELEASE += -g</span><br><span class="line"></span><br><span class="line">QMAKE_LFLAGS_RELEASE = -mthreads -Wl, <span class="comment">#其中最后的逗号注意添加，如果不添加可能编译不过</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#禁止优化(存疑)</span></span><br><span class="line"></span><br><span class="line">QMAKE_CFLAGS_RELEASE -= -O2</span><br><span class="line"></span><br><span class="line">QMAKE_CXXFLAGS_RELEASE -= -O2</span><br><span class="line"></span><br><span class="line"><span class="comment">#或者使用以下语句</span></span><br><span class="line"><span class="comment">#QMAKE_CFLAGS_RELEASE = $$QMAKE_CFLAGS_RELEASE_WITH_DEBUGINFO</span></span><br><span class="line"><span class="comment">#QMAKE_CXXFLAGS_RELEASE = $$QMAKE_CXXFLAGS_RELEASE_WITH_DEBUGINFO</span></span><br><span class="line"><span class="comment">#QMAKE_LFLAGS_RELEASE = $$QMAKE_LFLAGS_RELEASE_WITH_DEBUGINFO</span></span><br></pre></td></tr></table></figure>
+<ol start="9">
+<li>运行addr2line(该软件为Qt自带xxx\Tools\mingw530_32\bin\addr2line.exe)找到源文件中的地址<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">addr2line.exe -e untitled.exe -a 40eaf4 404774</span><br></pre></td></tr></table></figure>
+<img src="/photos/%E6%9C%89%E5%85%B3Qt%E7%9A%84%E4%B8%80%E4%BA%9B%E8%AE%B0%E5%BD%95/%E4%BD%BF%E7%94%A8addr2line.webp" alt="加入Qt源码"></li>
+</ol>
+<p>10.效果如下<br><img src="/photos/%E6%9C%89%E5%85%B3Qt%E7%9A%84%E4%B8%80%E4%BA%9B%E8%AE%B0%E5%BD%95/%E6%BA%90%E6%96%87%E4%BB%B6.webp" alt="加入Qt源码"><br>你就说巧不巧吧……</p>
+<blockquote>
+<p>如果不加调试信息则找不到,但是还可以使用调试工具打开</p>
+</blockquote>
+<p><img src="/photos/%E6%9C%89%E5%85%B3Qt%E7%9A%84%E4%B8%80%E4%BA%9B%E8%AE%B0%E5%BD%95/%E4%B8%8D%E5%8A%A0%E8%B0%83%E8%AF%95%E4%BF%A1%E6%81%AF.webp" alt="加入Qt源码"><br>找到第一个地址<strong>4b59</strong>然后在调试工具中找到地址发现为窗口显示的下一条语句,嗯听天由命吧<br><img src="/photos/%E6%9C%89%E5%85%B3Qt%E7%9A%84%E4%B8%80%E4%BA%9B%E8%AE%B0%E5%BD%95/%E8%B0%83%E8%AF%95%E5%B7%A5%E5%85%B7%E6%89%93%E5%BC%80.webp" alt="加入Qt源码"></p>
+<p>增加一条指令,将文件转为汇编…</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">objdump -S untilted.exe &gt; test.asm</span><br></pre></td></tr></table></figure>
+<h2 id="静态Qt编译Mysql驱动"><a href="#静态Qt编译Mysql驱动" class="headerlink" title="静态Qt编译Mysql驱动"></a>静态Qt编译Mysql驱动</h2><ol>
+<li>按照其他教程,下载相应版本的Qt源码放到对应的路径下</li>
+<li>建立qt_plugin_qsqlmysql.pri<br>模仿sqlite在路径 …Qt\Qt5.7.1\5.7\mingw53_32_release_static\mkspecs\modules 下建立一个文件内容如下</li>
+</ol>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">QT_PLUGIN<span class="selector-class">.qsqlmysql</span><span class="selector-class">.TYPE</span> = sqldrivers</span><br><span class="line">QT_PLUGIN<span class="selector-class">.qsqlmysql</span><span class="selector-class">.EXTENDS</span> =</span><br><span class="line">QT_PLUGIN<span class="selector-class">.qsqlmysql</span><span class="selector-class">.CLASS_NAME</span> = QMYSQLDriverPlugin</span><br><span class="line">QT_PLUGINS += qsqlmysql</span><br></pre></td></tr></table></figure>
+<p>这样Qt编译的时候会扫描该目录下的文件,自动导入</p>
+<ol start="3">
+<li>编译完成后生成的文件为</li>
+</ol>
+<ul>
+<li>libqsqlmysql.a</li>
+<li>qsqlmysql.prl<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">QMAKE_PRL_BUILD_DIR = C:/Qt/Qt5.7.1/5.7/Src/qtbase/src/plugins/sqldrivers/mysql</span><br><span class="line">QMAKE_PRO_INPUT = mysql.pro</span><br><span class="line">QMAKE_PRL_TARGET = libqsqlmysql.a</span><br><span class="line">QMAKE_PRL_CONFIG = lex yacc depend_includepath testcase_targets import_plugins import_qpa_plugin incremental_off windows qt_build_extra file_copies qt warn_on release link_prl debug_and_release precompile_header release static static_runtime rtti no_plugin_manifest directwrite qpa win32 mingw gcc copy_dir_files precompile_header pcre release sse2 sse3 ssse3 sse4_1 sse4_2 avx avx2 largefile prefix_build force_independent create_prl link_prl prepare_docs qt_docs_targets no_private_qt_headers_warning QTDIR_build qt_example_installs exceptions_off testcase_exceptions warning_clean release ReleaseBuild Release build_pass c++11 plugin relative_qt_rpath create_cmake c++11 strict_c++ c++14 c++1z release ReleaseBuild Release build_pass have_target staticlib exclusive_builds no_autoqmake thread moc resources</span><br><span class="line">QMAKE_PRL_LIBS = -llibmysql -LC:/Qt/Qt5.7.1/5.7/mingw53_32_release_static/lib C:/Qt/Qt5.7.1/5.7/mingw53_32_release_static/lib\\libQt5Sql.a -LC:/Qt/Qt5.7.1/5.7/OpenSSL_MinGW32_Static/lib C:/Qt/Qt5.7.1/5.7/mingw53_32_release_static/lib\\libQt5Core.a -lole32 -luuid -lws2_32 -ladvapi32 -lshell32 -luser32 -lkernel32 -lmpr C:/Qt/Qt5.7.1/5.7/mingw53_32_release_static/lib\\libqtpcre.a</span><br></pre></td></tr></table></figure></li>
+</ul>
+<ol start="4">
+<li><p>编译完成后就行了,但此时还需要拷贝动态链接库libmysql.dll到可执行目录留下,不然运行的时候会报错,一直想解决这个问题(不能完全做到打包到一个文件中)</p>
+</li>
+<li><p>下载mingw转化工具(reimp.exe)重新编译也许可以(暂时未做尝试) dlltool.exe在Qt的工具目录下就有</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">reimp -d libmysql.lib</span><br><span class="line">dlltool -k -d libmysql.def -l libmysql.a</span><br></pre></td></tr></table></figure>
+<p>有需要的自取(转化的版本我试了下5.7的不行,低版本的可以,未继续深入,同时把第二步中的qt_plugin_qsqlmysql.pri改名后既可以不加载mysql了</p>
+</li>
+</ol>
+<h2 id="附件下载"><a href="#附件下载" class="headerlink" title="附件下载"></a>附件下载</h2><p><a href="/attachment/%E6%9C%89%E5%85%B3Qt%E7%9A%84%E4%B8%80%E4%BA%9B%E8%AE%B0%E5%BD%95/minidump_stackwalk.zip">minidump_stackwalk下载</a></p>
+<p><a href="/attachment/%E6%9C%89%E5%85%B3Qt%E7%9A%84%E4%B8%80%E4%BA%9B%E8%AE%B0%E5%BD%95/reimp.zip">reimp下载</a><br>[]</p>
+<h2 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h2><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/p942005405/article/details/102678369">qt mingw 创建dump 并查找crash 出错行</a><br><a target="_blank" rel="noopener" href="https://github.com/JPNaude/dev_notes/wiki/Using-Google-Breakpad-with-Qt">JPNaude的教程</a></p>
+
+    </div>
+    
+        <div class="reward" ontouchstart>
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+                <span class="reward-type">
+                    <img class="alipay" src="/img/zhifubaocode.webp"><b>支付宝打赏</b>
+                </span>
+            
+            
+                <span class="reward-type">
+                    <img class="wechat" src="/img/weixincode.webp"><b>微信打赏</b>
+                </span>
+            
+        </div>
+    </div>
+    <p class="reward-tip">您的支持是我前行的动力!</p>
+</div>
+
+
+    
+    <div class="post-footer">
+        <div>
+            
+                转载声明：商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="/about" target="_blank">spygg</a>
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+        <a href="/2022/01/11/Qt%E4%B8%AD%E7%9A%84%E5%A4%9A%E7%BA%BF%E7%A8%8B/" class="pre-post btn btn-default" title='Qt中的多线程'>
+            <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+            <span class="hidden-xs">Qt中的多线程</span>
+        </a>
+    
+    
+        <a href="/2021/08/31/go%E8%AF%AD%E8%A8%80%E5%8D%8F%E7%A8%8B%E6%B1%A0%E4%B9%8B%E7%AB%AF%E5%8F%A3%E6%89%AB%E6%8F%8F%E5%99%A8/" class="next-post btn btn-default" title='go语言协程池之端口扫描器'>
+            <span class="hidden-lg">下一篇</span>
+            <span class="hidden-xs">go语言协程池之端口扫描器</span> <i class="fa fa-angle-right fa-fw"></i>
+        </a>
+    
+</div>
+
+
+
+    <div id="comments">
+        
+	
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+  <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+<script src="https://cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
+
+<div id="gitalk-container"></div>
+<script type="text/javascript">
+    var gitalk;
+    if(window.location.host === 'spygg.gitee.io'){
+        gitalk = new Gitalk({
+            // Gitalk配置
+            clientID: "2e6379556d0bea565323",
+            clientSecret: "2feb2ad5f1301351c79e1d0e2b1a177bb0661ed7",
+            repo: "blogcomment",
+            owner: "spygg",
+            admin: ["spygg"],
+            id: md5(window.location.pathname),
+            distractionFreeMode: true
+        });
+    }
+    else{
+        gitalk = new Gitalk({
+            // Gitalk配置
+            clientID: "6c31603d4df9afc8351b",
+            clientSecret: "c9e81f3ac1492550170fccb28c0f8bb16e3b7ed1",
+            repo: "blogcomment",
+            owner: "spygg",
+            admin: ["spygg"],
+            id: md5(window.location.pathname),
+            distractionFreeMode: true
+        });
+    }
+    gitalk.render('gitalk-container');
+</script>
+
+
+    </div>
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">文章目录</h3>
+        
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#windows%E4%B8%8BQtCreator%E7%9A%84%E5%A4%A7%E5%86%85%E5%AD%98%E6%94%B9%E9%80%A0-32%E4%BD%8D"><span class="toc-text">windows下QtCreator的大内存改造(32位)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Unable-to-set-geometry%E7%9A%84bug%E4%BF%AE%E5%A4%8D"><span class="toc-text">Unable to set geometry的bug修复</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A8%8B%E5%BA%8F%E5%B8%A6%E4%B8%8AQt%E6%BA%90%E7%A0%81%E8%B0%83%E8%AF%95"><span class="toc-text">程序带上Qt源码调试</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B4%A9%E6%BA%83%E6%94%B6%E9%9B%86"><span class="toc-text">崩溃收集</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9D%99%E6%80%81Qt%E7%BC%96%E8%AF%91Mysql%E9%A9%B1%E5%8A%A8"><span class="toc-text">静态Qt编译Mysql驱动</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%99%84%E4%BB%B6%E4%B8%8B%E8%BD%BD"><span class="toc-text">附件下载</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E6%A1%A3"><span class="toc-text">参考文档</span></a></li></ol>
+        
+    </div>
+</aside>
+
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+
+<a id="back-to-top" class="icon-btn hide">
+	<i class="fa fa-chevron-up"></i>
+</a>
+
+
+
+
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+</div>
+
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy; 2019
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+            
+                
+<script src="/assets/tagcanvas.min.js?rev=2.9.js"></script>
+
+                    <script>
+                        var tagcloud3d = document.getElementById("tag-cloud-3d");
+                        if (tagcloud3d) {
+                            var tagOption = {
+                                textColour: '#444', // 字体颜色
+                                outlineMethod: 'block', // 选中模式
+                                outlineColour: '#FFDAB9', // 选中模式的颜色
+                                interval: 30 || 30, // 动画帧之间的时间间隔，值越大，转动幅度越大
+                                textHeight: 13,
+                                outlineRadius: 3,
+                                freezeActive: true || '', // 选中的标签是否继续滚动
+                                frontSelect: true || '', // 不选标签云后部的标签
+                                initial: [0.1, -0.1],
+                                depth: 0.5,
+                                decel: 0.95,
+                                maxSpeed: 0.03,
+                                reverse: true || '', // 是否反向触发
+                                fadeIn: 500, // 进入动画时间
+                                wheelZoom: false || '' // 是否启用鼠标滚轮
+                            }
+                            TagCanvas.Start('tag-cloud-3d', '', tagOption);
+                        }
+
+                    </script>
+                    
+
+                        
+
+                                
+<script src="/js/app.js?rev=@@hash.js"></script>
+
+
+</body>
+</html>

@@ -1,0 +1,590 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="间客六十">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="google-site-verification" content="NGCFVs-lxT5zTiHxEXzk7fkJl26matl6KfVIgcORvFQ" />
+    <meta name="msvalidate.01" content="9C33A26895A2A8B80CEE60CD519D1095" />
+
+    <link rel="dns-prefetch" href="https://liusblog.top">
+    <!--SEO-->
+
+    <meta name="keywords" content="单实例,QLocalServer,Designer" />
+
+
+    <meta name="description" content="
+在用Qt写程序时候可能遇到避免程序重复启动的问题,我们知道用MFC时有个FindWindow函数可以进行窗口查找于是想Qt能否实现呢,经过一番摸索和折腾终于搞定(测试环境为Win7和Ubunt..." />
+
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+
+        <!--Title-->
+
+
+<title>Qt单实例运行 | 间客六十</title>
+
+
+    <link rel="alternate" href="/atom.xml" title="间客六十" type="application/atom+xml">
+
+
+    <link rel="icon" href="/favicon.ico">
+
+            
+
+
+
+
+<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.6.3/css/font-awesome.min.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash.css">
+
+
+
+
+                
+
+
+
+
+	<script>
+		(function(i, s, o, g, r, a, m) {
+		    i['GoogleAnalyticsObject'] = r;
+		    i[r] = i[r] || function() {
+		        (i[r].q = i[r].q || []).push(arguments)
+		    }, i[r].l = 1 * new Date();
+		    a = s.createElement(o),
+		    m = s.getElementsByTagName(o)[0];
+		    a.async = 1;
+		    a.src = g;
+		    m.parentNode.insertBefore(a, m)
+		})(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+		ga('create', 'true', 'auto');
+		ga('send', 'pageview');
+	</script>
+
+
+                    
+
+                        <script type="text/javascript">
+                            function hasClass(obj, cls) {
+                                return obj.className.match(new RegExp('(\\s|^)' + cls + '(\\s|$)'));
+                            }
+
+                            function addClass(obj, cls) {
+                                if (!this.hasClass(obj, cls)) obj.className += " " + cls;
+                            }
+
+                            function removeClass(obj, cls) {
+                                if (hasClass(obj, cls)) {
+                                    var reg = new RegExp('(\\s|^)' + cls + '(\\s|$)');
+                                    obj.className = obj.className.replace(reg, ' ');
+                                }
+                            }
+
+                            function copyToClip(event) {
+                                let cb = event.target.parentNode
+                                var cls = cb.getElementsByClassName("line");
+
+                                var pt = ""
+                                for (var k = 0; k < cls.length; k++) {
+                                    var cl = (cls[k].textContent || cls[k].innerHTML);
+                                    cl = cl.replace(`<span class="css"></span>`, "\n")
+                                    cl = cl.replace(`<span class="javascript"></span>`, "\n")
+
+                                    pt += cl
+                                    pt += "\n";
+                                }
+                                const textarea = document.createElement('textarea');
+                                textarea.value = pt;
+                                document.body.appendChild(textarea);
+                                textarea.select();
+                                if (document.execCommand('copy')) {
+                                    document.execCommand('copy');
+                                }
+                                document.body.removeChild(textarea);
+                                alert("复制成功");
+                            }
+
+                            function doAddCopyCode() {
+                                var codeBlocks = document.getElementsByClassName('code');
+                                for (var i = 0; i < codeBlocks.length; i++) {
+                                    //创建一个div
+                                    var divCopy = document.createElement("div");
+                                    divCopy.innerHTML = "点击复制"
+                                    //为div创建属性class = "test"
+                                    var divattr = document.createAttribute("class");
+                                    divattr.value = "copy_my_code";
+
+                                    //把属性class = "test"添加到div
+                                    divCopy.setAttributeNode(divattr);
+                                    codeBlocks[i].appendChild(divCopy)
+
+                                    var code = codeBlocks[i].getElementsByTagName("pre")[1];
+                                    //hack事件冒泡
+                                    codeBlocks[i].onclick = (e) => {
+                                        copyToClip(e);
+                                    }
+                                }
+                            }
+
+                            function doAddImg() {
+                                var imgAll = document.getElementsByClassName('post-body')[0];
+                                if (imgAll == undefined) {
+                                    return;
+                                }
+
+                                var imgs = imgAll.getElementsByTagName('img')
+                                for (var i = 0; i < imgs.length; i++) {
+                                    if (hasClass(imgs[i], 'class_no_full_screen')) {
+                                        continue;
+                                    }
+
+                                    imgs[i].setAttribute('style', "cursor: zoom-in");
+                                    imgs[i].onclick = function () {
+
+                                        var section = document.getElementsByTagName("section")[0];
+
+                                        var imgView = document.getElementById('imgViewDom');
+                                        if (imgView == undefined) {
+                                            imgView = document.createElement("div");
+                                            imgView.id = "imgViewDom";
+
+                                            section.appendChild(imgView)
+
+
+                                            imgView.onclick = function () {
+                                                addClass(imgView, "disnone");
+                                                imgView.innerHTML = "";
+                                            }
+
+                                        }
+
+                                        imgView.innerHTML = "<img id = 'jackslowfuck' src=" + this.src + " style='cursor: zoom-out; max-width: 100%;'" + ">";
+                                        removeClass(imgView, "disnone");
+
+                                        var jackslowfuck = document.getElementById('jackslowfuck');
+                                        jackslowfuck.onclick = function () {
+                                            addClass(imgView, "disnone");
+                                            imgView.innerHTML = "";
+                                        }
+
+                                    }
+                                }
+                            }
+
+                            window.addEventListener('load', function () {
+                                doAddImg();
+                                // doAddCopyCode();
+                            }, false);
+                        </script>
+
+                        <style type="text/css">
+                            .copy_my_code {
+                                position: absolute;
+                                top: 0;
+                                right: 0;
+                                border: 1px solid;
+                                background: #555;
+                                color: #fff;
+                                margin: 1px;
+                                padding: 0px 5px;
+                                cursor: pointer;
+                            }
+
+                            #imgViewDom {
+                                display: none;
+                                position: fixed;
+                                top: 0;
+                                left: 0;
+                                height: 100%;
+                                width: 100%;
+                                z-index: 99999999;
+                                background: rgba(0, 0, 0, 0.7);
+                                overflow: auto;
+                                display: -webkit-box;
+                                -webkit-box-align: center;
+                                -webkit-box-pack: center;
+                                display: -moz-box;
+                                -moz-box-align: center;
+                                -moz-box-pack: center;
+                                display: -o-box;
+                                -o-box-align: center;
+                                -o-box-pack: center;
+                                display: -ms-box;
+                                -ms-box-align: center;
+                                -ms-box-pack: center;
+                                display: box;
+                                box-align: center;
+                                box-pack: center;
+                                cursor: zoom-out;
+                            }
+
+                            .disnone {
+                                display: none !important;
+                            }
+                        </style>
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+
+<body>
+    <header class="main-header"  style="background-image:url(/img/banner.webp)"  >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/about" title='spygg'>
+            <img src="/img/avatar.webp" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+        	<!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+                <h2> 技术引领生活! </h2>
+            
+    	</div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                    <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <!---<a class="navbar-brand" href="https://liusblog.top">间客六十</a>--->
+                    <a class="navbar-brand" href="/">间客六十</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/"><i class="fa fa-home"></i>首页</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/Qt"><i class="fa "></i>Qt</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/Golang"><i class="fa "></i>Golang</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/Python"><i class="fa "></i>Python</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/Linux"><i class="fa "></i>Linux</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/音视频"><i class="fa "></i>音视频</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/网站开发"><i class="fa "></i>网站开发</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/杂谈"><i class="fa "></i>杂谈</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/archives/"><i class="fa "></i>时间轴</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/about/"><i class="fa "></i>关于</a>
+                            </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="Qt单实例运行">
+            
+	            Qt单实例运行
+            
+        </h1>
+        <div class="post-meta">
+    
+        <span class="categories-meta fa-wrap">
+            <i class="fa fa-folder-open-o"></i>
+            <a class="category-link" href="/categories/Qt/">Qt</a>
+        </span>
+    
+
+    
+        <span class="fa-wrap">
+            <i class="fa fa-tags"></i>
+            <span class="tags-meta">
+                
+                    <a class="tag-none-link" href="/tags/Designer/" rel="tag">Designer</a> <a class="tag-none-link" href="/tags/QLocalServer/" rel="tag">QLocalServer</a> <a class="tag-none-link" href="/tags/%E5%8D%95%E5%AE%9E%E4%BE%8B/" rel="tag">单实例</a>
+                
+            </span>
+        </span>
+    
+
+    
+        
+        <span class="fa-wrap">
+            <i class="fa fa-clock-o"></i>
+            <span class="date-meta">2019/06/25</span>
+        </span>
+        
+    
+</div>
+            
+            
+            <p class="fa fa-exclamation-triangle warning">
+                本文于<strong>1437</strong>天之前发表，文中内容可能已经过时。
+            </p>
+        
+    </div>
+
+    
+
+    <div class="post-body post-content">
+        <blockquote>
+<p>在用Qt写程序时候可能遇到避免程序重复启动的问题,我们知道用MFC时有个FindWindow函数可以进行窗口查找于是想Qt能否实现呢,经过一番摸索和折腾终于搞定(测试环境为Win7和Ubuntu)</p>
+</blockquote>
+<h2 id="系列目录"><a href="#系列目录" class="headerlink" title="系列目录"></a>系列目录</h2><p>本文是系列教程&lt;跟随Designer源码学Qt&gt;中的一篇详见<a href="/2019/06/24/%E8%B7%9F%E9%9A%8FDesigner%E6%BA%90%E7%A0%81%E5%AD%A6Qt/">跟随Designer源码学Qt</a></p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><img src="/../photos/Qt%E5%8D%95%E5%AE%9E%E4%BE%8B%E8%BF%90%E8%A1%8C/Qt%E5%8D%95%E5%AE%9E%E4%BE%8B%E8%BF%90%E8%A1%8C.webp" alt="一去二三里"><br>具体见链接<a target="_blank" rel="noopener" href="https://waleon.blog.csdn.net/">Qt学习一二三</a></p>
+<p>根据大神的说明大致有三种:</p>
+<ul>
+<li>QSharedMemory</li>
+<li>QLocalServer</li>
+<li>QtSingleApplication<br>本文着重介绍QLocalServer,在大神的代码基础上修改了下使程序启动时判断如果已经启动则进行窗口显示</li>
+</ul>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p>废话不多说直接上硬货</p>
+<p>头文件</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> SINGLEAPPLICATION_H</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> SINGLEAPPLICATION_H</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QApplication&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QWidget&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">QLocalServer</span>;</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">QWidget</span>;</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SingleApplication</span> :</span> <span class="keyword">public</span> QApplication</span><br><span class="line">&#123;</span><br><span class="line">    Q_OBJECT</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">SingleApplication</span>(<span class="keyword">int</span> &amp;argc, <span class="keyword">char</span> **argv);</span><br><span class="line">    ~<span class="built_in">SingleApplication</span>();</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">isRunning</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//保存主窗口指针</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">setSingleMainWindow</span><span class="params">(QWidget* w)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> slots:</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">newLocalConnection</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="keyword">bool</span> m_bRunning;</span><br><span class="line">    QLocalServer *m_pServer;</span><br><span class="line">    QWidget *m_widget;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span> <span class="comment">// SINGLEAPPLICATION_H</span></span></span><br></pre></td></tr></table></figure>
+
+<p>cpp文件</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br></pre></td><td class="code"><pre><span class="line">#<span class="keyword">include</span> <span class="string">&quot;singleapplication.h&quot;</span></span><br><span class="line">#<span class="keyword">include</span> &lt;QLocalSocket&gt;</span><br><span class="line">#<span class="keyword">include</span> &lt;QLocalServer&gt;</span><br><span class="line">#<span class="keyword">include</span> &lt;QFile&gt;</span><br><span class="line">#<span class="keyword">include</span> &lt;QTextStream&gt;</span><br><span class="line">#<span class="keyword">include</span> &lt;QWidget&gt;</span><br><span class="line">#<span class="keyword">include</span> &lt;QDebug&gt;</span><br><span class="line"></span><br><span class="line">static const <span class="built_in">char</span> *ApplicationName = <span class="string">&quot;myApp&quot;</span>;</span><br><span class="line"></span><br><span class="line">SingleApplication::<span class="constructor">SingleApplication(<span class="params">int</span> &amp;<span class="params">argc</span>, <span class="params">char</span> <span class="operator">**</span><span class="params">argv</span>)</span>:</span><br><span class="line">    <span class="constructor">QApplication(<span class="params">argc</span>, <span class="params">argv</span>)</span>,</span><br><span class="line">    m<span class="constructor">_mousePoint(0, 0)</span>,</span><br><span class="line">    m<span class="constructor">_mousePressed(<span class="params">false</span>)</span>,</span><br><span class="line">    m<span class="constructor">_bRunning(<span class="params">false</span>)</span>,</span><br><span class="line">    m<span class="constructor">_pServer(Q_NULLPTR)</span>,</span><br><span class="line">    m<span class="constructor">_widget(Q_NULLPTR)</span></span><br><span class="line">&#123;</span><br><span class="line">    set<span class="constructor">OrganizationName(QStringLiteral(<span class="string">&quot;MyProject&quot;</span>)</span>);</span><br><span class="line">    set<span class="constructor">ApplicationName(QLatin1String(ApplicationName)</span>);</span><br><span class="line"></span><br><span class="line">#<span class="keyword">if</span> !defined(Q_OS_OSX)</span><br><span class="line">    set<span class="constructor">WindowIcon(QIcon(QStringLiteral(<span class="string">&quot;:/image/calcapp.webp&quot;</span>)</span>));</span><br><span class="line">#endif</span><br><span class="line"></span><br><span class="line">    QString strServerName = <span class="constructor">QString(<span class="string">&quot;%1%2&quot;</span>)</span></span><br><span class="line">            .arg(QCoreApplication::organization<span class="constructor">Name()</span>)</span><br><span class="line">            .arg(QCoreApplication::application<span class="constructor">Name()</span>);</span><br><span class="line"></span><br><span class="line">    QLocalSocket socket;</span><br><span class="line">    socket.connect<span class="constructor">ToServer(<span class="params">strServerName</span>)</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (socket.wait<span class="constructor">ForConnected(500)</span>)&#123;</span><br><span class="line">        QTextStream stream(&amp;socket);</span><br><span class="line">        QStringList args = QCoreApplication::arguments<span class="literal">()</span>;</span><br><span class="line">        QString strArg = (args.count<span class="literal">()</span> &gt; <span class="number">1</span>) ? args.last<span class="literal">()</span> : <span class="string">&quot;&quot;</span>;</span><br><span class="line">        stream &lt;&lt; strArg;</span><br><span class="line">        stream.flush<span class="literal">()</span>;</span><br><span class="line"></span><br><span class="line">        q<span class="constructor">Debug()</span> &lt;&lt; <span class="string">&quot;Have already connected to server.&quot;</span>;</span><br><span class="line">        socket.wait<span class="constructor">ForBytesWritten()</span>;</span><br><span class="line">        m_bRunning = <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="comment">// 如果不能连接到服务器,则创建</span></span><br><span class="line">        m_pServer = <span class="keyword">new</span> <span class="constructor">QLocalServer(<span class="params">this</span>)</span>;</span><br><span class="line"></span><br><span class="line">        connect(m_pServer, <span class="constructor">SIGNAL(<span class="params">newConnection</span>()</span>), this, <span class="constructor">SLOT(<span class="params">newLocalConnection</span>()</span>));</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (m_pServer-&gt;listen(strServerName))&#123;</span><br><span class="line">            <span class="comment">// 防止程序崩溃,残留进程服务,直接移除</span></span><br><span class="line">            <span class="keyword">if</span> ((m_pServer-&gt;server<span class="constructor">Error()</span><span class="operator"> == </span>QAbstractSocket::AddressInUseError)<span class="operator"></span></span><br><span class="line"><span class="operator">                    &amp;&amp; </span>QFile::exists(m_pServer-&gt;server<span class="constructor">Name()</span>))&#123;</span><br><span class="line">                QFile::remove(m_pServer-&gt;server<span class="constructor">Name()</span>);</span><br><span class="line">                m_pServer-&gt;listen(strServerName);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">SingleApplication::~<span class="constructor">SingleApplication()</span></span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">bool</span> SingleApplication::is<span class="constructor">Running()</span></span><br><span class="line">&#123;</span><br><span class="line">    return m_bRunning;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">void SingleApplication::set<span class="constructor">SingleMainWindow(QWidget <span class="operator">*</span><span class="params">w</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    m_widget = w;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">void SingleApplication::<span class="keyword">new</span><span class="constructor">LocalConnection()</span></span><br><span class="line">&#123;</span><br><span class="line">    QLocalSocket *pSocket = m_pServer-&gt;next<span class="constructor">PendingConnection()</span>;</span><br><span class="line">    <span class="keyword">if</span> (pSocket != Q_NULLPTR)&#123;</span><br><span class="line">        pSocket-&gt;wait<span class="constructor">ForReadyRead(1000)</span>;</span><br><span class="line"></span><br><span class="line">        QTextStream <span class="keyword">in</span>(pSocket);</span><br><span class="line">        QString strValue;</span><br><span class="line">        <span class="keyword">in</span> &gt;&gt; strValue;</span><br><span class="line">        delete pSocket;</span><br><span class="line">        pSocket = Q_NULLPTR;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//如果窗口不为空,则前端显示</span></span><br><span class="line">        <span class="comment">//核心代码</span></span><br><span class="line">        <span class="keyword">if</span>(m_widget)&#123;</span><br><span class="line">            m_widget-&gt;show<span class="constructor">Maximized()</span>;</span><br><span class="line">            m_widget-&gt;activate<span class="constructor">Window()</span>;</span><br><span class="line">            m_widget-&gt;raise<span class="literal">()</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="用法"><a href="#用法" class="headerlink" title="用法"></a>用法</h2><p>别忘了在pro文件中加上网络依赖<br>QT += network</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;singleapplication.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QDialog&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="function">SingleApplication <span class="title">a</span><span class="params">(argc, argv)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (a.<span class="built_in">isRunning</span>())&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    QDialog w;</span><br><span class="line">    w.<span class="built_in">show</span>();</span><br><span class="line"></span><br><span class="line">    <span class="comment">//保存指针用于显示</span></span><br><span class="line">    a.<span class="built_in">setSingleMainWindow</span>(&amp;w);</span><br><span class="line">    <span class="keyword">return</span> a.<span class="built_in">exec</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="遇到的坑"><a href="#遇到的坑" class="headerlink" title="遇到的坑"></a>遇到的坑</h2><p>在Win7上可以随心所欲的运行,不料放到Ubuntu上之后崩的噼里啪啦,经过一番折腾终于找到个大坑</p>
+<ol>
+<li>连接服务器的代码要放到构造函数中</li>
+<li>setApplicationName(QLatin1String(ApplicationName));中的参数要提前定义为static const char *</li>
+</ol>
+<h2 id="PS"><a href="#PS" class="headerlink" title="PS"></a>PS</h2><p>在使用刘典武大神的代码时AppInit 也要放到SingleApplication的构造函数中,顺便说一句 QTimer::singleShot真香</p>
+<h2 id="PPS"><a href="#PPS" class="headerlink" title="PPS"></a>PPS</h2><p>你没有看错,我确实把大神的CSDN博客给撸下来,做成了高清无码的PDF….<br>嗯,爬虫在手,天下我有…..</p>
+
+    </div>
+    
+        <div class="reward" ontouchstart>
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+                <span class="reward-type">
+                    <img class="alipay" src="/img/zhifubaocode.webp"><b>支付宝打赏</b>
+                </span>
+            
+            
+                <span class="reward-type">
+                    <img class="wechat" src="/img/weixincode.webp"><b>微信打赏</b>
+                </span>
+            
+        </div>
+    </div>
+    <p class="reward-tip">您的支持是我前行的动力!</p>
+</div>
+
+
+    
+    <div class="post-footer">
+        <div>
+            
+                转载声明：商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="/about" target="_blank">spygg</a>
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+        <a href="/2019/06/28/Ubuntu%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BAQt%E8%BF%9B%E8%A1%8CAndroid%E5%BC%80%E5%8F%91/" class="pre-post btn btn-default" title='Ubuntu环境搭建Qt进行Android开发'>
+            <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+            <span class="hidden-xs">Ubuntu环境搭建Qt进行Android开发</span>
+        </a>
+    
+    
+        <a href="/2019/06/24/%E8%B7%9F%E9%9A%8FDesigner%E6%BA%90%E7%A0%81%E5%AD%A6Qt/" class="next-post btn btn-default" title='跟随Designer源码学Qt'>
+            <span class="hidden-lg">下一篇</span>
+            <span class="hidden-xs">跟随Designer源码学Qt</span> <i class="fa fa-angle-right fa-fw"></i>
+        </a>
+    
+</div>
+
+
+
+    <div id="comments">
+        
+	
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+  <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+<script src="https://cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
+
+<div id="gitalk-container"></div>
+<script type="text/javascript">
+    var gitalk;
+    if(window.location.host === 'spygg.gitee.io'){
+        gitalk = new Gitalk({
+            // Gitalk配置
+            clientID: "2e6379556d0bea565323",
+            clientSecret: "2feb2ad5f1301351c79e1d0e2b1a177bb0661ed7",
+            repo: "blogcomment",
+            owner: "spygg",
+            admin: ["spygg"],
+            id: md5(window.location.pathname),
+            distractionFreeMode: true
+        });
+    }
+    else{
+        gitalk = new Gitalk({
+            // Gitalk配置
+            clientID: "6c31603d4df9afc8351b",
+            clientSecret: "c9e81f3ac1492550170fccb28c0f8bb16e3b7ed1",
+            repo: "blogcomment",
+            owner: "spygg",
+            admin: ["spygg"],
+            id: md5(window.location.pathname),
+            distractionFreeMode: true
+        });
+    }
+    gitalk.render('gitalk-container');
+</script>
+
+
+    </div>
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">文章目录</h3>
+        
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B3%BB%E5%88%97%E7%9B%AE%E5%BD%95"><span class="toc-text">系列目录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-text">参考</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81"><span class="toc-text">代码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%A8%E6%B3%95"><span class="toc-text">用法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%81%87%E5%88%B0%E7%9A%84%E5%9D%91"><span class="toc-text">遇到的坑</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PS"><span class="toc-text">PS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PPS"><span class="toc-text">PPS</span></a></li></ol>
+        
+    </div>
+</aside>
+
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+
+<a id="back-to-top" class="icon-btn hide">
+	<i class="fa fa-chevron-up"></i>
+</a>
+
+
+
+
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+</div>
+
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy; 2019
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+            
+                
+<script src="/assets/tagcanvas.min.js?rev=2.9.js"></script>
+
+                    <script>
+                        var tagcloud3d = document.getElementById("tag-cloud-3d");
+                        if (tagcloud3d) {
+                            var tagOption = {
+                                textColour: '#444', // 字体颜色
+                                outlineMethod: 'block', // 选中模式
+                                outlineColour: '#FFDAB9', // 选中模式的颜色
+                                interval: 30 || 30, // 动画帧之间的时间间隔，值越大，转动幅度越大
+                                textHeight: 13,
+                                outlineRadius: 3,
+                                freezeActive: true || '', // 选中的标签是否继续滚动
+                                frontSelect: true || '', // 不选标签云后部的标签
+                                initial: [0.1, -0.1],
+                                depth: 0.5,
+                                decel: 0.95,
+                                maxSpeed: 0.03,
+                                reverse: true || '', // 是否反向触发
+                                fadeIn: 500, // 进入动画时间
+                                wheelZoom: false || '' // 是否启用鼠标滚轮
+                            }
+                            TagCanvas.Start('tag-cloud-3d', '', tagOption);
+                        }
+
+                    </script>
+                    
+
+                        
+
+                                
+<script src="/js/app.js?rev=@@hash.js"></script>
+
+
+</body>
+</html>

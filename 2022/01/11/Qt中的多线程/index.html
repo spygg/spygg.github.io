@@ -1,0 +1,587 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="间客六十">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="google-site-verification" content="NGCFVs-lxT5zTiHxEXzk7fkJl26matl6KfVIgcORvFQ" />
+    <meta name="msvalidate.01" content="9C33A26895A2A8B80CEE60CD519D1095" />
+
+    <link rel="dns-prefetch" href="https://liusblog.top">
+    <!--SEO-->
+
+    <meta name="keywords" content="Qt,多线程,QThread" />
+
+
+    <meta name="description" content="
+众所周知Qt的多线程有两种方法(写起来有三种), 注意当线程存在死循环时(即使是waitcondition等待),则该线程的事件循环将会被阻塞
+
+
+继承QThread官方范例里面都没有说线程等..." />
+
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+
+        <!--Title-->
+
+
+<title>Qt中的多线程 | 间客六十</title>
+
+
+    <link rel="alternate" href="/atom.xml" title="间客六十" type="application/atom+xml">
+
+
+    <link rel="icon" href="/favicon.ico">
+
+            
+
+
+
+
+<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.6.3/css/font-awesome.min.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash.css">
+
+
+
+
+                
+
+
+
+
+	<script>
+		(function(i, s, o, g, r, a, m) {
+		    i['GoogleAnalyticsObject'] = r;
+		    i[r] = i[r] || function() {
+		        (i[r].q = i[r].q || []).push(arguments)
+		    }, i[r].l = 1 * new Date();
+		    a = s.createElement(o),
+		    m = s.getElementsByTagName(o)[0];
+		    a.async = 1;
+		    a.src = g;
+		    m.parentNode.insertBefore(a, m)
+		})(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+		ga('create', 'true', 'auto');
+		ga('send', 'pageview');
+	</script>
+
+
+                    
+
+                        <script type="text/javascript">
+                            function hasClass(obj, cls) {
+                                return obj.className.match(new RegExp('(\\s|^)' + cls + '(\\s|$)'));
+                            }
+
+                            function addClass(obj, cls) {
+                                if (!this.hasClass(obj, cls)) obj.className += " " + cls;
+                            }
+
+                            function removeClass(obj, cls) {
+                                if (hasClass(obj, cls)) {
+                                    var reg = new RegExp('(\\s|^)' + cls + '(\\s|$)');
+                                    obj.className = obj.className.replace(reg, ' ');
+                                }
+                            }
+
+                            function copyToClip(event) {
+                                let cb = event.target.parentNode
+                                var cls = cb.getElementsByClassName("line");
+
+                                var pt = ""
+                                for (var k = 0; k < cls.length; k++) {
+                                    var cl = (cls[k].textContent || cls[k].innerHTML);
+                                    cl = cl.replace(`<span class="css"></span>`, "\n")
+                                    cl = cl.replace(`<span class="javascript"></span>`, "\n")
+
+                                    pt += cl
+                                    pt += "\n";
+                                }
+                                const textarea = document.createElement('textarea');
+                                textarea.value = pt;
+                                document.body.appendChild(textarea);
+                                textarea.select();
+                                if (document.execCommand('copy')) {
+                                    document.execCommand('copy');
+                                }
+                                document.body.removeChild(textarea);
+                                alert("复制成功");
+                            }
+
+                            function doAddCopyCode() {
+                                var codeBlocks = document.getElementsByClassName('code');
+                                for (var i = 0; i < codeBlocks.length; i++) {
+                                    //创建一个div
+                                    var divCopy = document.createElement("div");
+                                    divCopy.innerHTML = "点击复制"
+                                    //为div创建属性class = "test"
+                                    var divattr = document.createAttribute("class");
+                                    divattr.value = "copy_my_code";
+
+                                    //把属性class = "test"添加到div
+                                    divCopy.setAttributeNode(divattr);
+                                    codeBlocks[i].appendChild(divCopy)
+
+                                    var code = codeBlocks[i].getElementsByTagName("pre")[1];
+                                    //hack事件冒泡
+                                    codeBlocks[i].onclick = (e) => {
+                                        copyToClip(e);
+                                    }
+                                }
+                            }
+
+                            function doAddImg() {
+                                var imgAll = document.getElementsByClassName('post-body')[0];
+                                if (imgAll == undefined) {
+                                    return;
+                                }
+
+                                var imgs = imgAll.getElementsByTagName('img')
+                                for (var i = 0; i < imgs.length; i++) {
+                                    if (hasClass(imgs[i], 'class_no_full_screen')) {
+                                        continue;
+                                    }
+
+                                    imgs[i].setAttribute('style', "cursor: zoom-in");
+                                    imgs[i].onclick = function () {
+
+                                        var section = document.getElementsByTagName("section")[0];
+
+                                        var imgView = document.getElementById('imgViewDom');
+                                        if (imgView == undefined) {
+                                            imgView = document.createElement("div");
+                                            imgView.id = "imgViewDom";
+
+                                            section.appendChild(imgView)
+
+
+                                            imgView.onclick = function () {
+                                                addClass(imgView, "disnone");
+                                                imgView.innerHTML = "";
+                                            }
+
+                                        }
+
+                                        imgView.innerHTML = "<img id = 'jackslowfuck' src=" + this.src + " style='cursor: zoom-out; max-width: 100%;'" + ">";
+                                        removeClass(imgView, "disnone");
+
+                                        var jackslowfuck = document.getElementById('jackslowfuck');
+                                        jackslowfuck.onclick = function () {
+                                            addClass(imgView, "disnone");
+                                            imgView.innerHTML = "";
+                                        }
+
+                                    }
+                                }
+                            }
+
+                            window.addEventListener('load', function () {
+                                doAddImg();
+                                // doAddCopyCode();
+                            }, false);
+                        </script>
+
+                        <style type="text/css">
+                            .copy_my_code {
+                                position: absolute;
+                                top: 0;
+                                right: 0;
+                                border: 1px solid;
+                                background: #555;
+                                color: #fff;
+                                margin: 1px;
+                                padding: 0px 5px;
+                                cursor: pointer;
+                            }
+
+                            #imgViewDom {
+                                display: none;
+                                position: fixed;
+                                top: 0;
+                                left: 0;
+                                height: 100%;
+                                width: 100%;
+                                z-index: 99999999;
+                                background: rgba(0, 0, 0, 0.7);
+                                overflow: auto;
+                                display: -webkit-box;
+                                -webkit-box-align: center;
+                                -webkit-box-pack: center;
+                                display: -moz-box;
+                                -moz-box-align: center;
+                                -moz-box-pack: center;
+                                display: -o-box;
+                                -o-box-align: center;
+                                -o-box-pack: center;
+                                display: -ms-box;
+                                -ms-box-align: center;
+                                -ms-box-pack: center;
+                                display: box;
+                                box-align: center;
+                                box-pack: center;
+                                cursor: zoom-out;
+                            }
+
+                            .disnone {
+                                display: none !important;
+                            }
+                        </style>
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+
+<body>
+    <header class="main-header"  style="background-image:url(/img/banner.webp)"  >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/about" title='spygg'>
+            <img src="/img/avatar.webp" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+        	<!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+                <h2> 技术引领生活! </h2>
+            
+    	</div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                    <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <!---<a class="navbar-brand" href="https://liusblog.top">间客六十</a>--->
+                    <a class="navbar-brand" href="/">间客六十</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/"><i class="fa fa-home"></i>首页</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/Qt"><i class="fa "></i>Qt</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/Golang"><i class="fa "></i>Golang</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/Python"><i class="fa "></i>Python</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/Linux"><i class="fa "></i>Linux</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/音视频"><i class="fa "></i>音视频</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/网站开发"><i class="fa "></i>网站开发</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/杂谈"><i class="fa "></i>杂谈</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/archives/"><i class="fa "></i>时间轴</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/about/"><i class="fa "></i>关于</a>
+                            </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="Qt中的多线程">
+            
+	            Qt中的多线程
+            
+        </h1>
+        <div class="post-meta">
+    
+        <span class="categories-meta fa-wrap">
+            <i class="fa fa-folder-open-o"></i>
+            <a class="category-link" href="/categories/Qt/">Qt</a>
+        </span>
+    
+
+    
+        <span class="fa-wrap">
+            <i class="fa fa-tags"></i>
+            <span class="tags-meta">
+                
+                    <a class="tag-none-link" href="/tags/QThread/" rel="tag">QThread</a> <a class="tag-none-link" href="/tags/Qt/" rel="tag">Qt</a> <a class="tag-none-link" href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/" rel="tag">多线程</a>
+                
+            </span>
+        </span>
+    
+
+    
+        
+        <span class="fa-wrap">
+            <i class="fa fa-clock-o"></i>
+            <span class="date-meta">2022/01/11</span>
+        </span>
+        
+    
+</div>
+            
+            
+            <p class="fa fa-exclamation-triangle warning">
+                本文于<strong>506</strong>天之前发表，文中内容可能已经过时。
+            </p>
+        
+    </div>
+
+    
+
+    <div class="post-body post-content">
+        <blockquote>
+<p>众所周知Qt的多线程有两种方法(写起来有三种), 注意当线程存在死循环时(即使是waitcondition等待),则该线程的事件循环将会被阻塞</p>
+</blockquote>
+<ol>
+<li>继承QThread<br>官方范例里面都没有说线程等待某一个事件的问题,查找文档之后发现有个QWaitCondition 很好用, 大概如下</li>
+</ol>
+<figure class="highlight h"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> INHERITQTHREAD_H</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> INHERITQTHREAD_H</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QThread&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QWaitCondition&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QMutex&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QDateTime&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QTimer&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QDebug&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">InheritQThread</span> :</span> <span class="keyword">public</span> QThread</span><br><span class="line">&#123;</span><br><span class="line">    Q_OBJECT</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">explicit</span> <span class="title">InheritQThread</span><span class="params">(QObject *parent = <span class="number">0</span>)</span></span>;</span><br><span class="line">    ~InheritQThread();</span><br><span class="line"></span><br><span class="line">signals:</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> slots:</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    QWaitCondition m_condition;</span><br><span class="line">    QMutex m_mutex;</span><br><span class="line">    <span class="keyword">bool</span> m_quit;</span><br><span class="line"></span><br><span class="line"><span class="keyword">protected</span>:</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">run</span><span class="params">()</span></span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span> <span class="comment">// INHERITQTHREAD_H</span></span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;inheritqthread.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">InheritQThread::<span class="built_in">InheritQThread</span>(QObject *parent) : <span class="built_in">QThread</span>(parent)</span><br><span class="line">&#123;</span><br><span class="line">    m_quit = <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">    QTimer *t = <span class="keyword">new</span> <span class="built_in">QTimer</span>(<span class="keyword">this</span>);</span><br><span class="line"></span><br><span class="line">    t-&gt;<span class="built_in">setTimerType</span>(Qt::PreciseTimer);</span><br><span class="line">    t-&gt;<span class="built_in">setInterval</span>(<span class="number">1000</span>);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">connect</span>(t, &amp;QTimer::timeout, [=]()&#123;</span><br><span class="line">        <span class="comment">//此段代码运行在老线程中...</span></span><br><span class="line">        m_condition.<span class="built_in">wakeAll</span>();</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    t-&gt;<span class="built_in">start</span>();</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">InheritQThread::~<span class="built_in">InheritQThread</span>()</span><br><span class="line">&#123;</span><br><span class="line">    m_condition.<span class="built_in">wakeAll</span>();</span><br><span class="line">    m_quit = <span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">quit</span>();</span><br><span class="line">    <span class="built_in">wait</span>();</span><br><span class="line"></span><br><span class="line">    <span class="built_in">qDebug</span>() &lt;&lt; <span class="string">&quot;线程退出完毕&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">InheritQThread::run</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">while</span>(<span class="literal">true</span>)&#123;</span><br><span class="line">        <span class="keyword">if</span>(m_quit)&#123;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        m_mutex.<span class="built_in">lock</span>();</span><br><span class="line">        m_condition.<span class="built_in">wait</span>(&amp;m_mutex);</span><br><span class="line">        m_mutex.<span class="built_in">unlock</span>();</span><br><span class="line"></span><br><span class="line">        <span class="comment">//simulate time consuming operator</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">100000</span>; i++)&#123;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="built_in">qDebug</span>() &lt;&lt; QDateTime::<span class="built_in">currentDateTime</span>().<span class="built_in">toString</span>(<span class="string">&quot;yyyy-MM-dd hh:mm:ss.zzz&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>用一个父类<strong>包裹</strong>下QThread, 分两种情况</li>
+</ol>
+<ul>
+<li>使用Controller  和 Worker 然后通过信号槽来工作, 参见官方文档的例子<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Worker</span> :</span> <span class="keyword">public</span> QObject</span><br><span class="line">&#123;</span><br><span class="line">    Q_OBJECT</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> slots:</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">doWork</span><span class="params">(<span class="keyword">const</span> QString &amp;parameter)</span> </span>&#123;</span><br><span class="line">        QString result;</span><br><span class="line">        <span class="comment">/* ... here is the expensive or blocking operation ... */</span></span><br><span class="line">        <span class="function">emit <span class="title">resultReady</span><span class="params">(result)</span></span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">signals:</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">resultReady</span><span class="params">(<span class="keyword">const</span> QString &amp;result)</span></span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Controller</span> :</span> <span class="keyword">public</span> QObject</span><br><span class="line">&#123;</span><br><span class="line">    Q_OBJECT</span><br><span class="line">    QThread workerThread;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">Controller</span>() &#123;</span><br><span class="line">        Worker *worker = <span class="keyword">new</span> Worker;</span><br><span class="line">        worker-&gt;<span class="built_in">moveToThread</span>(&amp;workerThread);</span><br><span class="line">        <span class="built_in">connect</span>(&amp;workerThread, &amp;QThread::finished, worker, &amp;QObject::deleteLater);</span><br><span class="line">        <span class="built_in">connect</span>(<span class="keyword">this</span>, &amp;Controller::operate, worker, &amp;Worker::doWork);</span><br><span class="line">        <span class="built_in">connect</span>(worker, &amp;Worker::resultReady, <span class="keyword">this</span>, &amp;Controller::handleResults);</span><br><span class="line">        workerThread.<span class="built_in">start</span>();</span><br><span class="line">    &#125;</span><br><span class="line">    ~<span class="built_in">Controller</span>() &#123;</span><br><span class="line">        workerThread.<span class="built_in">quit</span>();</span><br><span class="line">        workerThread.<span class="built_in">wait</span>();</span><br><span class="line">    &#125;</span><br><span class="line"><span class="keyword">public</span> slots:</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">handleResults</span><span class="params">(<span class="keyword">const</span> QString &amp;)</span></span>;</span><br><span class="line">signals:</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">operate</span><span class="params">(<span class="keyword">const</span> QString &amp;)</span></span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></li>
+<li>将父类moveToThread,大概如下<blockquote>
+<p>调用时注意 ThreadContainer *c = new ThreadContainer; 不能有父对象<br>同时注意析构时删除 c</p>
+</blockquote>
+</li>
+</ul>
+<figure class="highlight h"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> THREADCONTAINER_H</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> THREADCONTAINER_H</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QObject&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QThread&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QTimer&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QMutex&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ThreadContainer</span> :</span> <span class="keyword">public</span> QObject</span><br><span class="line">&#123;</span><br><span class="line">    Q_OBJECT</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">explicit</span> <span class="title">ThreadContainer</span><span class="params">(QObject *parent = <span class="number">0</span>)</span></span>;</span><br><span class="line">    ~ThreadContainer();</span><br><span class="line"></span><br><span class="line">signals:</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> slots:</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    QMutex m_mutex;</span><br><span class="line">    <span class="keyword">bool</span> m_quit;</span><br><span class="line"></span><br><span class="line">    QThread *m_thread;</span><br><span class="line">    QTimer *m_timer;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">doWork</span><span class="params">()</span></span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span> <span class="comment">// THREADCONTAINER_H</span></span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;threadcontainer.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QDateTime&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QDebug&gt;</span></span></span><br><span class="line"></span><br><span class="line">ThreadContainer::<span class="built_in">ThreadContainer</span>(QObject *parent) : <span class="built_in">QObject</span>(parent)</span><br><span class="line">&#123;</span><br><span class="line">    m_quit = <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">    m_thread = <span class="keyword">new</span> QThread;</span><br><span class="line">    m_thread-&gt;<span class="built_in">start</span>();</span><br><span class="line"></span><br><span class="line">    <span class="comment">//这一句</span></span><br><span class="line">    <span class="built_in">moveToThread</span>(m_thread);</span><br><span class="line"></span><br><span class="line">    m_timer = <span class="keyword">new</span> QTimer;</span><br><span class="line">    m_timer-&gt;<span class="built_in">setTimerType</span>(Qt::PreciseTimer);</span><br><span class="line">    m_timer-&gt;<span class="built_in">setInterval</span>(<span class="number">1000</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//注意此时doWork运行在新线程中</span></span><br><span class="line">    <span class="comment">//connect(m_timer, &amp;QTimer::timeout, this, &amp;ThreadContainer::doWork);</span></span><br><span class="line">    <span class="built_in">connect</span>(m_timer, &amp;QTimer::timeout, <span class="keyword">this</span>, [=]()&#123;</span><br><span class="line">        <span class="comment">//不信你可以打印当前的 QThread::currentThreadId()</span></span><br><span class="line">        <span class="built_in">doWork</span>();</span><br><span class="line">    &#125;);</span><br><span class="line">    m_timer-&gt;<span class="built_in">start</span>();</span><br><span class="line"></span><br><span class="line">    <span class="built_in">qDebug</span>() &lt;&lt; <span class="string">&quot;ThreadContainer&quot;</span> &lt;&lt; QThread::<span class="built_in">currentThreadId</span>();</span><br><span class="line"></span><br><span class="line">    <span class="comment">//如果doWork是一个死循环,则这里不能直接调用,因为还是运行在父线程中,想要调用可使用以下方法,同时在doWork如果使用waitcondition,则应该写一个函数显示调用wakeAll</span></span><br><span class="line">    <span class="comment">//1. 通过QTimer::singleShot</span></span><br><span class="line">    <span class="comment">//2. 使用QMetaObject::invokeMethod(this, &quot;doWork&quot;, Qt::QueuedConnection);</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">//此句话以后(构造函数结束)该类的函数都将运行在子线程,除非是生成该对象的线程显式的调用时,被调用的函数才会运行在调用者的线程</span></span><br><span class="line">    <span class="comment">//既函数运行线程由调用者决定因为构造函数运行在调用者线程</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">ThreadContainer::~<span class="built_in">ThreadContainer</span>()</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">//这段代码运行在父线程,因为析构一般都是外部调用</span></span><br><span class="line">    m_mutex.<span class="built_in">lock</span>();</span><br><span class="line">    m_quit = <span class="literal">true</span>;</span><br><span class="line">    m_mutex.<span class="built_in">unlock</span>();</span><br><span class="line"></span><br><span class="line">    m_thread-&gt;<span class="built_in">quit</span>();</span><br><span class="line">    m_thread-&gt;<span class="built_in">wait</span>();</span><br><span class="line">    <span class="keyword">delete</span> m_thread;</span><br><span class="line">    <span class="keyword">delete</span> m_timer;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">qDebug</span>() &lt;&lt; <span class="string">&quot;线程退出完毕&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//如果此函数使用while死循环,则需要外部驱动来触发等待条件</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">ThreadContainer::doWork</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="function">QMutexLocker <span class="title">locker</span><span class="params">(&amp;m_mutex)</span></span>;</span><br><span class="line">    <span class="keyword">if</span>(m_quit)&#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//simulate time consuming operator</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">100000</span>; i++)&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">qDebug</span>() &lt;&lt; QDateTime::<span class="built_in">currentDateTime</span>().<span class="built_in">toString</span>(<span class="string">&quot;yyyy-MM-dd hh:mm:ss.zzz&quot;</span>) &lt;&lt; QThread::<span class="built_in">currentThreadId</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+    </div>
+    
+        <div class="reward" ontouchstart>
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+                <span class="reward-type">
+                    <img class="alipay" src="/img/zhifubaocode.webp"><b>支付宝打赏</b>
+                </span>
+            
+            
+                <span class="reward-type">
+                    <img class="wechat" src="/img/weixincode.webp"><b>微信打赏</b>
+                </span>
+            
+        </div>
+    </div>
+    <p class="reward-tip">您的支持是我前行的动力!</p>
+</div>
+
+
+    
+    <div class="post-footer">
+        <div>
+            
+                转载声明：商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="/about" target="_blank">spygg</a>
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+        <a href="/2022/01/13/%E5%93%94%E5%93%A9%E5%93%94%E5%93%A9%E7%BC%93%E5%AD%98%E8%A7%86%E9%A2%91%E5%AF%BC%E5%87%BA%E6%95%99%E7%A8%8B/" class="pre-post btn btn-default" title='哔哩哔哩缓存视频导出教程'>
+            <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+            <span class="hidden-xs">哔哩哔哩缓存视频导出教程</span>
+        </a>
+    
+    
+        <a href="/2022/01/02/%E6%9C%89%E5%85%B3Qt%E7%9A%84%E4%B8%80%E4%BA%9B%E8%AE%B0%E5%BD%95/" class="next-post btn btn-default" title='有关Qt的一些记录'>
+            <span class="hidden-lg">下一篇</span>
+            <span class="hidden-xs">有关Qt的一些记录</span> <i class="fa fa-angle-right fa-fw"></i>
+        </a>
+    
+</div>
+
+
+
+    <div id="comments">
+        
+	
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+  <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+<script src="https://cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
+
+<div id="gitalk-container"></div>
+<script type="text/javascript">
+    var gitalk;
+    if(window.location.host === 'spygg.gitee.io'){
+        gitalk = new Gitalk({
+            // Gitalk配置
+            clientID: "2e6379556d0bea565323",
+            clientSecret: "2feb2ad5f1301351c79e1d0e2b1a177bb0661ed7",
+            repo: "blogcomment",
+            owner: "spygg",
+            admin: ["spygg"],
+            id: md5(window.location.pathname),
+            distractionFreeMode: true
+        });
+    }
+    else{
+        gitalk = new Gitalk({
+            // Gitalk配置
+            clientID: "6c31603d4df9afc8351b",
+            clientSecret: "c9e81f3ac1492550170fccb28c0f8bb16e3b7ed1",
+            repo: "blogcomment",
+            owner: "spygg",
+            admin: ["spygg"],
+            id: md5(window.location.pathname),
+            distractionFreeMode: true
+        });
+    }
+    gitalk.render('gitalk-container');
+</script>
+
+
+    </div>
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">文章目录</h3>
+        
+            <p>暂无目录</p>
+        
+    </div>
+</aside>
+
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+
+<a id="back-to-top" class="icon-btn hide">
+	<i class="fa fa-chevron-up"></i>
+</a>
+
+
+
+
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+</div>
+
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy; 2019
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+            
+                
+<script src="/assets/tagcanvas.min.js?rev=2.9.js"></script>
+
+                    <script>
+                        var tagcloud3d = document.getElementById("tag-cloud-3d");
+                        if (tagcloud3d) {
+                            var tagOption = {
+                                textColour: '#444', // 字体颜色
+                                outlineMethod: 'block', // 选中模式
+                                outlineColour: '#FFDAB9', // 选中模式的颜色
+                                interval: 30 || 30, // 动画帧之间的时间间隔，值越大，转动幅度越大
+                                textHeight: 13,
+                                outlineRadius: 3,
+                                freezeActive: true || '', // 选中的标签是否继续滚动
+                                frontSelect: true || '', // 不选标签云后部的标签
+                                initial: [0.1, -0.1],
+                                depth: 0.5,
+                                decel: 0.95,
+                                maxSpeed: 0.03,
+                                reverse: true || '', // 是否反向触发
+                                fadeIn: 500, // 进入动画时间
+                                wheelZoom: false || '' // 是否启用鼠标滚轮
+                            }
+                            TagCanvas.Start('tag-cloud-3d', '', tagOption);
+                        }
+
+                    </script>
+                    
+
+                        
+
+                                
+<script src="/js/app.js?rev=@@hash.js"></script>
+
+
+</body>
+</html>

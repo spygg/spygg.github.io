@@ -1,0 +1,644 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="间客六十">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="google-site-verification" content="NGCFVs-lxT5zTiHxEXzk7fkJl26matl6KfVIgcORvFQ" />
+    <meta name="msvalidate.01" content="9C33A26895A2A8B80CEE60CD519D1095" />
+
+    <link rel="dns-prefetch" href="https://liusblog.top">
+    <!--SEO-->
+
+    <meta name="keywords" content="Gitpage,Hexo" />
+
+
+    <meta name="description" content="
+经过一系列折腾后,发现还是hexo + github 写博客靠谱,MARKDOWN语法真香…更多内容请参考staticgen网站
+
+
+
+安装部署安装hexo,首先安装nodejs 这里没啥好说..." />
+
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+
+        <!--Title-->
+
+
+<title>基于yilia主题在github上搭建博客 | 间客六十</title>
+
+
+    <link rel="alternate" href="/atom.xml" title="间客六十" type="application/atom+xml">
+
+
+    <link rel="icon" href="/favicon.ico">
+
+            
+
+
+
+
+<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.6.3/css/font-awesome.min.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash.css">
+
+
+
+
+                
+
+
+
+
+	<script>
+		(function(i, s, o, g, r, a, m) {
+		    i['GoogleAnalyticsObject'] = r;
+		    i[r] = i[r] || function() {
+		        (i[r].q = i[r].q || []).push(arguments)
+		    }, i[r].l = 1 * new Date();
+		    a = s.createElement(o),
+		    m = s.getElementsByTagName(o)[0];
+		    a.async = 1;
+		    a.src = g;
+		    m.parentNode.insertBefore(a, m)
+		})(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+		ga('create', 'true', 'auto');
+		ga('send', 'pageview');
+	</script>
+
+
+                    
+
+                        <script type="text/javascript">
+                            function hasClass(obj, cls) {
+                                return obj.className.match(new RegExp('(\\s|^)' + cls + '(\\s|$)'));
+                            }
+
+                            function addClass(obj, cls) {
+                                if (!this.hasClass(obj, cls)) obj.className += " " + cls;
+                            }
+
+                            function removeClass(obj, cls) {
+                                if (hasClass(obj, cls)) {
+                                    var reg = new RegExp('(\\s|^)' + cls + '(\\s|$)');
+                                    obj.className = obj.className.replace(reg, ' ');
+                                }
+                            }
+
+                            function copyToClip(event) {
+                                let cb = event.target.parentNode
+                                var cls = cb.getElementsByClassName("line");
+
+                                var pt = ""
+                                for (var k = 0; k < cls.length; k++) {
+                                    var cl = (cls[k].textContent || cls[k].innerHTML);
+                                    cl = cl.replace(`<span class="css"></span>`, "\n")
+                                    cl = cl.replace(`<span class="javascript"></span>`, "\n")
+
+                                    pt += cl
+                                    pt += "\n";
+                                }
+                                const textarea = document.createElement('textarea');
+                                textarea.value = pt;
+                                document.body.appendChild(textarea);
+                                textarea.select();
+                                if (document.execCommand('copy')) {
+                                    document.execCommand('copy');
+                                }
+                                document.body.removeChild(textarea);
+                                alert("复制成功");
+                            }
+
+                            function doAddCopyCode() {
+                                var codeBlocks = document.getElementsByClassName('code');
+                                for (var i = 0; i < codeBlocks.length; i++) {
+                                    //创建一个div
+                                    var divCopy = document.createElement("div");
+                                    divCopy.innerHTML = "点击复制"
+                                    //为div创建属性class = "test"
+                                    var divattr = document.createAttribute("class");
+                                    divattr.value = "copy_my_code";
+
+                                    //把属性class = "test"添加到div
+                                    divCopy.setAttributeNode(divattr);
+                                    codeBlocks[i].appendChild(divCopy)
+
+                                    var code = codeBlocks[i].getElementsByTagName("pre")[1];
+                                    //hack事件冒泡
+                                    codeBlocks[i].onclick = (e) => {
+                                        copyToClip(e);
+                                    }
+                                }
+                            }
+
+                            function doAddImg() {
+                                var imgAll = document.getElementsByClassName('post-body')[0];
+                                if (imgAll == undefined) {
+                                    return;
+                                }
+
+                                var imgs = imgAll.getElementsByTagName('img')
+                                for (var i = 0; i < imgs.length; i++) {
+                                    if (hasClass(imgs[i], 'class_no_full_screen')) {
+                                        continue;
+                                    }
+
+                                    imgs[i].setAttribute('style', "cursor: zoom-in");
+                                    imgs[i].onclick = function () {
+
+                                        var section = document.getElementsByTagName("section")[0];
+
+                                        var imgView = document.getElementById('imgViewDom');
+                                        if (imgView == undefined) {
+                                            imgView = document.createElement("div");
+                                            imgView.id = "imgViewDom";
+
+                                            section.appendChild(imgView)
+
+
+                                            imgView.onclick = function () {
+                                                addClass(imgView, "disnone");
+                                                imgView.innerHTML = "";
+                                            }
+
+                                        }
+
+                                        imgView.innerHTML = "<img id = 'jackslowfuck' src=" + this.src + " style='cursor: zoom-out; max-width: 100%;'" + ">";
+                                        removeClass(imgView, "disnone");
+
+                                        var jackslowfuck = document.getElementById('jackslowfuck');
+                                        jackslowfuck.onclick = function () {
+                                            addClass(imgView, "disnone");
+                                            imgView.innerHTML = "";
+                                        }
+
+                                    }
+                                }
+                            }
+
+                            window.addEventListener('load', function () {
+                                doAddImg();
+                                // doAddCopyCode();
+                            }, false);
+                        </script>
+
+                        <style type="text/css">
+                            .copy_my_code {
+                                position: absolute;
+                                top: 0;
+                                right: 0;
+                                border: 1px solid;
+                                background: #555;
+                                color: #fff;
+                                margin: 1px;
+                                padding: 0px 5px;
+                                cursor: pointer;
+                            }
+
+                            #imgViewDom {
+                                display: none;
+                                position: fixed;
+                                top: 0;
+                                left: 0;
+                                height: 100%;
+                                width: 100%;
+                                z-index: 99999999;
+                                background: rgba(0, 0, 0, 0.7);
+                                overflow: auto;
+                                display: -webkit-box;
+                                -webkit-box-align: center;
+                                -webkit-box-pack: center;
+                                display: -moz-box;
+                                -moz-box-align: center;
+                                -moz-box-pack: center;
+                                display: -o-box;
+                                -o-box-align: center;
+                                -o-box-pack: center;
+                                display: -ms-box;
+                                -ms-box-align: center;
+                                -ms-box-pack: center;
+                                display: box;
+                                box-align: center;
+                                box-pack: center;
+                                cursor: zoom-out;
+                            }
+
+                            .disnone {
+                                display: none !important;
+                            }
+                        </style>
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+
+<body>
+    <header class="main-header"  style="background-image:url(/img/banner.webp)"  >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/about" title='spygg'>
+            <img src="/img/avatar.webp" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+        	<!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+                <h2> 技术引领生活! </h2>
+            
+    	</div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                    <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <!---<a class="navbar-brand" href="https://liusblog.top">间客六十</a>--->
+                    <a class="navbar-brand" href="/">间客六十</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/"><i class="fa fa-home"></i>首页</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/Qt"><i class="fa "></i>Qt</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/Golang"><i class="fa "></i>Golang</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/Python"><i class="fa "></i>Python</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/Linux"><i class="fa "></i>Linux</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/音视频"><i class="fa "></i>音视频</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/网站开发"><i class="fa "></i>网站开发</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/杂谈"><i class="fa "></i>杂谈</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/archives/"><i class="fa "></i>时间轴</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/about/"><i class="fa "></i>关于</a>
+                            </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="基于yilia主题在github上搭建博客">
+            
+	            基于yilia主题在github上搭建博客
+            
+        </h1>
+        <div class="post-meta">
+    
+        <span class="categories-meta fa-wrap">
+            <i class="fa fa-folder-open-o"></i>
+            <a class="category-link" href="/categories/%E6%9D%82%E8%B0%88/">杂谈</a>
+        </span>
+    
+
+    
+        <span class="fa-wrap">
+            <i class="fa fa-tags"></i>
+            <span class="tags-meta">
+                
+                    <a class="tag-none-link" href="/tags/Gitpage/" rel="tag">Gitpage</a> <a class="tag-none-link" href="/tags/Hexo/" rel="tag">Hexo</a>
+                
+            </span>
+        </span>
+    
+
+    
+        
+        <span class="fa-wrap">
+            <i class="fa fa-clock-o"></i>
+            <span class="date-meta">2019/04/07</span>
+        </span>
+        
+    
+</div>
+            
+            
+            <p class="fa fa-exclamation-triangle warning">
+                本文于<strong>1516</strong>天之前发表，文中内容可能已经过时。
+            </p>
+        
+    </div>
+
+    
+
+    <div class="post-body post-content">
+        <blockquote>
+<p>经过一系列折腾后,发现还是hexo + github 写博客靠谱,MARKDOWN语法真香…<br>更多内容请参考<a target="_blank" rel="noopener" href="https://www.staticgen.com/">staticgen网站</a></p>
+</blockquote>
+<span id="more"></span>
+
+<h2 id="安装部署"><a href="#安装部署" class="headerlink" title="安装部署"></a>安装部署</h2><h3 id="安装hexo-首先安装nodejs-这里没啥好说的-如果网速比较慢请更换为淘宝源"><a href="#安装hexo-首先安装nodejs-这里没啥好说的-如果网速比较慢请更换为淘宝源" class="headerlink" title="安装hexo,首先安装nodejs 这里没啥好说的,如果网速比较慢请更换为淘宝源"></a>安装hexo,首先安装nodejs 这里没啥好说的,如果网速比较慢请更换为淘宝源</h3><figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo npm install -g hexo-<span class="keyword">cli</span> --registry=https://registry.npm.taobao<span class="meta">.org</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="在合适目录执行命令"><a href="#在合适目录执行命令" class="headerlink" title="在合适目录执行命令"></a>在合适目录执行命令</h3><figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">hexo init <span class="keyword">blog</span></span><br><span class="line"><span class="keyword"></span>cd <span class="keyword">blog</span></span><br><span class="line"><span class="keyword"></span>cnpm <span class="keyword">install</span></span><br><span class="line"><span class="keyword"></span>cnpm <span class="keyword">install </span>hexo-deployer-git --save 没有这一步的话可能会在hexo d发布这一步报错</span><br><span class="line">cnpm <span class="keyword">install </span>--save hexo-tag-aplayer</span><br><span class="line">cnpm i hexo-generator-<span class="keyword">json-content </span>--save 这个是yilia主题要用到的</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><p>打开目录下的_config.yml文件在[theme]中选择想要的主题<br>在deploy中填入:</p>
+<figure class="highlight handlebars"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="xml">deploy:</span></span><br><span class="line"><span class="xml">  type: git</span></span><br><span class="line"><span class="xml">  branch: master</span></span><br><span class="line"><span class="xml">  message: &#x27;站点更新:</span><span class="template-variable">&#123;&#123;<span class="name">now</span>(<span class="name">&quot;YYYY-MM-DD HH/mm/ss&quot;</span>)&#125;&#125;</span><span class="xml">&#x27;</span></span><br><span class="line"><span class="xml">  repo: git@github.com:spygg/spygg.github.io.git</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="命令"><a href="#命令" class="headerlink" title="命令:"></a>命令:</h2><figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">hexo s 为启动服务</span><br><span class="line">hexo <span class="built_in">clean</span> 为清除部署</span><br><span class="line">hexo g 是产生文件</span><br><span class="line">hexo d 为发布</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="ps"><a href="#ps" class="headerlink" title="ps:"></a>ps:</h2><h3 id="添加图片技巧"><a href="#添加图片技巧" class="headerlink" title="添加图片技巧"></a>添加图片技巧</h3><pre><code>在source目录下新建一个photos目录,在引用的时候使用如下代码
+</code></pre>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">![图片](<span class="regexp">/photos/</span>在github上搭建博客(基于yilia主题)/pic.webp)  头像和打赏就是类似的方法</span><br></pre></td></tr></table></figure>
+
+<p>修改照片属性</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.article</span> <span class="selector-tag">img</span>&#123;<span class="attribute">max-width</span>:<span class="number">80%</span>;<span class="attribute">margin</span>: <span class="number">0</span> auto;<span class="attribute">display</span>: block; <span class="attribute">max-height</span>: <span class="number">800px</span>;&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="添加多个分类使用"><a href="#添加多个分类使用" class="headerlink" title="添加多个分类使用"></a>添加多个分类使用</h3><figure class="highlight subunit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[分类1,分类2]</span><br><span class="line">或者</span><br><span class="line"><span class="keyword">tags:</span></span><br><span class="line">    - linux</span><br><span class="line">    - ubuntu</span><br><span class="line">    - centos</span><br><span class="line">    - mail</span><br></pre></td></tr></table></figure>
+
+
+<hr>
+<p>参看链接:<br>    <a target="_blank" rel="noopener" href="https://www.edevops.top/posts/cc368447.html">Hexo 基于yilia主题及其它插件优化 </a><br>    <a target="_blank" rel="noopener" href="https://www.edevops.top/posts/2543e989.html">Hexo 静态博客 </a></p>
+<h2 id="主题配置"><a href="#主题配置" class="headerlink" title="主题配置"></a>主题配置</h2><h3 id="安装主题"><a href="#安装主题" class="headerlink" title="安装主题"></a>安装主题</h3><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https:<span class="regexp">//gi</span>thub.com<span class="regexp">/litten/</span>hexo-theme-yilia.git themes/yilia</span><br></pre></td></tr></table></figure>
+
+<p>vim yilia/_config.yml</p>
+<h2 id="修改代码块样式"><a href="#修改代码块样式" class="headerlink" title="修改代码块样式"></a>修改代码块样式</h2><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">直接修改编译好的文件。路径为： theme/yilia/source/<span class="selector-tag">main</span>.<span class="number">0</span>cf68a<span class="selector-class">.css</span> </span><br><span class="line">修改代码背景色，搜索 <span class="selector-class">.article-entry</span> <span class="selector-class">.highlight</span>, 修改<span class="attribute">background</span>后面的颜色</span><br><span class="line"></span><br><span class="line">pre&#123;<span class="attribute">background</span>:<span class="number">#272822</span>;</span><br><span class="line">改为</span><br><span class="line">pre&#123;<span class="attribute">background</span>:<span class="number">#1a0139</span>;</span><br><span class="line"></span><br><span class="line">修改行号颜色，搜索 <span class="selector-class">.article-entry</span> <span class="selector-class">.highlight</span> <span class="selector-class">.gutter</span> pre <span class="selector-class">.line</span></span><br><span class="line">将</span><br><span class="line"><span class="selector-class">.article-entry</span> <span class="selector-class">.highlight</span> <span class="selector-class">.gutter</span> pre .line&#123;<span class="attribute">color</span>:<span class="number">#666</span></span><br><span class="line">改为</span><br><span class="line"><span class="selector-class">.article-entry</span> <span class="selector-class">.highlight</span> <span class="selector-class">.gutter</span> pre .line&#123;<span class="attribute">color</span>:<span class="number">#fc0000</span></span><br><span class="line"></span><br><span class="line">修改代码字体颜色 <span class="selector-class">.article-entry</span> <span class="selector-class">.highlight</span> <span class="selector-class">.line</span></span><br><span class="line"><span class="selector-class">.article-entry</span> <span class="selector-class">.highlight</span> .line&#123;<span class="attribute">color</span>:<span class="number">#fff</span>;</span><br><span class="line">修改为</span><br><span class="line"><span class="selector-class">.article-entry</span> <span class="selector-class">.highlight</span> .line&#123;<span class="attribute">color</span>:<span class="number">#00ff0d</span>;</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="代码块行号显示错乱"><a href="#代码块行号显示错乱" class="headerlink" title="代码块行号显示错乱"></a>代码块行号显示错乱</h2><p>vim yilia/source/main.0cf68a.css</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">将 <span class="attribute">white-space</span>:pre-wrap; 删除.</span><br><span class="line">这个问题是自动换行造成的，使用不自动换行的<span class="attribute">white-space</span>:pre;</span><br><span class="line">样式代码块部分会自动出现底部滚动条，行号错乱问题就没有了</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="版权声明"><a href="#版权声明" class="headerlink" title="版权声明"></a>版权声明</h2><p>themes/yilia/layout/_partial/article.ejs中插入代码</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">&lt;%</span><br><span class="line">  <span class="keyword">var</span> sUrl = url.replace(<span class="regexp">/index\.html$/</span>, <span class="string">&#x27;&#x27;</span>);</span><br><span class="line">  sUrl = <span class="regexp">/^(http:|https:)\/\//</span>.test(sUrl) ? sUrl : <span class="string">&#x27;https:&#x27;</span> + sUrl;</span><br><span class="line">%&gt;</span><br><span class="line">&lt;% <span class="keyword">if</span> ((theme.declare_type === <span class="number">2</span> || (theme.declare_type === <span class="number">1</span> &amp;&amp; post.declare)) &amp;&amp; !index)&#123; %&gt;</span><br><span class="line">  &lt;div class=&quot;declare&quot;&gt;</span><br><span class="line">    &lt;strong&gt;本文作者：&lt;/strong&gt;</span><br><span class="line">    &lt;% if(config.author != undefined)&#123; %&gt;</span><br><span class="line">      &lt;%= config.author%&gt;</span><br><span class="line">    &lt;% &#125;else&#123;%&gt;</span><br><span class="line">      &lt;font color=&quot;red&quot;&gt;请在博客根目录“_config.yml”中填入正确的“author”&lt;/font&gt;</span><br><span class="line">    &lt;%&#125;%&gt;</span><br><span class="line">    &lt;br&gt;</span><br><span class="line">    &lt;strong&gt;本文链接：&lt;/strong&gt;</span><br><span class="line">    &lt;%= sUrl%&gt;</span><br><span class="line">    &lt;br&gt;</span><br><span class="line">    &lt;strong&gt;版权声明：&lt;/strong&gt;</span><br><span class="line">    本作品采用</span><br><span class="line">    &lt;a rel=&quot;license&quot; href=&quot;&lt;%= theme.licensee_url%&gt;&quot;&gt;&lt;%= theme.licensee_name%&gt;&lt;/a&gt;</span><br><span class="line">    进行许可。转载请注明出处！</span><br><span class="line">    &lt;% if(theme.licensee_img != undefined)&#123; %&gt;</span><br><span class="line">      &lt;br&gt;</span><br><span class="line">      &lt;a rel=&quot;license&quot; href=&quot;&lt;%= theme.licensee_url%&gt;&quot;&gt;&lt;img alt=&quot;知识共享许可协议&quot; style=&quot;border-width:0&quot; src=&quot;&lt;%=    theme.licensee_img%&gt;&quot;/&gt;&lt;/a&gt;</span><br><span class="line">    &lt;% &#125; %&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;% &#125; else &#123;%&gt;</span><br><span class="line">  &lt;div class=&quot;declare&quot; hidden=&quot;hidden&quot;&gt;&lt;/div&gt;</span><br><span class="line">&lt;% &#125; %&gt;</span><br></pre></td></tr></table></figure>
+
+<p>vim yilia/source/main.0cf68a.css 添加如下代码</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.declare</span> &#123;</span><br><span class="line">  <span class="attribute">background-color</span>: <span class="number">#eaeaea</span>;</span><br><span class="line">  <span class="attribute">margin-top</span>: <span class="number">2em</span>;</span><br><span class="line">  <span class="attribute">border-left</span>: <span class="number">3px</span> solid <span class="number">#ff1700</span>;</span><br><span class="line">  <span class="attribute">padding</span>: .<span class="number">5em</span> <span class="number">1em</span>; &#125;</span><br></pre></td></tr></table></figure>
+
+<p>同时在yilla/_config.yml中添加</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">declare_type</span>: <span class="number">2</span></span><br><span class="line"><span class="attribute">licensee_name</span>: GPL<span class="number">3</span>.<span class="number">0</span></span><br></pre></td></tr></table></figure>
+<p>在根目录的_config.yml中修改url</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">url: https:<span class="regexp">//</span>spygg.github.io</span><br></pre></td></tr></table></figure>
+<h2 id="评论系统"><a href="#评论系统" class="headerlink" title="评论系统"></a>评论系统</h2><ol>
+<li><p>申请账号 具体可以参考<a target="_blank" rel="noopener" href="https://valine.js.org/">valine官网</a></p>
+</li>
+<li><p>删除themes/yilia/layout/_partial/post目录下的changyan.ejs duoshuo.ejs wangyiyun.ejs文件<br>vim valine.ejs</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;vcomment&quot;</span> <span class="attr">class</span>=<span class="string">&quot;comment&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span> </span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">async</span> <span class="attr">src</span>=<span class="string">&quot;//cdn1.lncld.net/static/js/3.0.4/av-min.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">async</span> <span class="attr">src</span>=<span class="string">&quot;//cdn.jsdelivr.net/npm/valine/dist/Valine.min.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></span><br><span class="line"><span class="javascript">   <span class="keyword">var</span> notify = <span class="string">&#x27;&lt;%= theme.valine.notify %&gt;&#x27;</span> == <span class="literal">true</span> ? <span class="literal">true</span> : <span class="literal">false</span>;</span></span><br><span class="line"><span class="javascript">   <span class="keyword">var</span> verify = <span class="string">&#x27;&lt;%= theme.valine.verify %&gt;&#x27;</span> == <span class="literal">true</span> ? <span class="literal">true</span> : <span class="literal">false</span>;</span></span><br><span class="line"><span class="javascript">    <span class="built_in">window</span>.onload = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">new</span> Valine(&#123;</span></span><br><span class="line"><span class="javascript">            <span class="attr">el</span>: <span class="string">&#x27;.comment&#x27;</span>,</span></span><br><span class="line"><span class="javascript">            <span class="attr">notify</span>: notify,</span></span><br><span class="line"><span class="javascript">            <span class="attr">verify</span>: verify,</span></span><br><span class="line"><span class="javascript">            <span class="attr">app_id</span>: <span class="string">&quot;&lt;%= theme.valine.appid %&gt;&quot;</span>,</span></span><br><span class="line"><span class="javascript">            <span class="attr">app_key</span>: <span class="string">&quot;&lt;%= theme.valine.appkey %&gt;&quot;</span>,</span></span><br><span class="line"><span class="javascript">            <span class="attr">placeholder</span>: <span class="string">&quot;&lt;%= theme.valine.placeholder %&gt;&quot;</span>,</span></span><br><span class="line"><span class="javascript">            <span class="attr">avatar</span>:<span class="string">&quot;&lt;%= theme.valine.avatar %&gt;&quot;</span></span></span><br><span class="line"><span class="javascript">        &#125;);</span></span><br><span class="line"><span class="javascript">    &#125;</span></span><br><span class="line"><span class="javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+<li><p>vim /Hexo/themes/EvanM/layout/_partial/article.ejs</p>
+</li>
+</ol>
+<p>增加如下内容</p>
+<figure class="highlight xl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"> &lt;% <span class="keyword">if</span> (<span class="built_in">theme</span>.valine &amp;&amp; <span class="built_in">theme</span>.valine.appid &amp;&amp; <span class="built_in">theme</span>.valine.appkey)&#123; %&gt;</span><br><span class="line">    &lt;section id=<span class="string">&quot;comments&quot;</span> style=<span class="string">&quot;margin:10px;padding:10px;background:#fff;&quot;</span>&gt;</span><br><span class="line">      &lt;%- partial(<span class="string">&#x27;post/valine&#x27;</span>, &#123;</span><br><span class="line">        key: post.slug,</span><br><span class="line">        <span class="built_in">title</span>: post.<span class="built_in">title</span>,</span><br><span class="line">        url: config.url+url_for(post.<span class="built_in">path</span>)</span><br><span class="line">        &#125;) %&gt;</span><br><span class="line">    &lt;/section&gt;</span><br><span class="line">  &lt;% &#125; %&gt;</span><br><span class="line"></span><br><span class="line">&lt;% <span class="keyword">if</span>(<span class="built_in">theme</span>.gitalk.enable)&#123; %&gt;</span><br><span class="line">    &lt;%- partial(<span class="string">&#x27;post/gitalk&#x27;</span>, &#123;</span><br><span class="line">        key: post.slug,</span><br><span class="line">        <span class="built_in">title</span>: post.<span class="built_in">title</span>,</span><br><span class="line">        url: config.url+url_for(post.<span class="built_in">path</span>)</span><br><span class="line">    &#125;) %&gt;</span><br><span class="line">  &lt;% &#125; %&gt;</span><br><span class="line">&lt;% &#125; %&gt;    ##倒数第一行</span><br></pre></td></tr></table></figure>
+<h2 id="添加文章分类"><a href="#添加文章分类" class="headerlink" title="添加文章分类"></a>添加文章分类</h2><p>参考链接:<br>       <a target="_blank" rel="noopener" href="http://119.3.66.9/archives/Hexo%20yilia%20%E6%B7%BB%E5%8A%A0%E7%9B%AE%E5%BD%95%E9%A1%B5%E9%9D%A2">Hexo yilia 添加目录页面</a></p>
+<p>主要步骤为:</p>
+<ol>
+<li><p>添加 categories 页面</p>
+<figure class="highlight haxe"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo <span class="keyword">new</span> <span class="type">page</span> categories</span><br></pre></td></tr></table></figure></li>
+<li><p>修改index.md</p>
+</li>
+</ol>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">title:</span> <span class="string">文章分类</span></span><br><span class="line"><span class="attr">date:</span> <span class="number">2018-10-19 11:22:21</span></span><br><span class="line"><span class="attr">type:</span> <span class="string">&quot;categories&quot;</span></span><br><span class="line"><span class="attr">layout:</span> <span class="string">&quot;categories&quot;</span></span><br><span class="line"><span class="attr">comments:</span> <span class="literal">false</span> <span class="comment">#关闭评论</span></span><br><span class="line"><span class="meta">---</span></span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li><p>修改配置文件</p>
+<figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">menu:</span></span><br><span class="line">  主页: <span class="regexp">/</span></span><br><span class="line"><span class="regexp">  分类: /categories</span></span><br><span class="line">  归档: <span class="regexp">/archives</span></span><br><span class="line"><span class="regexp">#随笔: /tags</span><span class="regexp">/随笔/</span></span><br></pre></td></tr></table></figure></li>
+<li><p>新建yilia/layout/categories.ejs</p>
+<figure class="highlight erb"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">article</span> <span class="attr">class</span>=<span class="string">&quot;article article-type-post show&quot;</span>&gt;</span></span></span><br><span class="line"><span class="xml">  <span class="tag">&lt;<span class="name">header</span> <span class="attr">class</span>=<span class="string">&quot;article-header&quot;</span> <span class="attr">style</span>=<span class="string">&quot;border-bottom: 1px solid #ccc&quot;</span>&gt;</span></span></span><br><span class="line"><span class="xml">  <span class="tag">&lt;<span class="name">h1</span> <span class="attr">class</span>=<span class="string">&quot;article-title&quot;</span> <span class="attr">itemprop</span>=<span class="string">&quot;name&quot;</span>&gt;</span></span></span><br><span class="line"><span class="xml">    &lt;%=</span><span class="ruby"> page.title </span><span class="xml">%&gt;</span></span><br><span class="line"><span class="xml">  <span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span></span><br><span class="line"><span class="xml">  <span class="tag">&lt;/<span class="name">header</span>&gt;</span></span></span><br><span class="line"><span class="xml"></span></span><br><span class="line"><span class="xml">  &lt;%</span><span class="ruby"> <span class="keyword">if</span> (site.categories.length)&#123; </span><span class="xml">%&gt;</span></span><br><span class="line"><span class="xml">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;category-all-page&quot;</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;<span class="name">h2</span>&gt;</span>共计 &lt;%=</span><span class="ruby"> site.categories.length </span><span class="xml">%&gt; 个分类<span class="tag">&lt;/<span class="name">h2</span>&gt;</span></span></span><br><span class="line"><span class="xml">    &lt;%-</span><span class="ruby"> list_categories(site.categories, &#123;</span></span><br><span class="line"><span class="ruby">      <span class="symbol">show_count:</span> <span class="literal">true</span>,</span></span><br><span class="line"><span class="ruby">      <span class="class"><span class="keyword">class</span>: &#x27;<span class="title">category</span>-<span class="title">list</span>-<span class="title">item</span>&#x27;,</span></span></span><br><span class="line"><span class="ruby">      <span class="symbol">style:</span> <span class="string">&#x27;list&#x27;</span>,</span></span><br><span class="line"><span class="ruby">      <span class="symbol">depth:</span> <span class="number">2</span>,</span></span><br><span class="line"><span class="ruby">      <span class="symbol">separator:</span> <span class="string">&#x27;&#x27;</span></span></span><br><span class="line"><span class="ruby">    &#125;) </span><span class="xml">%&gt;</span></span><br><span class="line"><span class="xml">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml">  &lt;%</span><span class="ruby"> &#125; </span><span class="xml">%&gt;</span></span><br><span class="line"><span class="xml"><span class="tag">&lt;/<span class="name">article</span>&gt;</span></span></span><br></pre></td></tr></table></figure></li>
+<li><p>修改 yilia\source\main.0cf68a.css，将下面的内容添加进去</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">category-all-page &#123;</span><br><span class="line">    <span class="attribute">margin</span>: <span class="number">30px</span> <span class="number">40px</span> <span class="number">30px</span> <span class="number">40px</span>;</span><br><span class="line">    <span class="attribute">position</span>: relative;</span><br><span class="line">    <span class="attribute">min-height</span>: <span class="number">70vh</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="selector-class">.category-all-page</span> <span class="selector-tag">h2</span> &#123;</span><br><span class="line">    <span class="attribute">margin</span>: <span class="number">20px</span> <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="selector-class">.category-all-page</span> <span class="selector-class">.category-all-title</span> &#123;</span><br><span class="line">    <span class="attribute">text-align</span>: center;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="selector-class">.category-all-page</span> <span class="selector-class">.category-all</span> &#123;</span><br><span class="line">    <span class="attribute">margin-top</span>: <span class="number">20px</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="selector-class">.category-all-page</span> <span class="selector-class">.category-list</span> &#123;</span><br><span class="line">    <span class="attribute">margin</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">padding</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">list-style</span>: none;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="selector-class">.category-all-page</span> <span class="selector-class">.category-list-item-list-item</span> &#123;</span><br><span class="line">    <span class="attribute">margin</span>: <span class="number">10px</span> <span class="number">15px</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="selector-class">.category-all-page</span> <span class="selector-class">.category-list-item-list-count</span> &#123;</span><br><span class="line">    <span class="attribute">color</span>: <span class="variable">$grey</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="selector-class">.category-all-page</span> <span class="selector-class">.category-list-item-list-count</span>:before &#123;</span><br><span class="line">    <span class="attribute">display</span>: inline;</span><br><span class="line">    <span class="attribute">content</span>: <span class="string">&quot; (&quot;</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="selector-class">.category-all-page</span> <span class="selector-class">.category-list-item-list-count</span>:after &#123;</span><br><span class="line">    <span class="attribute">display</span>: inline;</span><br><span class="line">    <span class="attribute">content</span>: <span class="string">&quot;) &quot;</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="selector-class">.category-all-page</span> <span class="selector-class">.category-list-item</span> &#123;</span><br><span class="line">    <span class="attribute">margin</span>: <span class="number">10px</span> <span class="number">10px</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="selector-class">.category-all-page</span> <span class="selector-class">.category-list-count</span> &#123;</span><br><span class="line">    <span class="attribute">color</span>: <span class="variable">$grey</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="selector-class">.category-all-page</span> <span class="selector-class">.category-list-count</span>:before &#123;</span><br><span class="line">    <span class="attribute">display</span>: inline;</span><br><span class="line">    <span class="attribute">content</span>: <span class="string">&quot; (&quot;</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="selector-class">.category-all-page</span> <span class="selector-class">.category-list-count</span>:after &#123;</span><br><span class="line">    <span class="attribute">display</span>: inline;</span><br><span class="line">    <span class="attribute">content</span>: <span class="string">&quot;) &quot;</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="selector-class">.category-all-page</span> <span class="selector-class">.category-list-child</span> &#123;</span><br><span class="line">    <span class="attribute">padding-left</span>: <span class="number">10px</span>;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>在写文章时添加categories</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">title:</span> <span class="string">Hexo</span> <span class="string">yilia</span> <span class="string">添加目录页面</span></span><br><span class="line"><span class="attr">tags:</span> [<span class="string">linux</span>,<span class="string">Hexo</span>]</span><br><span class="line"><span class="attr">categories:</span> [<span class="string">Hexo</span>,<span class="string">创建目录</span>]</span><br><span class="line"><span class="meta">---</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+<p>参考聊天记录<br><img src="/photos/%E5%9F%BA%E4%BA%8Eyilia%E4%B8%BB%E9%A2%98%E5%9C%A8github%E4%B8%8A%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/%E6%B7%BB%E5%8A%A0%E5%88%86%E7%B1%BB.webp" alt="聊天记录"></p>
+<h2 id="我的根目录-config-yml"><a href="#我的根目录-config-yml" class="headerlink" title="我的根目录_config.yml"></a>我的根目录_config.yml</h2><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Hexo Configuration</span></span><br><span class="line"><span class="comment">## Docs: https://hexo.io/docs/configuration.html</span></span><br><span class="line"><span class="comment">## Source: https://github.com/hexojs/hexo/</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Site</span></span><br><span class="line"><span class="attr">title:</span> <span class="string">LiusBlog</span></span><br><span class="line"><span class="attr">subtitle:</span> <span class="string">技术引领生活</span></span><br><span class="line"><span class="attr">description:</span> <span class="string">一些技术感悟</span></span><br><span class="line"><span class="attr">keywords:</span> <span class="string">&quot;Qt,Linux,Python,Django,爬虫,QML,HTML,JAVASCRIPT&quot;</span></span><br><span class="line"><span class="attr">author:</span> <span class="string">spygg</span></span><br><span class="line"><span class="attr">email:</span> <span class="string">liushidc@163.com</span></span><br><span class="line"><span class="attr">language:</span> <span class="string">zh-CN</span></span><br><span class="line"><span class="attr">timezone:</span> <span class="string">Asia/Shanghai</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># URL</span></span><br><span class="line"><span class="comment">## If your site is put in a subdirectory, set url as &#x27;http://yoursite.com/child&#x27; and root as &#x27;/child/&#x27;</span></span><br><span class="line"><span class="attr">url:</span> <span class="string">https://spygg.github.io</span></span><br><span class="line"><span class="attr">root:</span> <span class="string">/</span></span><br><span class="line"><span class="attr">permalink:</span> <span class="string">:year/:month/:day/:title/</span></span><br><span class="line"><span class="attr">permalink_defaults:</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Directory</span></span><br><span class="line"><span class="attr">source_dir:</span> <span class="string">source</span></span><br><span class="line"><span class="attr">public_dir:</span> <span class="string">public</span></span><br><span class="line"><span class="attr">tag_dir:</span> <span class="string">tags</span></span><br><span class="line"><span class="attr">archive_dir:</span> <span class="string">archives</span></span><br><span class="line"><span class="attr">category_dir:</span> <span class="string">categories</span></span><br><span class="line"><span class="attr">code_dir:</span> <span class="string">downloads/code</span></span><br><span class="line"><span class="attr">i18n_dir:</span> <span class="string">:lang</span></span><br><span class="line"><span class="attr">skip_render:</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Writing</span></span><br><span class="line"><span class="attr">new_post_name:</span> <span class="string">:title.md</span> <span class="comment"># File name of new posts</span></span><br><span class="line"><span class="attr">default_layout:</span> <span class="string">post</span></span><br><span class="line"><span class="attr">titlecase:</span> <span class="literal">false</span> <span class="comment"># Transform title into titlecase</span></span><br><span class="line"><span class="comment">#external_link: true # Open external links in new tab</span></span><br><span class="line"><span class="attr">external_link:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span> <span class="comment"># Open external links in new tab</span></span><br><span class="line">  <span class="attr">field:</span> <span class="string">site</span> <span class="comment"># Apply to the whole site</span></span><br><span class="line">  <span class="attr">exclude:</span> </span><br><span class="line"><span class="attr">filename_case:</span> <span class="number">0</span></span><br><span class="line"><span class="attr">render_drafts:</span> <span class="literal">false</span></span><br><span class="line"><span class="attr">post_asset_folder:</span> <span class="literal">false</span></span><br><span class="line"><span class="attr">relative_link:</span> <span class="literal">false</span></span><br><span class="line"><span class="attr">future:</span> <span class="literal">true</span></span><br><span class="line"><span class="attr">highlight:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">line_number:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">auto_detect:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">tab_replace:</span> <span class="literal">false</span></span><br><span class="line">  </span><br><span class="line"><span class="comment"># Home page setting</span></span><br><span class="line"><span class="comment"># path: Root path for your blogs index page. (default = &#x27;&#x27;)</span></span><br><span class="line"><span class="comment"># per_page: Posts displayed per page. (0 = disable pagination)</span></span><br><span class="line"><span class="comment"># order_by: Posts order. (Order by date descending by default)</span></span><br><span class="line"><span class="attr">index_generator:</span></span><br><span class="line">  <span class="attr">path:</span> <span class="string">&#x27;&#x27;</span></span><br><span class="line">  <span class="attr">per_page:</span> <span class="number">10</span></span><br><span class="line">  <span class="attr">order_by:</span> <span class="string">-date</span></span><br><span class="line">  </span><br><span class="line"><span class="comment"># Category &amp; Tag</span></span><br><span class="line"><span class="attr">default_category:</span> <span class="string">uncategorized</span></span><br><span class="line"><span class="attr">category_map:</span></span><br><span class="line"><span class="attr">tag_map:</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Date / Time format</span></span><br><span class="line"><span class="comment">## Hexo uses Moment.js to parse and display date</span></span><br><span class="line"><span class="comment">## You can customize the date format as defined in</span></span><br><span class="line"><span class="comment">## http://momentjs.com/docs/#/displaying/format/</span></span><br><span class="line"><span class="attr">date_format:</span> <span class="string">YYYY-MM-DD</span></span><br><span class="line"><span class="attr">time_format:</span> <span class="string">HH:mm:ss</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Pagination</span></span><br><span class="line"><span class="comment">## Set per_page to 0 to disable pagination</span></span><br><span class="line"><span class="attr">per_page:</span> <span class="number">10</span></span><br><span class="line"><span class="attr">pagination_dir:</span> <span class="string">page</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Extensions</span></span><br><span class="line"><span class="comment">## Plugins: https://hexo.io/plugins/</span></span><br><span class="line"><span class="comment">## Themes: https://hexo.io/themes/</span></span><br><span class="line"><span class="attr">theme:</span> <span class="string">yilia</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Deployment</span></span><br><span class="line"><span class="comment">## Docs: https://hexo.io/docs/deployment.html</span></span><br><span class="line"><span class="attr">deploy:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">git</span></span><br><span class="line">  <span class="attr">branch:</span> <span class="string">master</span></span><br><span class="line">  <span class="attr">message:</span> <span class="string">&#x27;站点更新:<span class="template-variable">&#123;&#123;now(&quot;YYYY-MM-DD HH/mm/ss&quot;)&#125;&#125;</span>&#x27;</span></span><br><span class="line">  <span class="attr">repo:</span> <span class="string">git@github.com:spygg/spygg.github.io.git</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="attr">jsonContent:</span></span><br><span class="line">  <span class="attr">meta:</span> <span class="literal">false</span></span><br><span class="line">  <span class="attr">pages:</span> <span class="literal">false</span></span><br><span class="line">  <span class="attr">posts:</span></span><br><span class="line">    <span class="attr">title:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">date:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">path:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">text:</span> <span class="literal">false</span></span><br><span class="line">    <span class="attr">raw:</span> <span class="literal">false</span></span><br><span class="line">    <span class="attr">content:</span> <span class="literal">false</span></span><br><span class="line">    <span class="attr">slug:</span> <span class="literal">false</span></span><br><span class="line">    <span class="attr">updated:</span> <span class="literal">false</span></span><br><span class="line">    <span class="attr">comments:</span> <span class="literal">false</span></span><br><span class="line">    <span class="attr">link:</span> <span class="literal">false</span></span><br><span class="line">    <span class="attr">permalink:</span> <span class="literal">false</span></span><br><span class="line">    <span class="attr">excerpt:</span> <span class="literal">false</span></span><br><span class="line">    <span class="attr">categories:</span> <span class="literal">false</span></span><br><span class="line">    <span class="attr">tags:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<p>主题配置</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Header</span></span><br><span class="line"></span><br><span class="line"><span class="attr">menu:</span></span><br><span class="line">  <span class="string">主页:</span> <span class="string">/</span></span><br><span class="line">  <span class="string">分类:</span> <span class="string">/categories</span></span><br><span class="line">  <span class="string">归档:</span> <span class="string">/archives</span></span><br><span class="line"><span class="comment">#随笔: /tags/随笔/</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># SubNav</span></span><br><span class="line"><span class="attr">subnav:</span></span><br><span class="line">  <span class="attr">github:</span> <span class="string">&quot;https://www.github.com/spygg&quot;</span></span><br><span class="line">  <span class="attr">zhihu:</span> <span class="string">&quot;https://www.zhihu.com/people/spygg/activities&quot;</span></span><br><span class="line">  <span class="attr">rss:</span> <span class="string">&quot;#&quot;</span></span><br><span class="line">  </span><br><span class="line">  <span class="comment">#qq: &quot;#&quot;</span></span><br><span class="line">  <span class="comment">#weixin: &quot;#&quot;</span></span><br><span class="line">  <span class="comment">#jianshu: &quot;#&quot;</span></span><br><span class="line">  <span class="comment">#douban: &quot;#&quot;</span></span><br><span class="line">  <span class="comment">#segmentfault: &quot;#&quot;</span></span><br><span class="line">  <span class="comment">#bilibili: &quot;#&quot;</span></span><br><span class="line">  <span class="comment">#acfun: &quot;#&quot;</span></span><br><span class="line">  <span class="comment">#mail: &quot;mailto:litten225@qq.com&quot;</span></span><br><span class="line">  <span class="comment">#facebook: &quot;#&quot;</span></span><br><span class="line">  <span class="comment">#google: &quot;#&quot;</span></span><br><span class="line">  <span class="comment">#twitter: &quot;#&quot;</span></span><br><span class="line">  <span class="comment">#linkedin: &quot;#&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="attr">rss:</span> <span class="string">/atom.xml</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 是否需要修改 root 路径</span></span><br><span class="line"><span class="comment"># 如果您的网站存放在子目录中，例如 http://yoursite.com/blog，</span></span><br><span class="line"><span class="comment"># 请将您的 url 设为 http://yoursite.com/blog 并把 root 设为 /blog/。</span></span><br><span class="line"><span class="attr">root:</span> <span class="string">/</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Content</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 文章太长，截断按钮文字</span></span><br><span class="line"><span class="attr">excerpt_link:</span> <span class="string">more</span></span><br><span class="line"><span class="comment"># 文章卡片右下角常驻链接，不需要请设置为false</span></span><br><span class="line"><span class="attr">show_all_link:</span> <span class="string">&#x27;more &gt;&gt;&#x27;</span></span><br><span class="line"><span class="comment"># 数学公式</span></span><br><span class="line"><span class="attr">mathjax:</span> <span class="literal">true</span></span><br><span class="line"><span class="comment"># 是否在新窗口打开链接</span></span><br><span class="line"><span class="attr">open_in_new:</span> <span class="literal">false</span></span><br><span class="line"></span><br><span class="line"><span class="attr">declare_type:</span> <span class="number">2</span></span><br><span class="line"><span class="attr">licensee_name:</span> <span class="string">GPL3.0</span></span><br><span class="line"><span class="comment"># 打赏</span></span><br><span class="line"><span class="comment"># 打赏type设定：0-关闭打赏； 1-文章对应的md文件里有reward:true属性，才有打赏； 2-所有文章均有打赏</span></span><br><span class="line"><span class="attr">reward_type:</span> <span class="number">2</span></span><br><span class="line"><span class="comment"># 打赏wording</span></span><br><span class="line"><span class="attr">reward_wording:</span> <span class="string">&#x27;您的支持是我前行的动力!&#x27;</span></span><br><span class="line"><span class="comment"># 支付宝二维码图片地址，跟你设置头像的方式一样。比如：/assets/img/alipay.webp</span></span><br><span class="line"><span class="attr">alipay:</span> <span class="string">/img/zhifubaocode.webp</span></span><br><span class="line"><span class="comment"># 微信二维码图片地址</span></span><br><span class="line"><span class="attr">weixin:</span> <span class="string">/img/weixincode.webp</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 目录</span></span><br><span class="line"><span class="comment"># 目录设定：0-不显示目录； 1-文章对应的md文件里有toc:true属性，才有目录； 2-所有文章均显示目录</span></span><br><span class="line"><span class="attr">toc:</span> <span class="number">2</span></span><br><span class="line"><span class="comment"># 根据自己的习惯来设置，如果你的目录标题习惯有标号，置为true即可隐藏hexo重复的序号；否则置为false</span></span><br><span class="line"><span class="attr">toc_hide_index:</span> <span class="literal">true</span></span><br><span class="line"><span class="comment"># 目录为空时的提示</span></span><br><span class="line"><span class="attr">toc_empty_wording:</span> <span class="string">&#x27;目录，不存在的…&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 是否有快速回到顶部的按钮</span></span><br><span class="line"><span class="attr">top:</span> <span class="literal">true</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Miscellaneous</span></span><br><span class="line"><span class="attr">baidu_analytics:</span> <span class="string">&#x27;&#x27;</span></span><br><span class="line"><span class="attr">google_analytics:</span> <span class="string">&#x27;&#x27;</span></span><br><span class="line"><span class="attr">favicon:</span> <span class="string">/img/favicon.webp</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#你的头像url</span></span><br><span class="line"><span class="attr">avatar:</span> <span class="string">/img/me.webp</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#是否开启分享</span></span><br><span class="line"><span class="attr">share_jia:</span> <span class="literal">true</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#评论：1、多说；2、网易云跟帖；3、畅言；4、Disqus；5、Gitment</span></span><br><span class="line"><span class="comment">#不需要使用某项，直接设置值为false，或注释掉</span></span><br><span class="line"><span class="comment">#具体请参考wiki：https://github.com/litten/hexo-theme-yilia/wiki/</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#1、多说</span></span><br><span class="line"><span class="attr">duoshuo:</span> <span class="literal">false</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#2、网易云跟帖</span></span><br><span class="line"><span class="attr">wangyiyun:</span> <span class="literal">true</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#3、畅言</span></span><br><span class="line"><span class="attr">changyan_appid:</span> <span class="literal">false</span></span><br><span class="line"><span class="attr">changyan_conf:</span> <span class="literal">false</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#4、Disqus 在hexo根目录的config里也有disqus_shortname字段，优先使用yilia的</span></span><br><span class="line"><span class="attr">disqus:</span> <span class="literal">false</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#4、Valine https://valine.js.org</span></span><br><span class="line"><span class="attr">valine:</span> </span><br><span class="line">  <span class="attr">appid:</span>  <span class="comment">#Leancloud应用的appId</span></span><br><span class="line">  <span class="attr">appkey:</span>  <span class="comment">#Leancloud应用的appKey</span></span><br><span class="line">  <span class="attr">verify:</span> <span class="literal">false</span> <span class="comment">#验证码</span></span><br><span class="line">  <span class="attr">notify:</span> <span class="literal">false</span> <span class="comment">#评论回复提醒</span></span><br><span class="line">  <span class="attr">avatar:</span> <span class="string">identicon</span> <span class="comment">#评论列表头像样式：&#x27;&#x27;/mp/identicon/monsterid/wavatar/retro/hide</span></span><br><span class="line">  <span class="attr">placeholder:</span> <span class="string">Just</span> <span class="string">go</span> <span class="string">go</span> <span class="comment">#评论框占位符</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#5、Gitment</span></span><br><span class="line"><span class="attr">gitment_owner:</span> <span class="string">spygg</span>      <span class="comment">#你的 GitHub ID</span></span><br><span class="line"><span class="attr">gitment_repo:</span> <span class="string">&#x27;&#x27;</span>          <span class="comment">#存储评论的 repo</span></span><br><span class="line"><span class="attr">gitment_oauth:</span></span><br><span class="line">  <span class="attr">client_id:</span> <span class="string">&#x27;&#x27;</span>           <span class="comment">#client ID</span></span><br><span class="line">  <span class="attr">client_secret:</span> <span class="string">&#x27;&#x27;</span>       <span class="comment">#client secret</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 样式定制 - 一般不需要修改，除非有很强的定制欲望…</span></span><br><span class="line"><span class="attr">style:</span></span><br><span class="line">  <span class="comment"># 头像上面的背景颜色</span></span><br><span class="line">  <span class="attr">header:</span> <span class="string">&#x27;#4d4d4d&#x27;</span></span><br><span class="line">  <span class="comment"># 右滑板块背景</span></span><br><span class="line">  <span class="attr">slider:</span> <span class="string">&#x27;linear-gradient(200deg,#a0cfe4,#e8c37e)&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># slider的设置</span></span><br><span class="line"><span class="attr">slider:</span></span><br><span class="line">  <span class="comment"># 是否默认展开tags板块</span></span><br><span class="line">  <span class="attr">showTags:</span> <span class="literal">true</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 智能菜单</span></span><br><span class="line"><span class="comment"># 如不需要，将该对应项置为false</span></span><br><span class="line"><span class="comment"># 比如</span></span><br><span class="line"><span class="comment">#smart_menu:</span></span><br><span class="line"><span class="comment">#  friends: false</span></span><br><span class="line"><span class="attr">smart_menu:</span></span><br><span class="line">  <span class="attr">innerArchive:</span> <span class="string">&#x27;所有文章&#x27;</span></span><br><span class="line">  <span class="attr">friends:</span> <span class="string">&#x27;友链&#x27;</span></span><br><span class="line">  <span class="attr">aboutme:</span> <span class="string">&#x27;关于我&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="attr">friends:</span></span><br><span class="line">  <span class="string">Litten的博客:</span> <span class="string">http://litten.me/</span></span><br><span class="line">  <span class="string">Evan的博客:</span> <span class="string">https://www.edevops.top/</span></span><br><span class="line"></span><br><span class="line"><span class="attr">aboutme:</span> <span class="string">&lt;ul&gt;</span>           </span><br><span class="line">                    <span class="string">&lt;li&gt;人生苦短，我用</span> <span class="string">Python！&lt;/li&gt;</span></span><br><span class="line">                    <span class="string">&lt;li&gt;简单高效我学C&lt;/li&gt;</span></span><br><span class="line">                    <span class="string">&lt;li&gt;优雅强大,必须Qt&lt;/li&gt;</span></span><br><span class="line">                    <span class="string">&lt;li&gt;博主</span> <span class="string">Github</span> <span class="string">地址:&lt;a</span> <span class="string">href=&quot;https://github.com/spygg&quot;</span> <span class="string">target=&quot;_blank&quot;&gt;https://github.com/spygg&lt;/a&gt;&lt;/li&gt;</span></span><br><span class="line">                    <span class="string">&lt;li&gt;我的CSDN:&lt;a</span> <span class="string">href=&quot;https://blog.csdn.net/spygg&quot;</span> <span class="string">target=&quot;_blank&quot;&gt;https://blog.csdn.net/spygg&lt;/a&gt;&lt;/li&gt;</span></span><br><span class="line">                    <span class="string">&lt;li&gt;联系邮箱：liushidc@163.com&lt;/li&gt;</span></span><br><span class="line">          <span class="string">&lt;/ul&gt;</span></span><br></pre></td></tr></table></figure>
+    </div>
+    
+        <div class="reward" ontouchstart>
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+                <span class="reward-type">
+                    <img class="alipay" src="/img/zhifubaocode.webp"><b>支付宝打赏</b>
+                </span>
+            
+            
+                <span class="reward-type">
+                    <img class="wechat" src="/img/weixincode.webp"><b>微信打赏</b>
+                </span>
+            
+        </div>
+    </div>
+    <p class="reward-tip">您的支持是我前行的动力!</p>
+</div>
+
+
+    
+    <div class="post-footer">
+        <div>
+            
+                转载声明：商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="/about" target="_blank">spygg</a>
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+        <a href="/2019/04/09/ubuntu-%E6%9C%89%E9%81%93%E4%BA%91%E7%AC%94%E8%AE%B0/" class="pre-post btn btn-default" title='Qt版本ubuntu有道云笔记'>
+            <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+            <span class="hidden-xs">Qt版本ubuntu有道云笔记</span>
+        </a>
+    
+    
+</div>
+
+
+
+    <div id="comments">
+        
+	
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+  <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+<script src="https://cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
+
+<div id="gitalk-container"></div>
+<script type="text/javascript">
+    var gitalk;
+    if(window.location.host === 'spygg.gitee.io'){
+        gitalk = new Gitalk({
+            // Gitalk配置
+            clientID: "2e6379556d0bea565323",
+            clientSecret: "2feb2ad5f1301351c79e1d0e2b1a177bb0661ed7",
+            repo: "blogcomment",
+            owner: "spygg",
+            admin: ["spygg"],
+            id: md5(window.location.pathname),
+            distractionFreeMode: true
+        });
+    }
+    else{
+        gitalk = new Gitalk({
+            // Gitalk配置
+            clientID: "6c31603d4df9afc8351b",
+            clientSecret: "c9e81f3ac1492550170fccb28c0f8bb16e3b7ed1",
+            repo: "blogcomment",
+            owner: "spygg",
+            admin: ["spygg"],
+            id: md5(window.location.pathname),
+            distractionFreeMode: true
+        });
+    }
+    gitalk.render('gitalk-container');
+</script>
+
+
+    </div>
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">文章目录</h3>
+        
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2"><span class="toc-text">安装部署</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85hexo-%E9%A6%96%E5%85%88%E5%AE%89%E8%A3%85nodejs-%E8%BF%99%E9%87%8C%E6%B2%A1%E5%95%A5%E5%A5%BD%E8%AF%B4%E7%9A%84-%E5%A6%82%E6%9E%9C%E7%BD%91%E9%80%9F%E6%AF%94%E8%BE%83%E6%85%A2%E8%AF%B7%E6%9B%B4%E6%8D%A2%E4%B8%BA%E6%B7%98%E5%AE%9D%E6%BA%90"><span class="toc-text">安装hexo,首先安装nodejs 这里没啥好说的,如果网速比较慢请更换为淘宝源</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9C%A8%E5%90%88%E9%80%82%E7%9B%AE%E5%BD%95%E6%89%A7%E8%A1%8C%E5%91%BD%E4%BB%A4"><span class="toc-text">在合适目录执行命令</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE"><span class="toc-text">配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4"><span class="toc-text">命令:</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ps"><span class="toc-text">ps:</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0%E5%9B%BE%E7%89%87%E6%8A%80%E5%B7%A7"><span class="toc-text">添加图片技巧</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0%E5%A4%9A%E4%B8%AA%E5%88%86%E7%B1%BB%E4%BD%BF%E7%94%A8"><span class="toc-text">添加多个分类使用</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BB%E9%A2%98%E9%85%8D%E7%BD%AE"><span class="toc-text">主题配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E4%B8%BB%E9%A2%98"><span class="toc-text">安装主题</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9%E4%BB%A3%E7%A0%81%E5%9D%97%E6%A0%B7%E5%BC%8F"><span class="toc-text">修改代码块样式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E5%9D%97%E8%A1%8C%E5%8F%B7%E6%98%BE%E7%A4%BA%E9%94%99%E4%B9%B1"><span class="toc-text">代码块行号显示错乱</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%89%88%E6%9D%83%E5%A3%B0%E6%98%8E"><span class="toc-text">版权声明</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%84%E8%AE%BA%E7%B3%BB%E7%BB%9F"><span class="toc-text">评论系统</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0%E6%96%87%E7%AB%A0%E5%88%86%E7%B1%BB"><span class="toc-text">添加文章分类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%88%91%E7%9A%84%E6%A0%B9%E7%9B%AE%E5%BD%95-config-yml"><span class="toc-text">我的根目录_config.yml</span></a></li></ol>
+        
+    </div>
+</aside>
+
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+
+<a id="back-to-top" class="icon-btn hide">
+	<i class="fa fa-chevron-up"></i>
+</a>
+
+
+
+
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+</div>
+
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy; 2019
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+            
+                
+<script src="/assets/tagcanvas.min.js?rev=2.9.js"></script>
+
+                    <script>
+                        var tagcloud3d = document.getElementById("tag-cloud-3d");
+                        if (tagcloud3d) {
+                            var tagOption = {
+                                textColour: '#444', // 字体颜色
+                                outlineMethod: 'block', // 选中模式
+                                outlineColour: '#FFDAB9', // 选中模式的颜色
+                                interval: 30 || 30, // 动画帧之间的时间间隔，值越大，转动幅度越大
+                                textHeight: 13,
+                                outlineRadius: 3,
+                                freezeActive: true || '', // 选中的标签是否继续滚动
+                                frontSelect: true || '', // 不选标签云后部的标签
+                                initial: [0.1, -0.1],
+                                depth: 0.5,
+                                decel: 0.95,
+                                maxSpeed: 0.03,
+                                reverse: true || '', // 是否反向触发
+                                fadeIn: 500, // 进入动画时间
+                                wheelZoom: false || '' // 是否启用鼠标滚轮
+                            }
+                            TagCanvas.Start('tag-cloud-3d', '', tagOption);
+                        }
+
+                    </script>
+                    
+
+                        
+
+                                
+<script src="/js/app.js?rev=@@hash.js"></script>
+
+
+</body>
+</html>

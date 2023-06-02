@@ -1,0 +1,584 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="间客六十">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="google-site-verification" content="NGCFVs-lxT5zTiHxEXzk7fkJl26matl6KfVIgcORvFQ" />
+    <meta name="msvalidate.01" content="9C33A26895A2A8B80CEE60CD519D1095" />
+
+    <link rel="dns-prefetch" href="https://liusblog.top">
+    <!--SEO-->
+
+    <meta name="keywords" content="HTML,m3u8,video-js" />
+
+
+    <meta name="description" content="
+现在越来越多的网站采用 m3u8 的方式来播放视频,但是原生的浏览器(除 Safari 外)都不支持,经搜索发现 video-js 可以将 m3u8 嵌到网页中,特记录之…
+
+步骤
+引入 vi..." />
+
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+
+        <!--Title-->
+
+
+<title>HTML5播放m3u8的方法 | 间客六十</title>
+
+
+    <link rel="alternate" href="/atom.xml" title="间客六十" type="application/atom+xml">
+
+
+    <link rel="icon" href="/favicon.ico">
+
+            
+
+
+
+
+<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.6.3/css/font-awesome.min.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash.css">
+
+
+
+
+                
+
+
+
+
+	<script>
+		(function(i, s, o, g, r, a, m) {
+		    i['GoogleAnalyticsObject'] = r;
+		    i[r] = i[r] || function() {
+		        (i[r].q = i[r].q || []).push(arguments)
+		    }, i[r].l = 1 * new Date();
+		    a = s.createElement(o),
+		    m = s.getElementsByTagName(o)[0];
+		    a.async = 1;
+		    a.src = g;
+		    m.parentNode.insertBefore(a, m)
+		})(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+		ga('create', 'true', 'auto');
+		ga('send', 'pageview');
+	</script>
+
+
+                    
+
+                        <script type="text/javascript">
+                            function hasClass(obj, cls) {
+                                return obj.className.match(new RegExp('(\\s|^)' + cls + '(\\s|$)'));
+                            }
+
+                            function addClass(obj, cls) {
+                                if (!this.hasClass(obj, cls)) obj.className += " " + cls;
+                            }
+
+                            function removeClass(obj, cls) {
+                                if (hasClass(obj, cls)) {
+                                    var reg = new RegExp('(\\s|^)' + cls + '(\\s|$)');
+                                    obj.className = obj.className.replace(reg, ' ');
+                                }
+                            }
+
+                            function copyToClip(event) {
+                                let cb = event.target.parentNode
+                                var cls = cb.getElementsByClassName("line");
+
+                                var pt = ""
+                                for (var k = 0; k < cls.length; k++) {
+                                    var cl = (cls[k].textContent || cls[k].innerHTML);
+                                    cl = cl.replace(`<span class="css"></span>`, "\n")
+                                    cl = cl.replace(`<span class="javascript"></span>`, "\n")
+
+                                    pt += cl
+                                    pt += "\n";
+                                }
+                                const textarea = document.createElement('textarea');
+                                textarea.value = pt;
+                                document.body.appendChild(textarea);
+                                textarea.select();
+                                if (document.execCommand('copy')) {
+                                    document.execCommand('copy');
+                                }
+                                document.body.removeChild(textarea);
+                                alert("复制成功");
+                            }
+
+                            function doAddCopyCode() {
+                                var codeBlocks = document.getElementsByClassName('code');
+                                for (var i = 0; i < codeBlocks.length; i++) {
+                                    //创建一个div
+                                    var divCopy = document.createElement("div");
+                                    divCopy.innerHTML = "点击复制"
+                                    //为div创建属性class = "test"
+                                    var divattr = document.createAttribute("class");
+                                    divattr.value = "copy_my_code";
+
+                                    //把属性class = "test"添加到div
+                                    divCopy.setAttributeNode(divattr);
+                                    codeBlocks[i].appendChild(divCopy)
+
+                                    var code = codeBlocks[i].getElementsByTagName("pre")[1];
+                                    //hack事件冒泡
+                                    codeBlocks[i].onclick = (e) => {
+                                        copyToClip(e);
+                                    }
+                                }
+                            }
+
+                            function doAddImg() {
+                                var imgAll = document.getElementsByClassName('post-body')[0];
+                                if (imgAll == undefined) {
+                                    return;
+                                }
+
+                                var imgs = imgAll.getElementsByTagName('img')
+                                for (var i = 0; i < imgs.length; i++) {
+                                    if (hasClass(imgs[i], 'class_no_full_screen')) {
+                                        continue;
+                                    }
+
+                                    imgs[i].setAttribute('style', "cursor: zoom-in");
+                                    imgs[i].onclick = function () {
+
+                                        var section = document.getElementsByTagName("section")[0];
+
+                                        var imgView = document.getElementById('imgViewDom');
+                                        if (imgView == undefined) {
+                                            imgView = document.createElement("div");
+                                            imgView.id = "imgViewDom";
+
+                                            section.appendChild(imgView)
+
+
+                                            imgView.onclick = function () {
+                                                addClass(imgView, "disnone");
+                                                imgView.innerHTML = "";
+                                            }
+
+                                        }
+
+                                        imgView.innerHTML = "<img id = 'jackslowfuck' src=" + this.src + " style='cursor: zoom-out; max-width: 100%;'" + ">";
+                                        removeClass(imgView, "disnone");
+
+                                        var jackslowfuck = document.getElementById('jackslowfuck');
+                                        jackslowfuck.onclick = function () {
+                                            addClass(imgView, "disnone");
+                                            imgView.innerHTML = "";
+                                        }
+
+                                    }
+                                }
+                            }
+
+                            window.addEventListener('load', function () {
+                                doAddImg();
+                                // doAddCopyCode();
+                            }, false);
+                        </script>
+
+                        <style type="text/css">
+                            .copy_my_code {
+                                position: absolute;
+                                top: 0;
+                                right: 0;
+                                border: 1px solid;
+                                background: #555;
+                                color: #fff;
+                                margin: 1px;
+                                padding: 0px 5px;
+                                cursor: pointer;
+                            }
+
+                            #imgViewDom {
+                                display: none;
+                                position: fixed;
+                                top: 0;
+                                left: 0;
+                                height: 100%;
+                                width: 100%;
+                                z-index: 99999999;
+                                background: rgba(0, 0, 0, 0.7);
+                                overflow: auto;
+                                display: -webkit-box;
+                                -webkit-box-align: center;
+                                -webkit-box-pack: center;
+                                display: -moz-box;
+                                -moz-box-align: center;
+                                -moz-box-pack: center;
+                                display: -o-box;
+                                -o-box-align: center;
+                                -o-box-pack: center;
+                                display: -ms-box;
+                                -ms-box-align: center;
+                                -ms-box-pack: center;
+                                display: box;
+                                box-align: center;
+                                box-pack: center;
+                                cursor: zoom-out;
+                            }
+
+                            .disnone {
+                                display: none !important;
+                            }
+                        </style>
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+
+<body>
+    <header class="main-header"  style="background-image:url(/img/banner.webp)"  >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/about" title='spygg'>
+            <img src="/img/avatar.webp" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+        	<!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+                <h2> 技术引领生活! </h2>
+            
+    	</div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                    <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <!---<a class="navbar-brand" href="https://liusblog.top">间客六十</a>--->
+                    <a class="navbar-brand" href="/">间客六十</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/"><i class="fa fa-home"></i>首页</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/Qt"><i class="fa "></i>Qt</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/Golang"><i class="fa "></i>Golang</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/Python"><i class="fa "></i>Python</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/Linux"><i class="fa "></i>Linux</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/音视频"><i class="fa "></i>音视频</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/网站开发"><i class="fa "></i>网站开发</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/杂谈"><i class="fa "></i>杂谈</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/archives/"><i class="fa "></i>时间轴</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/about/"><i class="fa "></i>关于</a>
+                            </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="HTML5播放m3u8的方法">
+            
+	            HTML5播放m3u8的方法
+            
+        </h1>
+        <div class="post-meta">
+    
+        <span class="categories-meta fa-wrap">
+            <i class="fa fa-folder-open-o"></i>
+            <a class="category-link" href="/categories/%E9%9F%B3%E8%A7%86%E9%A2%91/">音视频</a>
+        </span>
+    
+
+    
+        <span class="fa-wrap">
+            <i class="fa fa-tags"></i>
+            <span class="tags-meta">
+                
+                    <a class="tag-none-link" href="/tags/HTML/" rel="tag">HTML</a> <a class="tag-none-link" href="/tags/m3u8/" rel="tag">m3u8</a> <a class="tag-none-link" href="/tags/video-js/" rel="tag">video-js</a>
+                
+            </span>
+        </span>
+    
+
+    
+        
+        <span class="fa-wrap">
+            <i class="fa fa-clock-o"></i>
+            <span class="date-meta">2020/03/03</span>
+        </span>
+        
+    
+</div>
+            
+            
+            <p class="fa fa-exclamation-triangle warning">
+                本文于<strong>1185</strong>天之前发表，文中内容可能已经过时。
+            </p>
+        
+    </div>
+
+    
+
+    <div class="post-body post-content">
+        <blockquote>
+<p>现在越来越多的网站采用 m3u8 的方式来播放视频,但是原生的浏览器(除 Safari 外)都不支持,经搜索发现 video-js 可以将 m3u8 嵌到网页中,特记录之…</p>
+</blockquote>
+<h2 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h2><ol>
+<li>引入 video-js</li>
+<li>定义一个 video 标签,源就直接填写 m3u8 路径好了</li>
+<li>初始化,直接用</li>
+</ol>
+<h2 id="Why"><a href="#Why" class="headerlink" title="Why"></a>Why</h2><p>为什么要写这个呢? 本人认为 m3u8 几乎是未来视频的主要方向了,特别是发现一个视频网站想做一个播放器,思路有二:</p>
+<ol>
+<li>全部用 ffmpeg 解码</li>
+<li>做成网页的形式(简单方便)</li>
+</ol>
+<p>上述方法中 1 方法比较繁琐,但是可控性强,方法 2 使用快速特别是做服务器的同学(比如写个爬虫爬到 m3u8 然后做个小服务器进行转流),或者结合两者,一直有个想法做播放器来着.待我慢慢来…</p>
+<h2 id="PS"><a href="#PS" class="headerlink" title="PS"></a>PS</h2><p>将 Mp4 转 m3u8 命令</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">fmpeg</span> -i foo.mp<span class="number">4</span> -codec copy -vbsf h<span class="number">264</span>_mp<span class="number">4</span>toannexb -map <span class="number">0</span> -f segment -segment_list out.m<span class="number">3</span>u<span class="number">8</span> -segment_time <span class="number">10</span> out%<span class="number">03</span>d.ts</span><br></pre></td></tr></table></figure>
+
+<h2 id="PPS"><a href="#PPS" class="headerlink" title="PPS"></a>PPS</h2><p>测试代码备份</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;utf-8&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Video.js 7.4.1<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">href</span>=<span class="string">&quot;https://vjs.zencdn.net/7.6.6/video-js.css&quot;</span> <span class="attr">rel</span>=<span class="string">&quot;stylesheet&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="css"></span></span><br><span class="line"><span class="css">      <span class="selector-tag">body</span> &#123;</span></span><br><span class="line"><span class="css">        <span class="attribute">background-color</span>: <span class="number">#191919</span>;</span></span><br><span class="line"><span class="css">      &#125;</span></span><br><span class="line"><span class="css">      <span class="selector-class">.m</span> &#123;</span></span><br><span class="line"><span class="css">        <span class="attribute">width</span>: <span class="number">960px</span>;</span></span><br><span class="line"><span class="css">        <span class="attribute">height</span>: <span class="number">400px</span>;</span></span><br><span class="line"><span class="css">        <span class="attribute">margin-left</span>: auto;</span></span><br><span class="line"><span class="css">        <span class="attribute">margin-right</span>: auto;</span></span><br><span class="line"><span class="css">        <span class="attribute">margin-top</span>: <span class="number">100px</span>;</span></span><br><span class="line"><span class="css">      &#125;</span></span><br><span class="line"><span class="css">    </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;m&quot;</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">video</span></span></span><br><span class="line"><span class="tag">        <span class="attr">id</span>=<span class="string">&quot;my-video&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">class</span>=<span class="string">&quot;video-js&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">controls</span></span></span><br><span class="line"><span class="tag">        <span class="attr">preload</span>=<span class="string">&quot;auto&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">width</span>=<span class="string">&quot;960&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">height</span>=<span class="string">&quot;400&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">poster</span>=<span class="string">&quot;m.jpg&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">data-setup</span>=<span class="string">&quot;&#123;&#125;&quot;</span></span></span><br><span class="line"><span class="tag">      &gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">source</span></span></span><br><span class="line"><span class="tag">          <span class="attr">src</span>=<span class="string">&quot;http://recordcdn.quklive.com/upload/vod/user1462960877450854/1550739580345725/1/video.m3u8&quot;</span></span></span><br><span class="line"><span class="tag">          <span class="attr">type</span>=<span class="string">&quot;application/x-mpegURL&quot;</span></span></span><br><span class="line"><span class="tag">        /&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- &lt;source src=&quot;http://vjs.zencdn.net/v/oceans.webm&quot; type=&quot;video/webm&quot;&gt;</span></span><br><span class="line"><span class="comment">    	&lt;source src=&quot;http://vjs.zencdn.net/v/oceans.ogv&quot; type=&quot;video/ogg&quot;&gt; --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span>=<span class="string">&quot;vjs-no-js&quot;</span>&gt;</span></span><br><span class="line">          To view this video please enable JavaScript, and consider upgrading to</span><br><span class="line">          a web browser that</span><br><span class="line">          <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;http://videojs.com/html5-video-support/&quot;</span> <span class="attr">target</span>=<span class="string">&quot;_blank&quot;</span></span></span><br><span class="line"><span class="tag">            &gt;</span>supports HTML5 video&lt;/a</span><br><span class="line">          &gt;</span><br><span class="line">        <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">video</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;https://vjs.zencdn.net/7.6.6/video.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">&quot;text/javascript&quot;</span>&gt;</span><span class="javascript"></span></span><br><span class="line"><span class="javascript">        <span class="comment">//设置中文</span></span></span><br><span class="line"><span class="javascript">        videojs.addLanguage(<span class="string">&quot;zh-CN&quot;</span>, &#123;</span></span><br><span class="line"><span class="javascript">          <span class="attr">Play</span>: <span class="string">&quot;播放&quot;</span>,</span></span><br><span class="line"><span class="javascript">          <span class="attr">Pause</span>: <span class="string">&quot;暂停&quot;</span>,</span></span><br><span class="line"><span class="javascript">          <span class="string">&quot;Current Time&quot;</span>: <span class="string">&quot;当前时间&quot;</span>,</span></span><br><span class="line"><span class="javascript">          <span class="attr">Duration</span>: <span class="string">&quot;时长&quot;</span>,</span></span><br><span class="line"><span class="javascript">          <span class="string">&quot;Remaining Time&quot;</span>: <span class="string">&quot;剩余时间&quot;</span>,</span></span><br><span class="line"><span class="javascript">          <span class="string">&quot;Stream Type&quot;</span>: <span class="string">&quot;媒体流类型&quot;</span>,</span></span><br><span class="line"><span class="javascript">          <span class="attr">LIVE</span>: <span class="string">&quot;直播&quot;</span>,</span></span><br><span class="line"><span class="javascript">          <span class="attr">Loaded</span>: <span class="string">&quot;加载完毕&quot;</span>,</span></span><br><span class="line"><span class="javascript">          <span class="attr">Progress</span>: <span class="string">&quot;进度&quot;</span>,</span></span><br><span class="line"><span class="javascript">          <span class="attr">Fullscreen</span>: <span class="string">&quot;全屏&quot;</span>,</span></span><br><span class="line"><span class="javascript">          <span class="string">&quot;Non-Fullscreen&quot;</span>: <span class="string">&quot;退出全屏&quot;</span>,</span></span><br><span class="line"><span class="javascript">          <span class="attr">Mute</span>: <span class="string">&quot;静音&quot;</span>,</span></span><br><span class="line"><span class="javascript">          <span class="attr">Unmute</span>: <span class="string">&quot;取消静音&quot;</span>,</span></span><br><span class="line"><span class="javascript">          <span class="string">&quot;Playback Rate&quot;</span>: <span class="string">&quot;播放速度&quot;</span>,</span></span><br><span class="line"><span class="javascript">          <span class="attr">Subtitles</span>: <span class="string">&quot;字幕&quot;</span>,</span></span><br><span class="line"><span class="javascript">          <span class="string">&quot;subtitles off&quot;</span>: <span class="string">&quot;关闭字幕&quot;</span>,</span></span><br><span class="line"><span class="javascript">          <span class="attr">Captions</span>: <span class="string">&quot;内嵌字幕&quot;</span>,</span></span><br><span class="line"><span class="javascript">          <span class="string">&quot;captions off&quot;</span>: <span class="string">&quot;关闭内嵌字幕&quot;</span>,</span></span><br><span class="line"><span class="javascript">          <span class="attr">Chapters</span>: <span class="string">&quot;节目段落&quot;</span>,</span></span><br><span class="line"><span class="javascript">          <span class="string">&quot;Close Modal Dialog&quot;</span>: <span class="string">&quot;关闭弹窗&quot;</span>,</span></span><br><span class="line"><span class="javascript">          <span class="attr">Descriptions</span>: <span class="string">&quot;描述&quot;</span>,</span></span><br><span class="line"><span class="javascript">          <span class="string">&quot;descriptions off&quot;</span>: <span class="string">&quot;关闭描述&quot;</span>,</span></span><br><span class="line"><span class="javascript">          <span class="string">&quot;Audio Track&quot;</span>: <span class="string">&quot;音轨&quot;</span>,</span></span><br><span class="line"><span class="javascript">          <span class="string">&quot;You aborted the media playback&quot;</span>: <span class="string">&quot;视频播放被终止&quot;</span>,</span></span><br><span class="line"><span class="javascript">          <span class="string">&quot;A network error caused the media download to fail part-way.&quot;</span>:</span></span><br><span class="line"><span class="javascript">            <span class="string">&quot;网络错误导致视频下载中途失败。&quot;</span>,</span></span><br><span class="line"><span class="javascript">          <span class="string">&quot;The media could not be loaded, either because the server or network failed or because the format is not supported.&quot;</span>:</span></span><br><span class="line"><span class="javascript">            <span class="string">&quot;视频因格式不支持或者服务器或网络的问题无法加载。&quot;</span>,</span></span><br><span class="line"><span class="javascript">          <span class="string">&quot;The media playback was aborted due to a corruption problem or because the media used features your browser did not support.&quot;</span>:</span></span><br><span class="line"><span class="javascript">            <span class="string">&quot;由于视频文件损坏或是该视频使用了你的浏览器不支持的功能，播放终止。&quot;</span>,</span></span><br><span class="line"><span class="javascript">          <span class="string">&quot;No compatible source was found for this media.&quot;</span>:</span></span><br><span class="line"><span class="javascript">            <span class="string">&quot;无法找到此视频兼容的源。&quot;</span>,</span></span><br><span class="line"><span class="javascript">          <span class="string">&quot;The media is encrypted and we do not have the keys to decrypt it.&quot;</span>:</span></span><br><span class="line"><span class="javascript">            <span class="string">&quot;视频已加密，无法解密。&quot;</span>,</span></span><br><span class="line"><span class="javascript">          <span class="string">&quot;Play Video&quot;</span>: <span class="string">&quot;播放视频&quot;</span>,</span></span><br><span class="line"><span class="javascript">          <span class="attr">Close</span>: <span class="string">&quot;关闭&quot;</span>,</span></span><br><span class="line"><span class="javascript">          <span class="string">&quot;Modal Window&quot;</span>: <span class="string">&quot;弹窗&quot;</span>,</span></span><br><span class="line"><span class="javascript">          <span class="string">&quot;This is a modal window&quot;</span>: <span class="string">&quot;这是一个弹窗&quot;</span>,</span></span><br><span class="line"><span class="javascript">          <span class="string">&quot;This modal can be closed by pressing the Escape key or activating the close button.&quot;</span>:</span></span><br><span class="line"><span class="javascript">            <span class="string">&quot;可以按ESC按键或启用关闭按钮来关闭此弹窗。&quot;</span>,</span></span><br><span class="line"><span class="javascript">          <span class="string">&quot;, opens captions settings dialog&quot;</span>: <span class="string">&quot;, 开启标题设置弹窗&quot;</span>,</span></span><br><span class="line"><span class="javascript">          <span class="string">&quot;, opens subtitles settings dialog&quot;</span>: <span class="string">&quot;, 开启字幕设置弹窗&quot;</span>,</span></span><br><span class="line"><span class="javascript">          <span class="string">&quot;, opens descriptions settings dialog&quot;</span>: <span class="string">&quot;, 开启描述设置弹窗&quot;</span>,</span></span><br><span class="line"><span class="javascript">          <span class="string">&quot;, selected&quot;</span>: <span class="string">&quot;, 选择&quot;</span>,</span></span><br><span class="line"><span class="javascript">          <span class="string">&quot;captions settings&quot;</span>: <span class="string">&quot;字幕设定&quot;</span>,</span></span><br><span class="line"><span class="javascript">          <span class="string">&quot;Audio Player&quot;</span>: <span class="string">&quot;音频播放器&quot;</span>,</span></span><br><span class="line"><span class="javascript">          <span class="string">&quot;Video Player&quot;</span>: <span class="string">&quot;视频播放器&quot;</span>,</span></span><br><span class="line"><span class="javascript">          <span class="attr">Replay</span>: <span class="string">&quot;重播&quot;</span>,</span></span><br><span class="line"><span class="javascript">          <span class="string">&quot;Progress Bar&quot;</span>: <span class="string">&quot;进度小节&quot;</span>,</span></span><br><span class="line"><span class="javascript">          <span class="string">&quot;Volume Level&quot;</span>: <span class="string">&quot;音量&quot;</span>,</span></span><br><span class="line"><span class="javascript">          <span class="string">&quot;subtitles settings&quot;</span>: <span class="string">&quot;字幕设定&quot;</span>,</span></span><br><span class="line"><span class="javascript">          <span class="string">&quot;descriptions settings&quot;</span>: <span class="string">&quot;描述设定&quot;</span>,</span></span><br><span class="line"><span class="javascript">          <span class="attr">Text</span>: <span class="string">&quot;文字&quot;</span>,</span></span><br><span class="line"><span class="javascript">          <span class="attr">White</span>: <span class="string">&quot;白&quot;</span>,</span></span><br><span class="line"><span class="javascript">          <span class="attr">Black</span>: <span class="string">&quot;黑&quot;</span>,</span></span><br><span class="line"><span class="javascript">          <span class="attr">Red</span>: <span class="string">&quot;红&quot;</span>,</span></span><br><span class="line"><span class="javascript">          <span class="attr">Green</span>: <span class="string">&quot;绿&quot;</span>,</span></span><br><span class="line"><span class="javascript">          <span class="attr">Blue</span>: <span class="string">&quot;蓝&quot;</span>,</span></span><br><span class="line"><span class="javascript">          <span class="attr">Yellow</span>: <span class="string">&quot;黄&quot;</span>,</span></span><br><span class="line"><span class="javascript">          <span class="attr">Magenta</span>: <span class="string">&quot;紫红&quot;</span>,</span></span><br><span class="line"><span class="javascript">          <span class="attr">Cyan</span>: <span class="string">&quot;青&quot;</span>,</span></span><br><span class="line"><span class="javascript">          <span class="attr">Background</span>: <span class="string">&quot;背景&quot;</span>,</span></span><br><span class="line"><span class="javascript">          <span class="attr">Window</span>: <span class="string">&quot;视窗&quot;</span>,</span></span><br><span class="line"><span class="javascript">          <span class="attr">Transparent</span>: <span class="string">&quot;透明&quot;</span>,</span></span><br><span class="line"><span class="javascript">          <span class="string">&quot;Semi-Transparent&quot;</span>: <span class="string">&quot;半透明&quot;</span>,</span></span><br><span class="line"><span class="javascript">          <span class="attr">Opaque</span>: <span class="string">&quot;不透明&quot;</span>,</span></span><br><span class="line"><span class="javascript">          <span class="string">&quot;Font Size&quot;</span>: <span class="string">&quot;字体尺寸&quot;</span>,</span></span><br><span class="line"><span class="javascript">          <span class="string">&quot;Text Edge Style&quot;</span>: <span class="string">&quot;字体边缘样式&quot;</span>,</span></span><br><span class="line"><span class="javascript">          <span class="attr">None</span>: <span class="string">&quot;无&quot;</span>,</span></span><br><span class="line"><span class="javascript">          <span class="attr">Raised</span>: <span class="string">&quot;浮雕&quot;</span>,</span></span><br><span class="line"><span class="javascript">          <span class="attr">Depressed</span>: <span class="string">&quot;压低&quot;</span>,</span></span><br><span class="line"><span class="javascript">          <span class="attr">Uniform</span>: <span class="string">&quot;均匀&quot;</span>,</span></span><br><span class="line"><span class="javascript">          <span class="attr">Dropshadow</span>: <span class="string">&quot;下阴影&quot;</span>,</span></span><br><span class="line"><span class="javascript">          <span class="string">&quot;Font Family&quot;</span>: <span class="string">&quot;字体库&quot;</span>,</span></span><br><span class="line"><span class="javascript">          <span class="string">&quot;Proportional Sans-Serif&quot;</span>: <span class="string">&quot;比例无细体&quot;</span>,</span></span><br><span class="line"><span class="javascript">          <span class="string">&quot;Monospace Sans-Serif&quot;</span>: <span class="string">&quot;单间隔无细体&quot;</span>,</span></span><br><span class="line"><span class="javascript">          <span class="string">&quot;Proportional Serif&quot;</span>: <span class="string">&quot;比例细体&quot;</span>,</span></span><br><span class="line"><span class="javascript">          <span class="string">&quot;Monospace Serif&quot;</span>: <span class="string">&quot;单间隔细体&quot;</span>,</span></span><br><span class="line"><span class="javascript">          <span class="attr">Casual</span>: <span class="string">&quot;舒适&quot;</span>,</span></span><br><span class="line"><span class="javascript">          <span class="attr">Script</span>: <span class="string">&quot;手写体&quot;</span>,</span></span><br><span class="line"><span class="javascript">          <span class="string">&quot;Small Caps&quot;</span>: <span class="string">&quot;小型大写字体&quot;</span>,</span></span><br><span class="line"><span class="javascript">          <span class="attr">Reset</span>: <span class="string">&quot;重启&quot;</span>,</span></span><br><span class="line"><span class="javascript">          <span class="string">&quot;restore all settings to the default values&quot;</span>: <span class="string">&quot;恢复全部设定至预设值&quot;</span>,</span></span><br><span class="line"><span class="javascript">          <span class="attr">Done</span>: <span class="string">&quot;完成&quot;</span>,</span></span><br><span class="line"><span class="javascript">          <span class="string">&quot;Caption Settings Dialog&quot;</span>: <span class="string">&quot;字幕设定视窗&quot;</span>,</span></span><br><span class="line"><span class="javascript">          <span class="string">&quot;Beginning of dialog window. Escape will cancel and close the window.&quot;</span>:</span></span><br><span class="line"><span class="javascript">            <span class="string">&quot;开始对话视窗。离开会取消及关闭视窗&quot;</span>,</span></span><br><span class="line"><span class="javascript">          <span class="string">&quot;End of dialog window.&quot;</span>: <span class="string">&quot;结束对话视窗&quot;</span></span></span><br><span class="line"><span class="javascript">        &#125;);</span></span><br><span class="line"><span class="javascript"></span></span><br><span class="line"><span class="javascript">        <span class="keyword">var</span> myPlayer = videojs(<span class="string">&quot;my-video&quot;</span>);</span></span><br><span class="line"><span class="javascript">        videojs(<span class="string">&quot;my-video&quot;</span>).ready(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">          <span class="keyword">var</span> myPlayer = <span class="built_in">this</span>;</span></span><br><span class="line"><span class="javascript">          myPlayer.play();</span></span><br><span class="line"><span class="javascript">        &#125;);</span></span><br><span class="line"><span class="javascript">      </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+    </div>
+    
+        <div class="reward" ontouchstart>
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+                <span class="reward-type">
+                    <img class="alipay" src="/img/zhifubaocode.webp"><b>支付宝打赏</b>
+                </span>
+            
+            
+                <span class="reward-type">
+                    <img class="wechat" src="/img/weixincode.webp"><b>微信打赏</b>
+                </span>
+            
+        </div>
+    </div>
+    <p class="reward-tip">您的支持是我前行的动力!</p>
+</div>
+
+
+    
+    <div class="post-footer">
+        <div>
+            
+                转载声明：商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="/about" target="_blank">spygg</a>
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+        <a href="/2020/05/06/Qt%E4%B8%8B%E7%9A%84Http%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%BC%80%E5%8F%91/" class="pre-post btn btn-default" title='Qt下的Http服务器开发'>
+            <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+            <span class="hidden-xs">Qt下的Http服务器开发</span>
+        </a>
+    
+    
+        <a href="/2020/03/01/Qt%E8%B0%83%E7%94%A8Python%E8%BF%9B%E9%98%B6%E7%AF%87/" class="next-post btn btn-default" title='Qt调用Python进阶篇'>
+            <span class="hidden-lg">下一篇</span>
+            <span class="hidden-xs">Qt调用Python进阶篇</span> <i class="fa fa-angle-right fa-fw"></i>
+        </a>
+    
+</div>
+
+
+
+    <div id="comments">
+        
+	
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+  <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+<script src="https://cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
+
+<div id="gitalk-container"></div>
+<script type="text/javascript">
+    var gitalk;
+    if(window.location.host === 'spygg.gitee.io'){
+        gitalk = new Gitalk({
+            // Gitalk配置
+            clientID: "2e6379556d0bea565323",
+            clientSecret: "2feb2ad5f1301351c79e1d0e2b1a177bb0661ed7",
+            repo: "blogcomment",
+            owner: "spygg",
+            admin: ["spygg"],
+            id: md5(window.location.pathname),
+            distractionFreeMode: true
+        });
+    }
+    else{
+        gitalk = new Gitalk({
+            // Gitalk配置
+            clientID: "6c31603d4df9afc8351b",
+            clientSecret: "c9e81f3ac1492550170fccb28c0f8bb16e3b7ed1",
+            repo: "blogcomment",
+            owner: "spygg",
+            admin: ["spygg"],
+            id: md5(window.location.pathname),
+            distractionFreeMode: true
+        });
+    }
+    gitalk.render('gitalk-container');
+</script>
+
+
+    </div>
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">文章目录</h3>
+        
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%AD%A5%E9%AA%A4"><span class="toc-text">步骤</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Why"><span class="toc-text">Why</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PS"><span class="toc-text">PS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PPS"><span class="toc-text">PPS</span></a></li></ol>
+        
+    </div>
+</aside>
+
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+
+<a id="back-to-top" class="icon-btn hide">
+	<i class="fa fa-chevron-up"></i>
+</a>
+
+
+
+
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+</div>
+
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy; 2019
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+            
+                
+<script src="/assets/tagcanvas.min.js?rev=2.9.js"></script>
+
+                    <script>
+                        var tagcloud3d = document.getElementById("tag-cloud-3d");
+                        if (tagcloud3d) {
+                            var tagOption = {
+                                textColour: '#444', // 字体颜色
+                                outlineMethod: 'block', // 选中模式
+                                outlineColour: '#FFDAB9', // 选中模式的颜色
+                                interval: 30 || 30, // 动画帧之间的时间间隔，值越大，转动幅度越大
+                                textHeight: 13,
+                                outlineRadius: 3,
+                                freezeActive: true || '', // 选中的标签是否继续滚动
+                                frontSelect: true || '', // 不选标签云后部的标签
+                                initial: [0.1, -0.1],
+                                depth: 0.5,
+                                decel: 0.95,
+                                maxSpeed: 0.03,
+                                reverse: true || '', // 是否反向触发
+                                fadeIn: 500, // 进入动画时间
+                                wheelZoom: false || '' // 是否启用鼠标滚轮
+                            }
+                            TagCanvas.Start('tag-cloud-3d', '', tagOption);
+                        }
+
+                    </script>
+                    
+
+                        
+
+                                
+<script src="/js/app.js?rev=@@hash.js"></script>
+
+
+</body>
+</html>

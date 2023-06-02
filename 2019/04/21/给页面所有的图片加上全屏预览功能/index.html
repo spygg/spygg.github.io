@@ -1,0 +1,591 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="间客六十">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="google-site-verification" content="NGCFVs-lxT5zTiHxEXzk7fkJl26matl6KfVIgcORvFQ" />
+    <meta name="msvalidate.01" content="9C33A26895A2A8B80CEE60CD519D1095" />
+
+    <link rel="dns-prefetch" href="https://liusblog.top">
+    <!--SEO-->
+
+    <meta name="keywords" content="html,javascipt" />
+
+
+    <meta name="description" content="
+在使用主题snippet时候,图片不能全屏预览,于是自己动手写了一个,还是可以使用的
+
+更新添加代码段点击复制功能
+示意图
+参考intense但是这玩意有bug
+食用方法
+在页面的head部分..." />
+
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+
+        <!--Title-->
+
+
+<title>给页面所有的图片加上全屏预览功能 | 间客六十</title>
+
+
+    <link rel="alternate" href="/atom.xml" title="间客六十" type="application/atom+xml">
+
+
+    <link rel="icon" href="/favicon.ico">
+
+            
+
+
+
+
+<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.6.3/css/font-awesome.min.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash.css">
+
+
+
+
+                
+
+
+
+
+	<script>
+		(function(i, s, o, g, r, a, m) {
+		    i['GoogleAnalyticsObject'] = r;
+		    i[r] = i[r] || function() {
+		        (i[r].q = i[r].q || []).push(arguments)
+		    }, i[r].l = 1 * new Date();
+		    a = s.createElement(o),
+		    m = s.getElementsByTagName(o)[0];
+		    a.async = 1;
+		    a.src = g;
+		    m.parentNode.insertBefore(a, m)
+		})(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+		ga('create', 'true', 'auto');
+		ga('send', 'pageview');
+	</script>
+
+
+                    
+
+                        <script type="text/javascript">
+                            function hasClass(obj, cls) {
+                                return obj.className.match(new RegExp('(\\s|^)' + cls + '(\\s|$)'));
+                            }
+
+                            function addClass(obj, cls) {
+                                if (!this.hasClass(obj, cls)) obj.className += " " + cls;
+                            }
+
+                            function removeClass(obj, cls) {
+                                if (hasClass(obj, cls)) {
+                                    var reg = new RegExp('(\\s|^)' + cls + '(\\s|$)');
+                                    obj.className = obj.className.replace(reg, ' ');
+                                }
+                            }
+
+                            function copyToClip(event) {
+                                let cb = event.target.parentNode
+                                var cls = cb.getElementsByClassName("line");
+
+                                var pt = ""
+                                for (var k = 0; k < cls.length; k++) {
+                                    var cl = (cls[k].textContent || cls[k].innerHTML);
+                                    cl = cl.replace(`<span class="css"></span>`, "\n")
+                                    cl = cl.replace(`<span class="javascript"></span>`, "\n")
+
+                                    pt += cl
+                                    pt += "\n";
+                                }
+                                const textarea = document.createElement('textarea');
+                                textarea.value = pt;
+                                document.body.appendChild(textarea);
+                                textarea.select();
+                                if (document.execCommand('copy')) {
+                                    document.execCommand('copy');
+                                }
+                                document.body.removeChild(textarea);
+                                alert("复制成功");
+                            }
+
+                            function doAddCopyCode() {
+                                var codeBlocks = document.getElementsByClassName('code');
+                                for (var i = 0; i < codeBlocks.length; i++) {
+                                    //创建一个div
+                                    var divCopy = document.createElement("div");
+                                    divCopy.innerHTML = "点击复制"
+                                    //为div创建属性class = "test"
+                                    var divattr = document.createAttribute("class");
+                                    divattr.value = "copy_my_code";
+
+                                    //把属性class = "test"添加到div
+                                    divCopy.setAttributeNode(divattr);
+                                    codeBlocks[i].appendChild(divCopy)
+
+                                    var code = codeBlocks[i].getElementsByTagName("pre")[1];
+                                    //hack事件冒泡
+                                    codeBlocks[i].onclick = (e) => {
+                                        copyToClip(e);
+                                    }
+                                }
+                            }
+
+                            function doAddImg() {
+                                var imgAll = document.getElementsByClassName('post-body')[0];
+                                if (imgAll == undefined) {
+                                    return;
+                                }
+
+                                var imgs = imgAll.getElementsByTagName('img')
+                                for (var i = 0; i < imgs.length; i++) {
+                                    if (hasClass(imgs[i], 'class_no_full_screen')) {
+                                        continue;
+                                    }
+
+                                    imgs[i].setAttribute('style', "cursor: zoom-in");
+                                    imgs[i].onclick = function () {
+
+                                        var section = document.getElementsByTagName("section")[0];
+
+                                        var imgView = document.getElementById('imgViewDom');
+                                        if (imgView == undefined) {
+                                            imgView = document.createElement("div");
+                                            imgView.id = "imgViewDom";
+
+                                            section.appendChild(imgView)
+
+
+                                            imgView.onclick = function () {
+                                                addClass(imgView, "disnone");
+                                                imgView.innerHTML = "";
+                                            }
+
+                                        }
+
+                                        imgView.innerHTML = "<img id = 'jackslowfuck' src=" + this.src + " style='cursor: zoom-out; max-width: 100%;'" + ">";
+                                        removeClass(imgView, "disnone");
+
+                                        var jackslowfuck = document.getElementById('jackslowfuck');
+                                        jackslowfuck.onclick = function () {
+                                            addClass(imgView, "disnone");
+                                            imgView.innerHTML = "";
+                                        }
+
+                                    }
+                                }
+                            }
+
+                            window.addEventListener('load', function () {
+                                doAddImg();
+                                // doAddCopyCode();
+                            }, false);
+                        </script>
+
+                        <style type="text/css">
+                            .copy_my_code {
+                                position: absolute;
+                                top: 0;
+                                right: 0;
+                                border: 1px solid;
+                                background: #555;
+                                color: #fff;
+                                margin: 1px;
+                                padding: 0px 5px;
+                                cursor: pointer;
+                            }
+
+                            #imgViewDom {
+                                display: none;
+                                position: fixed;
+                                top: 0;
+                                left: 0;
+                                height: 100%;
+                                width: 100%;
+                                z-index: 99999999;
+                                background: rgba(0, 0, 0, 0.7);
+                                overflow: auto;
+                                display: -webkit-box;
+                                -webkit-box-align: center;
+                                -webkit-box-pack: center;
+                                display: -moz-box;
+                                -moz-box-align: center;
+                                -moz-box-pack: center;
+                                display: -o-box;
+                                -o-box-align: center;
+                                -o-box-pack: center;
+                                display: -ms-box;
+                                -ms-box-align: center;
+                                -ms-box-pack: center;
+                                display: box;
+                                box-align: center;
+                                box-pack: center;
+                                cursor: zoom-out;
+                            }
+
+                            .disnone {
+                                display: none !important;
+                            }
+                        </style>
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+
+<body>
+    <header class="main-header"  style="background-image:url(/img/banner.webp)"  >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/about" title='spygg'>
+            <img src="/img/avatar.webp" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+        	<!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+                <h2> 技术引领生活! </h2>
+            
+    	</div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                    <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <!---<a class="navbar-brand" href="https://liusblog.top">间客六十</a>--->
+                    <a class="navbar-brand" href="/">间客六十</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/"><i class="fa fa-home"></i>首页</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/Qt"><i class="fa "></i>Qt</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/Golang"><i class="fa "></i>Golang</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/Python"><i class="fa "></i>Python</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/Linux"><i class="fa "></i>Linux</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/音视频"><i class="fa "></i>音视频</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/网站开发"><i class="fa "></i>网站开发</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/杂谈"><i class="fa "></i>杂谈</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/archives/"><i class="fa "></i>时间轴</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/about/"><i class="fa "></i>关于</a>
+                            </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="给页面所有的图片加上全屏预览功能">
+            
+	            给页面所有的图片加上全屏预览功能
+            
+        </h1>
+        <div class="post-meta">
+    
+        <span class="categories-meta fa-wrap">
+            <i class="fa fa-folder-open-o"></i>
+            <a class="category-link" href="/categories/%E6%9D%82%E8%B0%88/">杂谈</a>
+        </span>
+    
+
+    
+        <span class="fa-wrap">
+            <i class="fa fa-tags"></i>
+            <span class="tags-meta">
+                
+                    <a class="tag-none-link" href="/tags/html/" rel="tag">html</a> <a class="tag-none-link" href="/tags/javascipt/" rel="tag">javascipt</a>
+                
+            </span>
+        </span>
+    
+
+    
+        
+        <span class="fa-wrap">
+            <i class="fa fa-clock-o"></i>
+            <span class="date-meta">2019/04/21</span>
+        </span>
+        
+    
+</div>
+            
+            
+            <p class="fa fa-exclamation-triangle warning">
+                本文于<strong>1502</strong>天之前发表，文中内容可能已经过时。
+            </p>
+        
+    </div>
+
+    
+
+    <div class="post-body post-content">
+        <blockquote>
+<p>在使用主题snippet时候,图片不能全屏预览,于是自己动手写了一个,还是可以使用的</p>
+</blockquote>
+<h2 id="更新"><a href="#更新" class="headerlink" title="更新"></a>更新</h2><p>添加代码段点击复制功能</p>
+<h2 id="示意图"><a href="#示意图" class="headerlink" title="示意图"></a>示意图</h2><p><img src="/photos/%E7%BB%99%E9%A1%B5%E9%9D%A2%E6%89%80%E6%9C%89%E7%9A%84%E5%9B%BE%E7%89%87%E5%8A%A0%E4%B8%8A%E5%85%A8%E5%B1%8F%E9%A2%84%E8%A7%88%E5%8A%9F%E8%83%BD/demo.webp" alt="demo"></p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a target="_blank" rel="noopener" href="https://github.com/tholman/intense-images">intense</a><br>但是这玩意有bug</p>
+<h2 id="食用方法"><a href="#食用方法" class="headerlink" title="食用方法"></a>食用方法</h2><ul>
+<li>在页面的head部分script中加入javscript代码,同时引入css代码</li>
+<li>具体情况时需要改变js中的<strong>post-body</strong>  var imgs = document.getElementsByClassName(‘post-body’)[0].getElementsByTagName(‘img’)</li>
+<li>对不需要展示的图片加上 <em>class_no_full_screen</em> 类</li>
+<li>如果要修改背景色请修改*background: rgba(255, 255, 255,0.8);*这一句</li>
+</ul>
+<h2 id="直接上干货"><a href="#直接上干货" class="headerlink" title="直接上干货"></a>直接上干货</h2><h3 id="原理"><a href="#原理" class="headerlink" title="原理:"></a>原理:</h3><ul>
+<li>查找所有的图片</li>
+<li>在图片点击时候获取图片地址</li>
+<li>在页面末尾插入一个div,div中插入一个img(地址为点击图片的地址)</li>
+<li>设置div样式为全屏,透明</li>
+</ul>
+<h3 id="javscript-代码"><a href="#javscript-代码" class="headerlink" title="javscript 代码"></a>javscript 代码</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br></pre></td><td class="code"><pre><span class="line">&lt;script type=<span class="string">&quot;text/javascript&quot;</span>&gt;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">hasClass</span>(<span class="params">obj, cls</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> obj.className.match(<span class="keyword">new</span> <span class="built_in">RegExp</span>(<span class="string">&#x27;(\\s|^)&#x27;</span> + cls + <span class="string">&#x27;(\\s|$)&#x27;</span>));</span><br><span class="line">    &#125;</span><br><span class="line">        </span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">addClass</span>(<span class="params">obj, cls</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (!<span class="built_in">this</span>.hasClass(obj, cls)) obj.className += <span class="string">&quot; &quot;</span> + cls;</span><br><span class="line">    &#125;</span><br><span class="line">        </span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">removeClass</span>(<span class="params">obj, cls</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (hasClass(obj, cls)) &#123;</span><br><span class="line">            <span class="keyword">var</span> reg = <span class="keyword">new</span> <span class="built_in">RegExp</span>(<span class="string">&#x27;(\\s|^)&#x27;</span> + cls + <span class="string">&#x27;(\\s|$)&#x27;</span>);</span><br><span class="line">            obj.className = obj.className.replace(reg, <span class="string">&#x27; &#x27;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">copyToClip</span>(<span class="params">event</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">let</span> cb = event.target.parentNode</span><br><span class="line">        <span class="keyword">var</span> cls = cb.getElementsByClassName(<span class="string">&quot;line&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">var</span> pt = <span class="string">&quot;&quot;</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">var</span> k = <span class="number">0</span>; k &lt; cls.length; k++) &#123;</span><br><span class="line">            <span class="keyword">var</span> cl = (cls[k].textContent || cls[k].innerHTML);</span><br><span class="line">            cl = cl.replace(<span class="string">`&lt;span class=&quot;css&quot;&gt;&lt;/span&gt;`</span>, <span class="string">&quot;\n&quot;</span>)</span><br><span class="line">            cl = cl.replace(<span class="string">`&lt;span class=&quot;javascript&quot;&gt;&lt;/span&gt;`</span>, <span class="string">&quot;\n&quot;</span>)</span><br><span class="line"></span><br><span class="line">            pt += cl</span><br><span class="line">            pt += <span class="string">&quot;\n&quot;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">const</span> textarea = <span class="built_in">document</span>.createElement(<span class="string">&#x27;textarea&#x27;</span>);</span><br><span class="line">        textarea.value = pt;</span><br><span class="line">        <span class="built_in">document</span>.body.appendChild(textarea);</span><br><span class="line">        textarea.select();</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">document</span>.execCommand(<span class="string">&#x27;copy&#x27;</span>)) &#123;</span><br><span class="line">            <span class="built_in">document</span>.execCommand(<span class="string">&#x27;copy&#x27;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">document</span>.body.removeChild(textarea);</span><br><span class="line">        alert(<span class="string">&quot;复制成功&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">doAddCopyCode</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> codeBlocks = <span class="built_in">document</span>.getElementsByClassName(<span class="string">&#x27;code&#x27;</span>);</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; codeBlocks.length; i++) &#123;</span><br><span class="line">            <span class="comment">//创建一个div</span></span><br><span class="line">            <span class="keyword">var</span> divCopy = <span class="built_in">document</span>.createElement(<span class="string">&quot;div&quot;</span>);</span><br><span class="line">            divCopy.innerHTML = <span class="string">&quot;点击复制&quot;</span></span><br><span class="line">            <span class="comment">//为div创建属性class = &quot;test&quot;</span></span><br><span class="line">            <span class="keyword">var</span> divattr = <span class="built_in">document</span>.createAttribute(<span class="string">&quot;class&quot;</span>);</span><br><span class="line">            divattr.value = <span class="string">&quot;copy_my_code&quot;</span>;</span><br><span class="line"></span><br><span class="line">            <span class="comment">//把属性class = &quot;test&quot;添加到div</span></span><br><span class="line">            divCopy.setAttributeNode(divattr);</span><br><span class="line">            codeBlocks[i].appendChild(divCopy)</span><br><span class="line"></span><br><span class="line">            <span class="keyword">var</span> code = codeBlocks[i].getElementsByTagName(<span class="string">&quot;pre&quot;</span>)[<span class="number">1</span>];</span><br><span class="line"></span><br><span class="line">            codeBlocks[i].onclick = <span class="function">(<span class="params">e</span>) =&gt;</span> &#123;</span><br><span class="line">                copyToClip(e);</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">doAddImg</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> imgAll = <span class="built_in">document</span>.getElementsByClassName(<span class="string">&#x27;post-body&#x27;</span>)[<span class="number">0</span>];</span><br><span class="line">        <span class="keyword">if</span> (imgAll == <span class="literal">undefined</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">var</span> imgs = imgAll.getElementsByTagName(<span class="string">&#x27;img&#x27;</span>)</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; imgs.length; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (hasClass(imgs[i], <span class="string">&#x27;class_no_full_screen&#x27;</span>)) &#123;</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            imgs[i].setAttribute(<span class="string">&#x27;style&#x27;</span>, <span class="string">&quot;cursor: zoom-in&quot;</span>);</span><br><span class="line">            imgs[i].onclick = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">                <span class="keyword">var</span> section = <span class="built_in">document</span>.getElementsByTagName(<span class="string">&quot;section&quot;</span>)[<span class="number">0</span>];</span><br><span class="line"></span><br><span class="line">                <span class="keyword">var</span> imgView = <span class="built_in">document</span>.getElementById(<span class="string">&#x27;imgViewDom&#x27;</span>);</span><br><span class="line">                <span class="keyword">if</span> (imgView == <span class="literal">undefined</span>) &#123;</span><br><span class="line">                    imgView = <span class="built_in">document</span>.createElement(<span class="string">&quot;div&quot;</span>);</span><br><span class="line">                    imgView.id = <span class="string">&quot;imgViewDom&quot;</span>;</span><br><span class="line"></span><br><span class="line">                    section.appendChild(imgView)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">                    imgView.onclick = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">                        addClass(imgView, <span class="string">&quot;disnone&quot;</span>);</span><br><span class="line">                        imgView.innerHTML = <span class="string">&quot;&quot;</span>;</span><br><span class="line">                    &#125;</span><br><span class="line"></span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                imgView.innerHTML = <span class="string">&quot;&lt;img id = &#x27;jackslowfuck&#x27; src=&quot;</span> + <span class="built_in">this</span>.src + <span class="string">&quot; style=&#x27;cursor: zoom-out; max-width: 100%;&#x27;&quot;</span> + <span class="string">&quot;&gt;&quot;</span>;</span><br><span class="line">                removeClass(imgView, <span class="string">&quot;disnone&quot;</span>);</span><br><span class="line"></span><br><span class="line">                <span class="keyword">var</span> jackslowfuck = <span class="built_in">document</span>.getElementById(<span class="string">&#x27;jackslowfuck&#x27;</span>);</span><br><span class="line">                jackslowfuck.onclick = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">                    addClass(imgView, <span class="string">&quot;disnone&quot;</span>);</span><br><span class="line">                    imgView.innerHTML = <span class="string">&quot;&quot;</span>;</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">window</span>.addEventListener(<span class="string">&#x27;load&#x27;</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        doAddImg();</span><br><span class="line">        doAddCopyCode();</span><br><span class="line">    &#125;, <span class="literal">false</span>);</span><br><span class="line">&lt;/scirpt&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="css代码"><a href="#css代码" class="headerlink" title="css代码"></a>css代码</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">&lt;style type=&quot;text/css&quot;&gt;</span><br><span class="line">    <span class="selector-class">.copy_my_code</span> &#123;</span><br><span class="line">        <span class="attribute">position</span>: absolute;</span><br><span class="line">        <span class="attribute">top</span>: <span class="number">0</span>;</span><br><span class="line">        <span class="attribute">right</span>: <span class="number">0</span>;</span><br><span class="line">        <span class="attribute">border</span>: <span class="number">1px</span> solid;</span><br><span class="line">        <span class="attribute">background</span>: <span class="number">#555</span>;</span><br><span class="line">        <span class="attribute">color</span>: <span class="number">#fff</span>;</span><br><span class="line">        <span class="attribute">margin</span>: <span class="number">1px</span>;</span><br><span class="line">        <span class="attribute">padding</span>: <span class="number">0px</span> <span class="number">5px</span>;</span><br><span class="line">        <span class="attribute">cursor</span>: pointer;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="selector-id">#imgViewDom</span> &#123;</span><br><span class="line">        <span class="attribute">display</span>: none;</span><br><span class="line">        <span class="attribute">position</span>: fixed;</span><br><span class="line">        <span class="attribute">top</span>: <span class="number">0</span>;</span><br><span class="line">        <span class="attribute">left</span>: <span class="number">0</span>;</span><br><span class="line">        <span class="attribute">height</span>: <span class="number">100%</span>;</span><br><span class="line">        <span class="attribute">width</span>: <span class="number">100%</span>;</span><br><span class="line">        <span class="attribute">z-index</span>: <span class="number">99999999</span>;</span><br><span class="line">        <span class="attribute">background</span>: <span class="built_in">rgba</span>(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>,<span class="number">0.7</span>);</span><br><span class="line">        <span class="attribute">overflow</span>: auto;</span><br><span class="line">        <span class="attribute">display</span>: -webkit-box;</span><br><span class="line">        -webkit-box-align: center;</span><br><span class="line">        -webkit-box-pack: center;</span><br><span class="line">        <span class="attribute">display</span>: -moz-box;</span><br><span class="line">        -moz-box-align: center;</span><br><span class="line">        -moz-box-pack: center;</span><br><span class="line">        <span class="attribute">display</span>: -o-box;</span><br><span class="line">        -o-box-align: center;</span><br><span class="line">        -o-box-pack: center;</span><br><span class="line">        <span class="attribute">display</span>: -ms-box;</span><br><span class="line">        -ms-box-align: center;</span><br><span class="line">        -ms-box-pack: center;</span><br><span class="line">        <span class="attribute">display</span>: box;</span><br><span class="line">        box-align: center;</span><br><span class="line">        box-pack: center;</span><br><span class="line">        <span class="attribute">cursor</span>: zoom-out;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="selector-class">.disnone</span>&#123;</span><br><span class="line">        <span class="attribute">display</span>: none <span class="meta">!important</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&lt;/style&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="ps"><a href="#ps" class="headerlink" title="ps"></a>ps</h2><p>我是javascript菜鸟,如果有打包好的请联系告知本人</p>
+
+    </div>
+    
+        <div class="reward" ontouchstart>
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+                <span class="reward-type">
+                    <img class="alipay" src="/img/zhifubaocode.webp"><b>支付宝打赏</b>
+                </span>
+            
+            
+                <span class="reward-type">
+                    <img class="wechat" src="/img/weixincode.webp"><b>微信打赏</b>
+                </span>
+            
+        </div>
+    </div>
+    <p class="reward-tip">您的支持是我前行的动力!</p>
+</div>
+
+
+    
+    <div class="post-footer">
+        <div>
+            
+                转载声明：商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="/about" target="_blank">spygg</a>
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+        <a href="/2019/04/25/linux%E7%8E%AF%E5%A2%83pip3%E9%85%8D%E7%BD%AE/" class="pre-post btn btn-default" title='linux环境pip3镜像配置'>
+            <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+            <span class="hidden-xs">linux环境pip3镜像配置</span>
+        </a>
+    
+    
+        <a href="/2019/04/15/github%E5%82%BB%E7%93%9C%E7%9A%84%E9%A3%9F%E7%94%A8%E6%96%B9%E6%B3%95/" class="next-post btn btn-default" title='github傻瓜的食用方法'>
+            <span class="hidden-lg">下一篇</span>
+            <span class="hidden-xs">github傻瓜的食用方法</span> <i class="fa fa-angle-right fa-fw"></i>
+        </a>
+    
+</div>
+
+
+
+    <div id="comments">
+        
+	
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+  <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+<script src="https://cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
+
+<div id="gitalk-container"></div>
+<script type="text/javascript">
+    var gitalk;
+    if(window.location.host === 'spygg.gitee.io'){
+        gitalk = new Gitalk({
+            // Gitalk配置
+            clientID: "2e6379556d0bea565323",
+            clientSecret: "2feb2ad5f1301351c79e1d0e2b1a177bb0661ed7",
+            repo: "blogcomment",
+            owner: "spygg",
+            admin: ["spygg"],
+            id: md5(window.location.pathname),
+            distractionFreeMode: true
+        });
+    }
+    else{
+        gitalk = new Gitalk({
+            // Gitalk配置
+            clientID: "6c31603d4df9afc8351b",
+            clientSecret: "c9e81f3ac1492550170fccb28c0f8bb16e3b7ed1",
+            repo: "blogcomment",
+            owner: "spygg",
+            admin: ["spygg"],
+            id: md5(window.location.pathname),
+            distractionFreeMode: true
+        });
+    }
+    gitalk.render('gitalk-container');
+</script>
+
+
+    </div>
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">文章目录</h3>
+        
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9B%B4%E6%96%B0"><span class="toc-text">更新</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A4%BA%E6%84%8F%E5%9B%BE"><span class="toc-text">示意图</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-text">参考</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A3%9F%E7%94%A8%E6%96%B9%E6%B3%95"><span class="toc-text">食用方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%B4%E6%8E%A5%E4%B8%8A%E5%B9%B2%E8%B4%A7"><span class="toc-text">直接上干货</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8E%9F%E7%90%86"><span class="toc-text">原理:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#javscript-%E4%BB%A3%E7%A0%81"><span class="toc-text">javscript 代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#css%E4%BB%A3%E7%A0%81"><span class="toc-text">css代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ps"><span class="toc-text">ps</span></a></li></ol>
+        
+    </div>
+</aside>
+
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+
+<a id="back-to-top" class="icon-btn hide">
+	<i class="fa fa-chevron-up"></i>
+</a>
+
+
+
+
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+</div>
+
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy; 2019
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+            
+                
+<script src="/assets/tagcanvas.min.js?rev=2.9.js"></script>
+
+                    <script>
+                        var tagcloud3d = document.getElementById("tag-cloud-3d");
+                        if (tagcloud3d) {
+                            var tagOption = {
+                                textColour: '#444', // 字体颜色
+                                outlineMethod: 'block', // 选中模式
+                                outlineColour: '#FFDAB9', // 选中模式的颜色
+                                interval: 30 || 30, // 动画帧之间的时间间隔，值越大，转动幅度越大
+                                textHeight: 13,
+                                outlineRadius: 3,
+                                freezeActive: true || '', // 选中的标签是否继续滚动
+                                frontSelect: true || '', // 不选标签云后部的标签
+                                initial: [0.1, -0.1],
+                                depth: 0.5,
+                                decel: 0.95,
+                                maxSpeed: 0.03,
+                                reverse: true || '', // 是否反向触发
+                                fadeIn: 500, // 进入动画时间
+                                wheelZoom: false || '' // 是否启用鼠标滚轮
+                            }
+                            TagCanvas.Start('tag-cloud-3d', '', tagOption);
+                        }
+
+                    </script>
+                    
+
+                        
+
+                                
+<script src="/js/app.js?rev=@@hash.js"></script>
+
+
+</body>
+</html>

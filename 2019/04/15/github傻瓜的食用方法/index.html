@@ -1,0 +1,663 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="间客六十">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="google-site-verification" content="NGCFVs-lxT5zTiHxEXzk7fkJl26matl6KfVIgcORvFQ" />
+    <meta name="msvalidate.01" content="9C33A26895A2A8B80CEE60CD519D1095" />
+
+    <link rel="dns-prefetch" href="https://liusblog.top">
+    <!--SEO-->
+
+    <meta name="keywords" content="git,github" />
+
+
+    <meta name="description" content="
+github 作为全球最大的同性交友网站,是作为程序员的我们必备网站之一,本文就简单的使用做个介绍
+
+
+配置 Git
+首先在本地创建 ssh key；
+
+1$ ssh-keygen -t rs..." />
+
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+
+        <!--Title-->
+
+
+<title>github傻瓜的食用方法 | 间客六十</title>
+
+
+    <link rel="alternate" href="/atom.xml" title="间客六十" type="application/atom+xml">
+
+
+    <link rel="icon" href="/favicon.ico">
+
+            
+
+
+
+
+<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.6.3/css/font-awesome.min.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash.css">
+
+
+
+
+                
+
+
+
+
+	<script>
+		(function(i, s, o, g, r, a, m) {
+		    i['GoogleAnalyticsObject'] = r;
+		    i[r] = i[r] || function() {
+		        (i[r].q = i[r].q || []).push(arguments)
+		    }, i[r].l = 1 * new Date();
+		    a = s.createElement(o),
+		    m = s.getElementsByTagName(o)[0];
+		    a.async = 1;
+		    a.src = g;
+		    m.parentNode.insertBefore(a, m)
+		})(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+		ga('create', 'true', 'auto');
+		ga('send', 'pageview');
+	</script>
+
+
+                    
+
+                        <script type="text/javascript">
+                            function hasClass(obj, cls) {
+                                return obj.className.match(new RegExp('(\\s|^)' + cls + '(\\s|$)'));
+                            }
+
+                            function addClass(obj, cls) {
+                                if (!this.hasClass(obj, cls)) obj.className += " " + cls;
+                            }
+
+                            function removeClass(obj, cls) {
+                                if (hasClass(obj, cls)) {
+                                    var reg = new RegExp('(\\s|^)' + cls + '(\\s|$)');
+                                    obj.className = obj.className.replace(reg, ' ');
+                                }
+                            }
+
+                            function copyToClip(event) {
+                                let cb = event.target.parentNode
+                                var cls = cb.getElementsByClassName("line");
+
+                                var pt = ""
+                                for (var k = 0; k < cls.length; k++) {
+                                    var cl = (cls[k].textContent || cls[k].innerHTML);
+                                    cl = cl.replace(`<span class="css"></span>`, "\n")
+                                    cl = cl.replace(`<span class="javascript"></span>`, "\n")
+
+                                    pt += cl
+                                    pt += "\n";
+                                }
+                                const textarea = document.createElement('textarea');
+                                textarea.value = pt;
+                                document.body.appendChild(textarea);
+                                textarea.select();
+                                if (document.execCommand('copy')) {
+                                    document.execCommand('copy');
+                                }
+                                document.body.removeChild(textarea);
+                                alert("复制成功");
+                            }
+
+                            function doAddCopyCode() {
+                                var codeBlocks = document.getElementsByClassName('code');
+                                for (var i = 0; i < codeBlocks.length; i++) {
+                                    //创建一个div
+                                    var divCopy = document.createElement("div");
+                                    divCopy.innerHTML = "点击复制"
+                                    //为div创建属性class = "test"
+                                    var divattr = document.createAttribute("class");
+                                    divattr.value = "copy_my_code";
+
+                                    //把属性class = "test"添加到div
+                                    divCopy.setAttributeNode(divattr);
+                                    codeBlocks[i].appendChild(divCopy)
+
+                                    var code = codeBlocks[i].getElementsByTagName("pre")[1];
+                                    //hack事件冒泡
+                                    codeBlocks[i].onclick = (e) => {
+                                        copyToClip(e);
+                                    }
+                                }
+                            }
+
+                            function doAddImg() {
+                                var imgAll = document.getElementsByClassName('post-body')[0];
+                                if (imgAll == undefined) {
+                                    return;
+                                }
+
+                                var imgs = imgAll.getElementsByTagName('img')
+                                for (var i = 0; i < imgs.length; i++) {
+                                    if (hasClass(imgs[i], 'class_no_full_screen')) {
+                                        continue;
+                                    }
+
+                                    imgs[i].setAttribute('style', "cursor: zoom-in");
+                                    imgs[i].onclick = function () {
+
+                                        var section = document.getElementsByTagName("section")[0];
+
+                                        var imgView = document.getElementById('imgViewDom');
+                                        if (imgView == undefined) {
+                                            imgView = document.createElement("div");
+                                            imgView.id = "imgViewDom";
+
+                                            section.appendChild(imgView)
+
+
+                                            imgView.onclick = function () {
+                                                addClass(imgView, "disnone");
+                                                imgView.innerHTML = "";
+                                            }
+
+                                        }
+
+                                        imgView.innerHTML = "<img id = 'jackslowfuck' src=" + this.src + " style='cursor: zoom-out; max-width: 100%;'" + ">";
+                                        removeClass(imgView, "disnone");
+
+                                        var jackslowfuck = document.getElementById('jackslowfuck');
+                                        jackslowfuck.onclick = function () {
+                                            addClass(imgView, "disnone");
+                                            imgView.innerHTML = "";
+                                        }
+
+                                    }
+                                }
+                            }
+
+                            window.addEventListener('load', function () {
+                                doAddImg();
+                                // doAddCopyCode();
+                            }, false);
+                        </script>
+
+                        <style type="text/css">
+                            .copy_my_code {
+                                position: absolute;
+                                top: 0;
+                                right: 0;
+                                border: 1px solid;
+                                background: #555;
+                                color: #fff;
+                                margin: 1px;
+                                padding: 0px 5px;
+                                cursor: pointer;
+                            }
+
+                            #imgViewDom {
+                                display: none;
+                                position: fixed;
+                                top: 0;
+                                left: 0;
+                                height: 100%;
+                                width: 100%;
+                                z-index: 99999999;
+                                background: rgba(0, 0, 0, 0.7);
+                                overflow: auto;
+                                display: -webkit-box;
+                                -webkit-box-align: center;
+                                -webkit-box-pack: center;
+                                display: -moz-box;
+                                -moz-box-align: center;
+                                -moz-box-pack: center;
+                                display: -o-box;
+                                -o-box-align: center;
+                                -o-box-pack: center;
+                                display: -ms-box;
+                                -ms-box-align: center;
+                                -ms-box-pack: center;
+                                display: box;
+                                box-align: center;
+                                box-pack: center;
+                                cursor: zoom-out;
+                            }
+
+                            .disnone {
+                                display: none !important;
+                            }
+                        </style>
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+
+<body>
+    <header class="main-header"  style="background-image:url(/img/banner.webp)"  >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/about" title='spygg'>
+            <img src="/img/avatar.webp" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+        	<!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+                <h2> 技术引领生活! </h2>
+            
+    	</div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                    <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <!---<a class="navbar-brand" href="https://liusblog.top">间客六十</a>--->
+                    <a class="navbar-brand" href="/">间客六十</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/"><i class="fa fa-home"></i>首页</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/Qt"><i class="fa "></i>Qt</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/Golang"><i class="fa "></i>Golang</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/Python"><i class="fa "></i>Python</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/Linux"><i class="fa "></i>Linux</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/音视频"><i class="fa "></i>音视频</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/网站开发"><i class="fa "></i>网站开发</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/杂谈"><i class="fa "></i>杂谈</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/archives/"><i class="fa "></i>时间轴</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/about/"><i class="fa "></i>关于</a>
+                            </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="github傻瓜的食用方法">
+            
+	            github傻瓜的食用方法
+            
+        </h1>
+        <div class="post-meta">
+    
+        <span class="categories-meta fa-wrap">
+            <i class="fa fa-folder-open-o"></i>
+            <a class="category-link" href="/categories/%E6%9D%82%E8%B0%88/">杂谈</a>
+        </span>
+    
+
+    
+        <span class="fa-wrap">
+            <i class="fa fa-tags"></i>
+            <span class="tags-meta">
+                
+                    <a class="tag-none-link" href="/tags/git/" rel="tag">git</a> <a class="tag-none-link" href="/tags/github/" rel="tag">github</a>
+                
+            </span>
+        </span>
+    
+
+    
+        
+        <span class="fa-wrap">
+            <i class="fa fa-clock-o"></i>
+            <span class="date-meta">2019/04/15</span>
+        </span>
+        
+    
+</div>
+            
+            
+            <p class="fa fa-exclamation-triangle warning">
+                本文于<strong>1508</strong>天之前发表，文中内容可能已经过时。
+            </p>
+        
+    </div>
+
+    
+
+    <div class="post-body post-content">
+        <blockquote>
+<p>github 作为全球最大的同性交友网站,是作为程序员的我们必备网站之一,本文就简单的使用做个介绍</p>
+</blockquote>
+<p><img src="/photos/github%E5%82%BB%E7%93%9C%E7%9A%84%E9%A3%9F%E7%94%A8%E6%96%B9%E6%B3%95/git%E5%92%8Cgithub.webp" alt="git"></p>
+<h2 id="配置-Git"><a href="#配置-Git" class="headerlink" title="配置 Git"></a>配置 Git</h2><ol>
+<li>首先在本地创建 ssh key；</li>
+</ol>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>ssh-keygen -t rsa -C <span class="string">&quot;your_email@youremail.com&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>后面的 <a href="mailto:&#121;&#111;&#x75;&#x72;&#95;&#x65;&#x6d;&#97;&#105;&#108;&#64;&#x79;&#x6f;&#117;&#x72;&#101;&#109;&#x61;&#x69;&#108;&#x2e;&#x63;&#x6f;&#x6d;">&#121;&#111;&#x75;&#x72;&#95;&#x65;&#x6d;&#97;&#105;&#108;&#64;&#x79;&#x6f;&#117;&#x72;&#101;&#109;&#x61;&#x69;&#108;&#x2e;&#x63;&#x6f;&#x6d;</a> 改为你在 github 上注册的邮箱,之后会要求确认路径和输入密码,我们这使用默认的一路回车就行.成功的话会在~/下生成.ssh 文件夹,进去,打开 id_rsa.pub,复制里面的 key.</p>
+<ol start="2">
+<li><p>回到 github 上,进入 Account Settings（账户配置）,左边选择 SSH Keys,Add SSH Key,title 随便填,粘贴在你电脑上生成的 key.</p>
+</li>
+<li><p>为了验证是否成功,在 git bash 下输入：</p>
+</li>
+</ol>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>ssh -T git<span class="variable">@github</span>.com</span><br></pre></td></tr></table></figure>
+
+<p>如果是第一次的会提示是否 continue,输入 yes 就会看到：You’ve successfully authenticated, but GitHub does not provide shell access .这就表示已成功连上 github.</p>
+<ol start="4">
+<li>接下来我们要做的就是把本地仓库传到 github 上去,在此之前还需要设置 username 和 email,因为 github 每次 commit 都会记录他们.</li>
+</ol>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git <span class="keyword">config</span> --<span class="keyword">global</span> user<span class="variable">.name</span> <span class="string">&quot;your name&quot;</span></span><br><span class="line">$ git <span class="keyword">config</span> --<span class="keyword">global</span> user<span class="variable">.email</span> <span class="string">&quot;your_email@youremail.com&quot;</span></span><br></pre></td></tr></table></figure>
+<h2 id="新建项目"><a href="#新建项目" class="headerlink" title="新建项目"></a>新建项目</h2><figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">echo <span class="string">&quot;# 某某项目&quot;</span> &gt;&gt; <span class="module-access"><span class="module"><span class="identifier">README</span>.</span></span>md</span><br><span class="line">git init</span><br><span class="line">git add <span class="module-access"><span class="module"><span class="identifier">README</span>.</span></span>md</span><br><span class="line">git commit -m <span class="string">&quot;first commit&quot;</span></span><br><span class="line">git branch -M main</span><br><span class="line">git remote add origin https:<span class="comment">//github.com/spygg/goweb.git</span></span><br><span class="line">git push -u origin main</span><br></pre></td></tr></table></figure>
+
+<h2 id="将一个已有的工程上传到-github-的方法"><a href="#将一个已有的工程上传到-github-的方法" class="headerlink" title="将一个已有的工程上传到 github 的方法"></a>将一个已有的工程上传到 github 的方法</h2><ol>
+<li>克隆法(较为简单)注意建立的时候<strong>不要</strong>添加license 和readme</li>
+</ol>
+<ul>
+<li>到 github 上去新建一个当前工程命名的仓库</li>
+<li>执行 git clone 新建的仓库地址</li>
+</ul>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="keyword">clone</span> <span class="title">git</span>@github.com:spygg/xxxx.git</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li><p>常规方法</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git remote add origin https:<span class="regexp">//gi</span>thub.com<span class="regexp">/用户名/</span>项目名</span><br><span class="line">git branch -M main</span><br><span class="line">git push -u origin main</span><br></pre></td></tr></table></figure></li>
+<li><p>强制推送</p>
+<figure class="highlight maxima"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">push</span> -f <span class="built_in">origin</span> main</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="黑科技"><a href="#黑科技" class="headerlink" title="黑科技"></a>黑科技</h2><p>加上拷贝深度后只保留最新的</p>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="keyword">clone</span> <span class="title">--depth</span>=<span class="number">1</span> git@github.com:spygg/xxxx.git</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>将工程下的所有文件拷贝到上一步 xxx 目录中</li>
+<li>执行命令三部曲</li>
+</ul>
+<figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git <span class="keyword">add</span> .</span><br><span class="line">git comment -m <span class="string">&quot;说明xxxxxxxxxx&quot;</span></span><br><span class="line">git <span class="keyword">push</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="强制覆盖本地版本"><a href="#强制覆盖本地版本" class="headerlink" title="强制覆盖本地版本"></a>强制覆盖本地版本</h2><figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git  <span class="keyword">fetch</span> <span class="comment">--all</span></span><br><span class="line">git <span class="keyword">reset</span> <span class="comment">--hard origin/master</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="ps"><a href="#ps" class="headerlink" title="ps"></a>ps</h2><ul>
+<li>更新仓库还是命令三部曲</li>
+<li>如果系统是 windows 请自行安装 git(我是 ubuntu 自带的,自豪一下(<em>^__^</em>)</li>
+</ul>
+<h2 id="高级用法"><a href="#高级用法" class="headerlink" title="高级用法"></a>高级用法</h2><h3 id="新增分支"><a href="#新增分支" class="headerlink" title="新增分支"></a>新增分支</h3><ol>
+<li>查看所有分支</li>
+</ol>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git branch -<span class="selector-tag">a</span></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>创建本地分支</li>
+</ol>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="keyword">branch </span>[<span class="keyword">branch </span>name]</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>切换分支</li>
+</ol>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">git</span> checkout<span class="meta"> [branch name]</span></span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>更新到指定分支</li>
+</ol>
+<figure class="highlight maxima"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">push</span> <span class="built_in">origin</span> [branch name]</span><br></pre></td></tr></table></figure>
+
+<h3 id="克隆分支到本地"><a href="#克隆分支到本地" class="headerlink" title="克隆分支到本地"></a>克隆分支到本地</h3><figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="keyword">clone</span> <span class="title">-b</span> [branch name] git@github.com:spygg/xxxx.git</span><br></pre></td></tr></table></figure>
+
+<h3 id="文本回车换行"><a href="#文本回车换行" class="headerlink" title="文本回车换行"></a>文本回车换行</h3><figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global core.autocrlf <span class="literal">false</span></span><br><span class="line">git config --global core.safecrlf <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="AutoCRLF-自动换行"><a href="#AutoCRLF-自动换行" class="headerlink" title="AutoCRLF(自动换行)"></a>AutoCRLF(自动换行)</h4><ul>
+<li><p>提交时转换为 LF，检出时转换为 CRLF<br>git config –global core.autocrlf true</p>
+</li>
+<li><p>提交时转换为 LF，检出时不转换<br>git config –global core.autocrlf input</p>
+</li>
+<li><p>提交检出均不转换<br>git config –global core.autocrlf false</p>
+</li>
+</ul>
+<h4 id="SafeCRLF-安全换行"><a href="#SafeCRLF-安全换行" class="headerlink" title="SafeCRLF(安全换行)"></a>SafeCRLF(安全换行)</h4><ul>
+<li><p>拒绝提交包含混合换行符的文件<br>git config –global core.safecrlf true</p>
+</li>
+<li><p>允许提交包含混合换行符的文件<br>git config –global core.safecrlf false</p>
+</li>
+<li><p>提交包含混合换行符的文件时给出警告<br>git config –global core.safecrlf warn</p>
+</li>
+</ul>
+
+    </div>
+    
+        <div class="reward" ontouchstart>
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+                <span class="reward-type">
+                    <img class="alipay" src="/img/zhifubaocode.webp"><b>支付宝打赏</b>
+                </span>
+            
+            
+                <span class="reward-type">
+                    <img class="wechat" src="/img/weixincode.webp"><b>微信打赏</b>
+                </span>
+            
+        </div>
+    </div>
+    <p class="reward-tip">您的支持是我前行的动力!</p>
+</div>
+
+
+    
+    <div class="post-footer">
+        <div>
+            
+                转载声明：商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="/about" target="_blank">spygg</a>
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+        <a href="/2019/04/21/%E7%BB%99%E9%A1%B5%E9%9D%A2%E6%89%80%E6%9C%89%E7%9A%84%E5%9B%BE%E7%89%87%E5%8A%A0%E4%B8%8A%E5%85%A8%E5%B1%8F%E9%A2%84%E8%A7%88%E5%8A%9F%E8%83%BD/" class="pre-post btn btn-default" title='给页面所有的图片加上全屏预览功能'>
+            <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+            <span class="hidden-xs">给页面所有的图片加上全屏预览功能</span>
+        </a>
+    
+    
+        <a href="/2019/04/14/Ubuntu%E8%A7%A6%E6%91%B8%E6%9D%BF%E8%B0%83%E6%95%99/" class="next-post btn btn-default" title='Ubuntu触摸板调教'>
+            <span class="hidden-lg">下一篇</span>
+            <span class="hidden-xs">Ubuntu触摸板调教</span> <i class="fa fa-angle-right fa-fw"></i>
+        </a>
+    
+</div>
+
+
+
+    <div id="comments">
+        
+	
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+  <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+<script src="https://cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
+
+<div id="gitalk-container"></div>
+<script type="text/javascript">
+    var gitalk;
+    if(window.location.host === 'spygg.gitee.io'){
+        gitalk = new Gitalk({
+            // Gitalk配置
+            clientID: "2e6379556d0bea565323",
+            clientSecret: "2feb2ad5f1301351c79e1d0e2b1a177bb0661ed7",
+            repo: "blogcomment",
+            owner: "spygg",
+            admin: ["spygg"],
+            id: md5(window.location.pathname),
+            distractionFreeMode: true
+        });
+    }
+    else{
+        gitalk = new Gitalk({
+            // Gitalk配置
+            clientID: "6c31603d4df9afc8351b",
+            clientSecret: "c9e81f3ac1492550170fccb28c0f8bb16e3b7ed1",
+            repo: "blogcomment",
+            owner: "spygg",
+            admin: ["spygg"],
+            id: md5(window.location.pathname),
+            distractionFreeMode: true
+        });
+    }
+    gitalk.render('gitalk-container');
+</script>
+
+
+    </div>
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">文章目录</h3>
+        
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE-Git"><span class="toc-text">配置 Git</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%B0%E5%BB%BA%E9%A1%B9%E7%9B%AE"><span class="toc-text">新建项目</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%86%E4%B8%80%E4%B8%AA%E5%B7%B2%E6%9C%89%E7%9A%84%E5%B7%A5%E7%A8%8B%E4%B8%8A%E4%BC%A0%E5%88%B0-github-%E7%9A%84%E6%96%B9%E6%B3%95"><span class="toc-text">将一个已有的工程上传到 github 的方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%BB%91%E7%A7%91%E6%8A%80"><span class="toc-text">黑科技</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%BA%E5%88%B6%E8%A6%86%E7%9B%96%E6%9C%AC%E5%9C%B0%E7%89%88%E6%9C%AC"><span class="toc-text">强制覆盖本地版本</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ps"><span class="toc-text">ps</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%AB%98%E7%BA%A7%E7%94%A8%E6%B3%95"><span class="toc-text">高级用法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B0%E5%A2%9E%E5%88%86%E6%94%AF"><span class="toc-text">新增分支</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%8B%E9%9A%86%E5%88%86%E6%94%AF%E5%88%B0%E6%9C%AC%E5%9C%B0"><span class="toc-text">克隆分支到本地</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%87%E6%9C%AC%E5%9B%9E%E8%BD%A6%E6%8D%A2%E8%A1%8C"><span class="toc-text">文本回车换行</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#AutoCRLF-%E8%87%AA%E5%8A%A8%E6%8D%A2%E8%A1%8C"><span class="toc-text">AutoCRLF(自动换行)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#SafeCRLF-%E5%AE%89%E5%85%A8%E6%8D%A2%E8%A1%8C"><span class="toc-text">SafeCRLF(安全换行)</span></a></li></ol></li></ol></li></ol>
+        
+    </div>
+</aside>
+
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+
+<a id="back-to-top" class="icon-btn hide">
+	<i class="fa fa-chevron-up"></i>
+</a>
+
+
+
+
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+</div>
+
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy; 2019
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+            
+                
+<script src="/assets/tagcanvas.min.js?rev=2.9.js"></script>
+
+                    <script>
+                        var tagcloud3d = document.getElementById("tag-cloud-3d");
+                        if (tagcloud3d) {
+                            var tagOption = {
+                                textColour: '#444', // 字体颜色
+                                outlineMethod: 'block', // 选中模式
+                                outlineColour: '#FFDAB9', // 选中模式的颜色
+                                interval: 30 || 30, // 动画帧之间的时间间隔，值越大，转动幅度越大
+                                textHeight: 13,
+                                outlineRadius: 3,
+                                freezeActive: true || '', // 选中的标签是否继续滚动
+                                frontSelect: true || '', // 不选标签云后部的标签
+                                initial: [0.1, -0.1],
+                                depth: 0.5,
+                                decel: 0.95,
+                                maxSpeed: 0.03,
+                                reverse: true || '', // 是否反向触发
+                                fadeIn: 500, // 进入动画时间
+                                wheelZoom: false || '' // 是否启用鼠标滚轮
+                            }
+                            TagCanvas.Start('tag-cloud-3d', '', tagOption);
+                        }
+
+                    </script>
+                    
+
+                        
+
+                                
+<script src="/js/app.js?rev=@@hash.js"></script>
+
+
+</body>
+</html>
