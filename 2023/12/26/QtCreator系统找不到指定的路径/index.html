@@ -377,7 +377,7 @@
         <blockquote>
 <p>在windows上使用Qt5.7.0版本时打开QtCreator就提示 系统找不到指定的路径,强迫症患者忍不了,在编译了QtCreator源码之后终于把元凶找出特此记录</p>
 </blockquote>
-<p><img src="/photos/qtcreator%E7%BB%93%E5%90%88git%E5%AE%9E%E7%8E%B0%E7%BC%96%E8%AF%91%E5%8E%86%E5%8F%B2/%E6%95%88%E6%9E%9C.webp" alt="图片"></p>
+<p><img src="/photos/QtCreator%E7%B3%BB%E7%BB%9F%E6%89%BE%E4%B8%8D%E5%88%B0%E6%8C%87%E5%AE%9A%E7%9A%84%E8%B7%AF%E5%BE%84/%E7%B3%BB%E7%BB%9F%E6%89%BE%E4%B8%8D%E5%88%B0%E6%8C%87%E5%AE%9A%E7%9A%84%E8%B7%AF%E5%BE%84.webp" alt="图片"></p>
 <h2 id="跟踪"><a href="#跟踪" class="headerlink" title="跟踪"></a>跟踪</h2><p>发现是读取文件C:\Qt\Qt5.7.0\5.7\mingw53_32\mkspecs\features\default_pre.prf时报错<br><img src="/photos/QtCreator%E7%B3%BB%E7%BB%9F%E6%89%BE%E4%B8%8D%E5%88%B0%E6%8C%87%E5%AE%9A%E7%9A%84%E8%B7%AF%E5%BE%84/%E6%89%A7%E8%A1%8C%E5%87%BD%E6%95%B0.webp" alt="图片"></p>
 <h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><p>修改文件中的QMAKE_DIR_SEP 为DIR_SEPARATOR,根源可能是/dev/null之类的文件为linux系统所有,修改后问题解决<br><img src="/photos/QtCreator%E7%B3%BB%E7%BB%9F%E6%89%BE%E4%B8%8D%E5%88%B0%E6%8C%87%E5%AE%9A%E7%9A%84%E8%B7%AF%E5%BE%84/default_pre.webp" alt="图片"></p>
 
