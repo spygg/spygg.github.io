@@ -6,7 +6,7 @@
   <link href="https://liusblog.top/atom.xml" rel="self"/>
   
   <link href="https://liusblog.top/"/>
-  <updated>2024-04-12T03:56:59.352Z</updated>
+  <updated>2024-04-24T05:41:48.611Z</updated>
   <id>https://liusblog.top/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>frp远程穿透</title>
+    <link href="https://liusblog.top/2024/04/24/frp%E8%BF%9C%E7%A8%8B%E7%A9%BF%E9%80%8F/"/>
+    <id>https://liusblog.top/2024/04/24/frp%E8%BF%9C%E7%A8%8B%E7%A9%BF%E9%80%8F/</id>
+    <published>2024-04-24T05:25:18.000Z</published>
+    <updated>2024-04-24T05:41:48.611Z</updated>
+    
+    <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><blockquote><p>说重点, 要有服务器, 或者使用别人提供的服务如:<br><a href="https://frpee.com/">frpee服务</a><br><a href="https://www.natfrp.com/">SakuraFrp樱花</a></p></blockquote><h2 id="自建服务器"><a href="#自建服务器" class="headerlink" title="自建服务器"></a>自建服务器</h2><p>需要自己购买服务器, 同时设置frps.ini文件, 本文不涉及</p><h2 id="使用第三方服务"><a href="#使用第三方服务" class="headerlink" title="使用第三方服务"></a>使用第三方服务</h2><p>使用上述frpee或者樱花服务<br>以frpee为例在注册好之后,会有示例frpc.ini文件配置(<strong>最新版为frpc.toml</strong>)</p><p>以自定义com为例<br>手动添加[com]小节, 有四个字段<br>|字段|含义|说明|<br>|—|—|—|<br>|type| 类型| 一般为tcp或者udp|<br>|local_ip| 本地地址| 一般为 127.0.0.1|<br>|local_port| 本地地址|自定义|<br>|remote_port| 暴露出去的地址| 自定义|</p><p>比如要把本地的 127.0.0.1:9911的tcp服务器暴露出去<br>则远程网络连接为free.frpee.com:10624<br>如下图所示<br><img src="/photos/frp%E8%BF%9C%E7%A8%8B%E7%A9%BF%E9%80%8F/%E7%A4%BA%E4%BE%8B.webp" alt="图片"></p><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[common]</span></span><br><span class="line"><span class="attr">server_addr</span> = free.frpee.com</span><br><span class="line"><span class="attr">server_port</span> = <span class="number">7000</span></span><br><span class="line"></span><br><span class="line"><span class="section">[common]</span></span><br><span class="line"><span class="attr">admin_addr</span> = <span class="number">127.0</span>.<span class="number">0.1</span></span><br><span class="line"><span class="attr">admin_port</span> = <span class="number">7400</span></span><br><span class="line"><span class="attr">admin_user</span> = admin</span><br><span class="line"><span class="attr">admin_pwd</span> = admin</span><br><span class="line"></span><br><span class="line"><span class="comment"># 认证重点，输入你注册的账号密码 </span></span><br><span class="line"><span class="attr">user</span> = frpee用户名</span><br><span class="line"><span class="attr">meta_password</span> = frpee注册密码</span><br><span class="line"></span><br><span class="line"><span class="comment">#下面根据情况自行修改,完全遵循frp配置</span></span><br><span class="line"></span><br><span class="line"><span class="section">[com]</span></span><br><span class="line"><span class="attr">type</span> = tcp</span><br><span class="line"><span class="attr">local_ip</span> = <span class="number">127.0</span>.<span class="number">0.1</span></span><br><span class="line"><span class="attr">local_port</span> = <span class="number">9911</span></span><br><span class="line"><span class="attr">remote_port</span> = <span class="number">10624</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#[yclj]</span></span><br><span class="line"><span class="comment">#type = tcp</span></span><br><span class="line"><span class="comment">#local_ip = 127.0.0.1</span></span><br><span class="line"><span class="comment">#local_port = 3389</span></span><br><span class="line"><span class="comment">#remote_port = 10624</span></span><br><span class="line"><span class="comment"># [web2]</span></span><br><span class="line"><span class="comment"># type = http</span></span><br><span class="line"><span class="comment"># local_port = 8080</span></span><br><span class="line"><span class="comment"># custom_domains = youdomain.com</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;link rel=&quot;stylesheet&quot; class=&quot;aplayer-secondary-style-marker&quot; href=&quot;\assets\css\APlayer.min.css&quot;&gt;&lt;script src=&quot;\assets\js\APlayer.min.js&quot; cla</summary>
+      
+    
+    
+    
+    <category term="杂谈" scheme="https://liusblog.top/categories/%E6%9D%82%E8%B0%88/"/>
+    
+    
+    <category term="frp" scheme="https://liusblog.top/tags/frp/"/>
+    
+    <category term="内网穿透" scheme="https://liusblog.top/tags/%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/"/>
+    
+  </entry>
   
   <entry>
     <title>QtCreator系统找不到指定的路径</title>
@@ -563,34 +589,6 @@
     <category term="Websocket" scheme="https://liusblog.top/tags/Websocket/"/>
     
     <category term="Html" scheme="https://liusblog.top/tags/Html/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Qt下的Http服务器开发</title>
-    <link href="https://liusblog.top/2020/05/06/Qt%E4%B8%8B%E7%9A%84Http%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%BC%80%E5%8F%91/"/>
-    <id>https://liusblog.top/2020/05/06/Qt%E4%B8%8B%E7%9A%84Http%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%BC%80%E5%8F%91/</id>
-    <published>2020-05-06T11:10:48.000Z</published>
-    <updated>2020-05-06T11:38:02.216Z</updated>
-    
-    <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><blockquote><p>在实际程序的开发中,html 越来越流行,作为跨平台的大户的 Qt 对 web 支持一直没有一个较好的官方模块来进行支持,本文简要介绍下常用的 Web 服务器</p></blockquote><h2 id="JQHttpServer"><a href="#JQHttpServer" class="headerlink" title="JQHttpServer"></a>JQHttpServer</h2><p><a href="https://github.com/188080501/JQHttpServer">JQHttpServer</a>是大神 <em>Jason</em> 开发的轻量级 web 服务器,具有以下特点:</p><ul><li>接口简单,上手快</li><li>默认采用异步架构处理,在需要同步处理时不时很好掌握</li><li>无第三方依赖</li><li>开发者友好,很 <strong>NICE</strong> 啊</li></ul><p>当把这个问题反馈给大神以后,大神回复如下</p><figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">把 <span class="keyword">session</span> 保存出去到你的业务处理线程，等处理好数据库数据的时候再调用 reply 或者在处理 <span class="keyword">session</span> 的回调线程里处理数据库数据，然后调用 reply（我用的这个方法）</span><br><span class="line">注：<span class="keyword">session</span> 可以跨线程操作，本身已经做了线程安全处理</span><br></pre></td></tr></table></figure><h2 id="qhttpserver"><a href="#qhttpserver" class="headerlink" title="qhttpserver"></a>qhttpserver</h2><p><a href="https://github.com/nikhilm/qhttpserver">qhttpserver</a>也是一个小巧的 Web 服务器,不过这玩意有 BUG,手动修复了之后在实际项目中采用(勉强可用,不推荐), BUG 大抵如下:</p><ul><li>获取 Request 的参数时存在 bug(本人已经修复)</li><li>当设置请求头中包含请求长度时会出错(依然没有解决)</li></ul><h2 id="QtWebApp"><a href="#QtWebApp" class="headerlink" title="QtWebApp"></a>QtWebApp</h2><p><a href="https://github.com/samiavasil/QtWebApp">QtWebApp</a>,这个是个较为成熟的 Web 服务器,API 路由模块做的很好,有着良好的 demo,<strong>重点推荐之</strong>,具有以下特点</p><ul><li>集成 Windows Unix <strong>服务</strong></li><li>集成<strong>静态</strong>服务器</li><li><strong>模板</strong>解析</li><li>路由分层良好</li><li>良好的 Demo</li></ul><p>要说缺点吗?个人感觉微有瑕疵的地方就在于过多的使用了 QSettings 来进行参数设置</p><h2 id="mongoose"><a href="#mongoose" class="headerlink" title="mongoose"></a>mongoose</h2><p><a href="https://github.com/cesanta/mongoose">mongoose</a>这个是个纯 C 的 HttpServer 库听说在嵌入式设备上用的比较多,看起来不错的样子<a href="https://www.cesanta.com/mongoose-library.html">官网</a></p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;link rel=&quot;stylesheet&quot; class=&quot;aplayer-secondary-style-marker&quot; href=&quot;\assets\css\APlayer.min.css&quot;&gt;&lt;script src=&quot;\assets\js\APlayer.min.js&quot; cla</summary>
-      
-    
-    
-    
-    <category term="Qt" scheme="https://liusblog.top/categories/Qt/"/>
-    
-    
-    <category term="Qt" scheme="https://liusblog.top/tags/Qt/"/>
-    
-    <category term="HttpServer" scheme="https://liusblog.top/tags/HttpServer/"/>
-    
-    <category term="服务器" scheme="https://liusblog.top/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/"/>
     
   </entry>
   
