@@ -1,0 +1,608 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="间客六十">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="google-site-verification" content="NGCFVs-lxT5zTiHxEXzk7fkJl26matl6KfVIgcORvFQ" />
+    <meta name="msvalidate.01" content="9C33A26895A2A8B80CEE60CD519D1095" />
+
+    <link rel="dns-prefetch" href="https://liusblog.top">
+    <!--SEO-->
+
+    <meta name="keywords" content="Qt,组播,多网卡,低版本" />
+
+
+    <meta name="description" content="
+最近在某个项目中，发现了一个低版本Qt的bug，导致组播无法正常使用，经过一番排查，终于找到了原因，特此记录。
+
+环境
+Qt：5.7.0 mingw32
+操作系统：windows 11
+
+现象..." />
+
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+
+        <!--Title-->
+
+
+<title>Qt低版本组播的bug | 间客六十</title>
+
+
+    <link rel="alternate" href="/atom.xml" title="间客六十" type="application/atom+xml">
+
+
+    <link rel="icon" href="/favicon.ico">
+
+            
+
+
+
+
+<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.6.3/css/font-awesome.min.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash.css">
+
+
+
+
+                
+
+
+
+
+	<script>
+		(function(i, s, o, g, r, a, m) {
+		    i['GoogleAnalyticsObject'] = r;
+		    i[r] = i[r] || function() {
+		        (i[r].q = i[r].q || []).push(arguments)
+		    }, i[r].l = 1 * new Date();
+		    a = s.createElement(o),
+		    m = s.getElementsByTagName(o)[0];
+		    a.async = 1;
+		    a.src = g;
+		    m.parentNode.insertBefore(a, m)
+		})(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+		ga('create', 'true', 'auto');
+		ga('send', 'pageview');
+	</script>
+
+
+                    
+
+                        <script type="text/javascript">
+                            function hasClass(obj, cls) {
+                                return obj.className.match(new RegExp('(\\s|^)' + cls + '(\\s|$)'));
+                            }
+
+                            function addClass(obj, cls) {
+                                if (!this.hasClass(obj, cls)) obj.className += " " + cls;
+                            }
+
+                            function removeClass(obj, cls) {
+                                if (hasClass(obj, cls)) {
+                                    var reg = new RegExp('(\\s|^)' + cls + '(\\s|$)');
+                                    obj.className = obj.className.replace(reg, ' ');
+                                }
+                            }
+
+                            function copyToClip(event) {
+                                let cb = event.target.parentNode
+                                var cls = cb.getElementsByClassName("line");
+
+                                var pt = ""
+                                for (var k = 0; k < cls.length; k++) {
+                                    var cl = (cls[k].textContent || cls[k].innerHTML);
+                                    cl = cl.replace(`<span class="css"></span>`, "\n")
+                                    cl = cl.replace(`<span class="javascript"></span>`, "\n")
+
+                                    pt += cl
+                                    pt += "\n";
+                                }
+                                const textarea = document.createElement('textarea');
+                                textarea.value = pt;
+                                document.body.appendChild(textarea);
+                                textarea.select();
+                                if (document.execCommand('copy')) {
+                                    document.execCommand('copy');
+                                }
+                                document.body.removeChild(textarea);
+                                alert("复制成功");
+                            }
+
+                            function doAddCopyCode() {
+                                var codeBlocks = document.getElementsByClassName('code');
+                                for (var i = 0; i < codeBlocks.length; i++) {
+                                    //创建一个div
+                                    var divCopy = document.createElement("div");
+                                    divCopy.innerHTML = "点击复制"
+                                    //为div创建属性class = "test"
+                                    var divattr = document.createAttribute("class");
+                                    divattr.value = "copy_my_code";
+
+                                    //把属性class = "test"添加到div
+                                    divCopy.setAttributeNode(divattr);
+                                    codeBlocks[i].appendChild(divCopy)
+
+                                    var code = codeBlocks[i].getElementsByTagName("pre")[1];
+                                    //hack事件冒泡
+                                    codeBlocks[i].onclick = (e) => {
+                                        copyToClip(e);
+                                    }
+                                }
+                            }
+
+                            function doAddImg() {
+                                var imgAll = document.getElementsByClassName('post-body')[0];
+                                if (imgAll == undefined) {
+                                    return;
+                                }
+
+                                var imgs = imgAll.getElementsByTagName('img')
+                                for (var i = 0; i < imgs.length; i++) {
+                                    if (hasClass(imgs[i], 'class_no_full_screen')) {
+                                        continue;
+                                    }
+
+                                    imgs[i].setAttribute('style', "cursor: zoom-in");
+                                    imgs[i].onclick = function () {
+
+                                        var section = document.getElementsByTagName("section")[0];
+
+                                        var imgView = document.getElementById('imgViewDom');
+                                        if (imgView == undefined) {
+                                            imgView = document.createElement("div");
+                                            imgView.id = "imgViewDom";
+
+                                            section.appendChild(imgView)
+
+
+                                            imgView.onclick = function () {
+                                                addClass(imgView, "disnone");
+                                                imgView.innerHTML = "";
+                                            }
+
+                                        }
+
+                                        imgView.innerHTML = "<img id = 'jackslowfuck' src=" + this.src + " style='cursor: zoom-out; max-width: 100%;'" + ">";
+                                        removeClass(imgView, "disnone");
+
+                                        var jackslowfuck = document.getElementById('jackslowfuck');
+                                        jackslowfuck.onclick = function () {
+                                            addClass(imgView, "disnone");
+                                            imgView.innerHTML = "";
+                                        }
+
+                                    }
+                                }
+                            }
+
+                            window.addEventListener('load', function () {
+                                doAddImg();
+                                // doAddCopyCode();
+                            }, false);
+                        </script>
+
+                        <style type="text/css">
+                            .copy_my_code {
+                                position: absolute;
+                                top: 0;
+                                right: 0;
+                                border: 1px solid;
+                                background: #555;
+                                color: #fff;
+                                margin: 1px;
+                                padding: 0px 5px;
+                                cursor: pointer;
+                            }
+
+                            #imgViewDom {
+                                display: none;
+                                position: fixed;
+                                top: 0;
+                                left: 0;
+                                height: 100%;
+                                width: 100%;
+                                z-index: 99999999;
+                                background: rgba(0, 0, 0, 0.7);
+                                overflow: auto;
+                                display: -webkit-box;
+                                -webkit-box-align: center;
+                                -webkit-box-pack: center;
+                                display: -moz-box;
+                                -moz-box-align: center;
+                                -moz-box-pack: center;
+                                display: -o-box;
+                                -o-box-align: center;
+                                -o-box-pack: center;
+                                display: -ms-box;
+                                -ms-box-align: center;
+                                -ms-box-pack: center;
+                                display: box;
+                                box-align: center;
+                                box-pack: center;
+                                cursor: zoom-out;
+                            }
+
+                            .disnone {
+                                display: none !important;
+                            }
+                        </style>
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+
+<body>
+    <header class="main-header"  style="background-image:url(/img/banner.webp)"  >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/about" title='spygg'>
+            <img src="/img/avatar.webp" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+        	<!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+                <h2> 技术引领生活! </h2>
+            
+    	</div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                    <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <!---<a class="navbar-brand" href="https://liusblog.top">间客六十</a>--->
+                    <a class="navbar-brand" href="/">间客六十</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/"><i class="fa fa-home"></i>首页</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/Qt"><i class="fa "></i>Qt</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/Flutter"><i class="fa "></i>Flutter</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/Python"><i class="fa "></i>Python</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/Linux"><i class="fa "></i>Linux</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/音视频"><i class="fa "></i>音视频</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/网站开发"><i class="fa "></i>网站开发</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/杂谈"><i class="fa "></i>杂谈</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/archives/"><i class="fa "></i>时间轴</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/about/"><i class="fa "></i>关于</a>
+                            </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="Qt低版本组播的bug">
+            
+	            Qt低版本组播的bug
+            
+        </h1>
+        <div class="post-meta">
+    
+        <span class="categories-meta fa-wrap">
+            <i class="fa fa-folder-open-o"></i>
+            <a class="category-link" href="/categories/Qt/">Qt</a>
+        </span>
+    
+
+    
+        <span class="fa-wrap">
+            <i class="fa fa-tags"></i>
+            <span class="tags-meta">
+                
+                    <a class="tag-none-link" href="/tags/Qt/" rel="tag">Qt</a> <a class="tag-none-link" href="/tags/%E4%BD%8E%E7%89%88%E6%9C%AC/" rel="tag">低版本</a> <a class="tag-none-link" href="/tags/%E5%A4%9A%E7%BD%91%E5%8D%A1/" rel="tag">多网卡</a> <a class="tag-none-link" href="/tags/%E7%BB%84%E6%92%AD/" rel="tag">组播</a>
+                
+            </span>
+        </span>
+    
+
+    
+        
+        <span class="fa-wrap">
+            <i class="fa fa-clock-o"></i>
+            <span class="date-meta">2024/11/07</span>
+        </span>
+        
+    
+</div>
+            
+            
+    </div>
+
+    
+
+    <div class="post-body post-content">
+        <blockquote>
+<p>最近在某个项目中，发现了一个低版本Qt的bug，导致组播无法正常使用，经过一番排查，终于找到了原因，特此记录。</p>
+</blockquote>
+<h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><ul>
+<li>Qt：5.7.0 mingw32</li>
+<li>操作系统：windows 11</li>
+</ul>
+<h2 id="现象"><a href="#现象" class="headerlink" title="现象"></a>现象</h2><p>在Qt5.7.0版本中，使用组播发送数据时，发现数据无法接收，经过长时间的排查，发现是Qt的bug，具体现象如下：</p>
+<ol>
+<li>在Qt5.7.0版本中，使用组播发送数据时，发现数据无法接收。</li>
+<li>使用串口调试工具，发现发送的数据包没有问题（无论何种情况都可以）。</li>
+<li>使用wireshark抓包，发现发送的数据包没有问题。</li>
+<li>使用Qt自带的组播收发例子，本机测试发现可以正常接收数据， 两台电脑可以。</li>
+</ol>
+<h2 id="排查步骤"><a href="#排查步骤" class="headerlink" title="排查步骤"></a>排查步骤</h2><ol>
+<li>使用调试工具<ul>
+<li>   使用地址 0.0.0.0: port 不能接收到数据</li>
+<li>   使用地址 192.168.1.100: port 可以接收到数据</li>
+<li>   使用地址 239.255.255.255: port 不能接收到数据</li>
+</ul>
+</li>
+<li>测试自带的组播收发例子<ul>
+<li>   本机测试可以正常接收数据</li>
+<li>   两台电脑测试不能接收数据</li>
+</ul>
+</li>
+</ol>
+<h2 id="尝试解决"><a href="#尝试解决" class="headerlink" title="尝试解决"></a>尝试解决</h2><p>经过一顿搜索，加上长时间的摸索（本机的虚拟网卡太多），长时间折腾后发现只有一个网卡的时候可以正常。必须祭出终极大杀器 <strong>socket sdk</strong> 如果还不行都不知道该怎么办了，结果测试竟然可行</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span>  </span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;winsock2.h&gt;</span>  </span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;ws2tcpip.h&gt;</span>  </span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> comment(lib, <span class="meta-string">&quot;ws2_32.lib&quot;</span>)</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">sendData</span><span class="params">(SOCKET sock)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">sockaddr_in</span> <span class="title">dest_addr</span>;</span> <span class="comment">// 目标地址结构体</span></span><br><span class="line">	 </span><br><span class="line">	 <span class="comment">// 设置目标地址</span></span><br><span class="line">	 <span class="built_in">memset</span>(&amp;dest_addr, <span class="number">0</span>, <span class="built_in"><span class="keyword">sizeof</span></span>(dest_addr));</span><br><span class="line">	 dest_addr.sin_family = AF_INET; <span class="comment">// IPv4</span></span><br><span class="line">	 dest_addr.sin_port = <span class="built_in">htons</span>(groupPort); <span class="comment">// 目标端口号</span></span><br><span class="line">	 dest_addr.sin_addr.s_addr = <span class="built_in">inet_addr</span>(groupIp); <span class="comment">// 目标IP地址</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="keyword">char</span> *sendData = <span class="string">&quot;hello world&quot;</span>;</span><br><span class="line">	<span class="built_in">sendto</span>(sock, sendData, <span class="built_in">strlen</span>(sendData), <span class="number">0</span>, (<span class="keyword">const</span> struct sockaddr *)&amp;dest_addr, <span class="built_in"><span class="keyword">sizeof</span></span>(dest_addr));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>* argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">short</span> groupPort = <span class="number">37080</span>;</span><br><span class="line">	<span class="keyword">char</span> *bindIp = <span class="string">&quot;192.168.8.112&quot;</span>;</span><br><span class="line">	<span class="keyword">char</span> *localIp = <span class="string">&quot;192.168.8.112&quot;</span>;</span><br><span class="line">	<span class="keyword">char</span> *groupIp = <span class="string">&quot;239.255.255.250&quot;</span>;</span><br><span class="line">	</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%s\n%s\n%s\n%d\n&quot;</span>, bindIp, localIp, groupIp, groupPort);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span>(argc &gt;= <span class="number">5</span>)&#123;</span><br><span class="line">		bindIp = argv[<span class="number">1</span>];</span><br><span class="line">		localIp = argv[<span class="number">2</span>];</span><br><span class="line">		groupIp = argv[<span class="number">3</span>];</span><br><span class="line">		groupPort = <span class="built_in">atoi</span>(argv[<span class="number">4</span>]);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="keyword">int</span> iRet = <span class="number">0</span>;</span><br><span class="line">	WSADATA wsaData;</span><br><span class="line">	<span class="built_in">WSAStartup</span>(<span class="built_in">MAKEWORD</span>(<span class="number">2</span>, <span class="number">2</span>), &amp;wsaData);</span><br><span class="line"></span><br><span class="line">	SOCKET sock = <span class="built_in">socket</span>(AF_INET, SOCK_DGRAM, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">	sockaddr_in addr;</span><br><span class="line">	addr.sin_family = AF_INET;</span><br><span class="line">	addr.sin_addr.S_un.S_addr = <span class="built_in">inet_addr</span>(bindIp);<span class="comment">//INADDR_ANY;</span></span><br><span class="line">	<span class="comment">//addr.sin_addr.S_un.S_addr = inet_addr(&quot;127.0.0.1&quot;);</span></span><br><span class="line">	addr.sin_port = <span class="built_in">htons</span>(groupPort);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">bool</span> bOptval = <span class="literal">true</span>;</span><br><span class="line">	iRet = <span class="built_in">setsockopt</span>(sock, SOL_SOCKET, SO_REUSEADDR, (<span class="keyword">char</span>*)&amp;bOptval, <span class="built_in"><span class="keyword">sizeof</span></span>(bOptval));</span><br><span class="line">	<span class="keyword">if</span> (iRet != <span class="number">0</span>) &#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;setsockopt fail:%d&quot;</span>, <span class="built_in">WSAGetLastError</span>());</span><br><span class="line">		<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	iRet = <span class="built_in">bind</span>(sock, (sockaddr*)&amp;addr, <span class="built_in"><span class="keyword">sizeof</span></span>(addr));</span><br><span class="line">	<span class="keyword">if</span> (iRet != <span class="number">0</span>) &#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;bind fail:%d\n&quot;</span>, <span class="built_in">WSAGetLastError</span>());</span><br><span class="line">		<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;socket:%d bind success\n&quot;</span>, sock);</span><br><span class="line"></span><br><span class="line">	ip_mreq multiCast;</span><br><span class="line">	multiCast.imr_interface.S_un.S_addr = <span class="built_in">inet_addr</span>(localIp);</span><br><span class="line">	multiCast.imr_multiaddr.S_un.S_addr = <span class="built_in">inet_addr</span>(groupIp);</span><br><span class="line">	iRet = <span class="built_in">setsockopt</span>(sock, IPPROTO_IP, IP_ADD_MEMBERSHIP, (<span class="keyword">char</span>*)&amp;multiCast, <span class="built_in"><span class="keyword">sizeof</span></span>(multiCast));</span><br><span class="line">	<span class="keyword">if</span> (iRet != <span class="number">0</span>) &#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;setsockopt fail:%d\n&quot;</span>, <span class="built_in">WSAGetLastError</span>());</span><br><span class="line">		<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;udp group start: %d, %d\n&quot;</span>, IPPROTO_IP, IP_ADD_MEMBERSHIP);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> len = <span class="built_in"><span class="keyword">sizeof</span></span>(sockaddr);</span><br><span class="line">	<span class="keyword">char</span> strRecv[<span class="number">1024</span>] = &#123; <span class="number">0</span> &#125;;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">while</span> (<span class="literal">true</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">memset</span>(strRecv, <span class="number">0</span>, <span class="built_in"><span class="keyword">sizeof</span></span>(strRecv));</span><br><span class="line">		iRet = <span class="built_in">recvfrom</span>(sock, strRecv, <span class="built_in"><span class="keyword">sizeof</span></span>(strRecv) - <span class="number">1</span>, <span class="number">0</span>, (sockaddr*)&amp;addr, &amp;len);</span><br><span class="line">		<span class="keyword">if</span> (iRet &lt;= <span class="number">0</span>) &#123;</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">&quot;recvfrom fail:%d&quot;</span>, <span class="built_in">WSAGetLastError</span>());</span><br><span class="line">			<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;recv data:%s\n&quot;</span>, strRecv);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">closesocket</span>(sock);</span><br><span class="line">	<span class="built_in">WSACleanup</span>();</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<p>经过对比发现Qt的源码中地址 mreq4.imr_interface.s_addr 赋值时候 QHostAddress firstIP = addressEntries.first().ip();可能为IPV6地址，导致IPV6地址赋值给IPV4地址，导致组播失败。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (iface.<span class="built_in">isValid</span>()) &#123;</span><br><span class="line">    <span class="keyword">const</span> QList&lt;QNetworkAddressEntry&gt; addressEntries = iface.<span class="built_in">addressEntries</span>();</span><br><span class="line">    <span class="keyword">if</span> (!addressEntries.<span class="built_in">isEmpty</span>()) &#123;</span><br><span class="line">        QHostAddress firstIP = addressEntries.<span class="built_in">first</span>().<span class="built_in">ip</span>();</span><br><span class="line">        mreq4.imr_interface.s_addr = <span class="built_in">htonl</span>(firstIP.<span class="built_in">toIPv4Address</span>());</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        d-&gt;<span class="built_in">setError</span>(QAbstractSocket::NetworkError,</span><br><span class="line">                    QNativeSocketEnginePrivate::NetworkUnreachableErrorString);</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    mreq4.imr_interface.s_addr = INADDR_ANY;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><ol>
+<li>更新Qt版本，最新版的Qt已经修复了这个问题<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (iface.<span class="built_in">isValid</span>()) &#123;</span><br><span class="line">        <span class="keyword">const</span> QList&lt;QNetworkAddressEntry&gt; addressEntries = iface.<span class="built_in">addressEntries</span>();</span><br><span class="line">        <span class="keyword">bool</span> found = <span class="literal">false</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">const</span> QNetworkAddressEntry &amp;entry : addressEntries) &#123;</span><br><span class="line">            <span class="keyword">const</span> QHostAddress ip = entry.<span class="built_in">ip</span>();</span><br><span class="line">            <span class="keyword">if</span> (ip.<span class="built_in">protocol</span>() == QAbstractSocket::IPv4Protocol) &#123;</span><br><span class="line">                mreq4.imr_interface.s_addr = <span class="built_in">htonl</span>(ip.<span class="built_in">toIPv4Address</span>());</span><br><span class="line">                found = <span class="literal">true</span>;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (!found) &#123;</span><br><span class="line">            d-&gt;<span class="built_in">setError</span>(QAbstractSocket::NetworkError,</span><br><span class="line">                        QNativeSocketEnginePrivate::NetworkUnreachableErrorString);</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        mreq4.imr_interface.s_addr = INADDR_ANY;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></li>
+<li>修改代码如下<br>在工程文件中添加<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">win32 &#123;</span><br><span class="line">    LIBS += -lWs2_32</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p>修改关键代码</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//添加头文件</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> Q_OS_WIN32</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;winsock2.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;ws2tcpip.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line"><span class="comment">//...........................</span></span><br><span class="line"></span><br><span class="line">            <span class="comment">//Qt 5.7 bug fix, 第一个IP可能为ip v6</span></span><br><span class="line">            <span class="keyword">if</span> (firstIP.<span class="built_in">protocol</span>() == groupAddress.<span class="built_in">protocol</span>()) &#123;</span><br><span class="line">                ok = udpsock-&gt;<span class="built_in">joinMulticastGroup</span>(groupAddress, iface);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> Q_OS_WIN32</span></span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; addressEntries.<span class="built_in">size</span>(); i++) &#123;</span><br><span class="line">                    QHostAddress addrTemp = addressEntries.<span class="built_in">at</span>(i).<span class="built_in">ip</span>();</span><br><span class="line">                    <span class="keyword">if</span> (addrTemp.<span class="built_in">protocol</span>() == groupAddress.<span class="built_in">protocol</span>()) &#123;</span><br><span class="line">                        ip_mreq multiCast;</span><br><span class="line">                        multiCast.imr_interface.S_un.S_addr = <span class="built_in">inet_addr</span>(</span><br><span class="line">                            addrTemp.<span class="built_in">toString</span>().<span class="built_in">toUtf8</span>().<span class="built_in">constData</span>());</span><br><span class="line">                        multiCast.imr_multiaddr.S_un.S_addr = <span class="built_in">inet_addr</span>(</span><br><span class="line">                            groupAddress.<span class="built_in">toString</span>().<span class="built_in">toUtf8</span>().<span class="built_in">constData</span>());</span><br><span class="line">                        <span class="keyword">int</span> res = <span class="built_in">setsockopt</span>(udpsock-&gt;<span class="built_in">socketDescriptor</span>(),</span><br><span class="line">                                             <span class="number">0</span>,</span><br><span class="line">                                             <span class="number">12</span>,</span><br><span class="line">                                             (<span class="keyword">char</span> *) &amp;multiCast,</span><br><span class="line">                                             <span class="built_in"><span class="keyword">sizeof</span></span>(multiCast));</span><br><span class="line"></span><br><span class="line">                        ok = (res == <span class="number">0</span>);</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">else</span></span></span><br><span class="line">                ok = udpsock-&gt;<span class="built_in">joinMulticastGroup</span>(groupAddress, iface);</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+
+
+<h2 id="血的经验"><a href="#血的经验" class="headerlink" title="血的经验"></a>血的经验</h2><ol>
+<li>使用三方标准工具测试</li>
+<li>使用原始sdk测试</li>
+<li>Qt也可能存在bug</li>
+<li>搜索引擎可能存在误导</li>
+<li>csdn === 田文镜</li>
+</ol>
+
+    </div>
+    
+        <div class="reward" ontouchstart>
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+                <span class="reward-type">
+                    <img class="alipay" src="/img/zhifubaocode.webp"><b>支付宝打赏</b>
+                </span>
+            
+            
+                <span class="reward-type">
+                    <img class="wechat" src="/img/weixincode.webp"><b>微信打赏</b>
+                </span>
+            
+        </div>
+    </div>
+    <p class="reward-tip">您的支持是我前行的动力!</p>
+</div>
+
+
+    
+    <div class="post-footer">
+        <div>
+            
+                转载声明：商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="/about" target="_blank">spygg</a>
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+    
+        <a href="/2024/08/22/%E8%B7%A8%E5%B9%B3%E5%8F%B0%E5%BC%80%E5%8F%91flutter%E4%B9%8Bandroid/" class="next-post btn btn-default" title='跨平台开发flutter之android'>
+            <span class="hidden-lg">下一篇</span>
+            <span class="hidden-xs">跨平台开发flutter之android</span> <i class="fa fa-angle-right fa-fw"></i>
+        </a>
+    
+</div>
+
+
+
+    <div id="comments">
+        
+	
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+  <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+<script src="https://cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
+
+<div id="gitalk-container"></div>
+<script type="text/javascript">
+    var gitalk;
+    if(window.location.host === 'spygg.gitee.io'){
+        gitalk = new Gitalk({
+            // Gitalk配置
+            clientID: "2e6379556d0bea565323",
+            clientSecret: "2feb2ad5f1301351c79e1d0e2b1a177bb0661ed7",
+            repo: "blogcomment",
+            owner: "spygg",
+            admin: ["spygg"],
+            id: md5(window.location.pathname),
+            distractionFreeMode: true
+        });
+    }
+    else{
+        gitalk = new Gitalk({
+            // Gitalk配置
+            clientID: "6c31603d4df9afc8351b",
+            clientSecret: "c9e81f3ac1492550170fccb28c0f8bb16e3b7ed1",
+            repo: "blogcomment",
+            owner: "spygg",
+            admin: ["spygg"],
+            id: md5(window.location.pathname),
+            distractionFreeMode: true
+        });
+    }
+    gitalk.render('gitalk-container');
+</script>
+
+
+    </div>
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">文章目录</h3>
+        
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83"><span class="toc-text">环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%8E%B0%E8%B1%A1"><span class="toc-text">现象</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8E%92%E6%9F%A5%E6%AD%A5%E9%AA%A4"><span class="toc-text">排查步骤</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%9D%E8%AF%95%E8%A7%A3%E5%86%B3"><span class="toc-text">尝试解决</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="toc-text">解决方案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A1%80%E7%9A%84%E7%BB%8F%E9%AA%8C"><span class="toc-text">血的经验</span></a></li></ol>
+        
+    </div>
+</aside>
+
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+
+<a id="back-to-top" class="icon-btn hide">
+	<i class="fa fa-chevron-up"></i>
+</a>
+
+
+
+
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+</div>
+
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy; 2019
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+            
+                
+<script src="/assets/tagcanvas.min.js?rev=2.9.js"></script>
+
+                    <script>
+                        var tagcloud3d = document.getElementById("tag-cloud-3d");
+                        if (tagcloud3d) {
+                            var tagOption = {
+                                textColour: '#444', // 字体颜色
+                                outlineMethod: 'block', // 选中模式
+                                outlineColour: '#FFDAB9', // 选中模式的颜色
+                                interval: 30 || 30, // 动画帧之间的时间间隔，值越大，转动幅度越大
+                                textHeight: 13,
+                                outlineRadius: 3,
+                                freezeActive: true || '', // 选中的标签是否继续滚动
+                                frontSelect: true || '', // 不选标签云后部的标签
+                                initial: [0.1, -0.1],
+                                depth: 0.5,
+                                decel: 0.95,
+                                maxSpeed: 0.03,
+                                reverse: true || '', // 是否反向触发
+                                fadeIn: 500, // 进入动画时间
+                                wheelZoom: false || '' // 是否启用鼠标滚轮
+                            }
+                            TagCanvas.Start('tag-cloud-3d', '', tagOption);
+                        }
+
+                    </script>
+                    
+
+                        
+
+                                
+<script src="/js/app.js?rev=@@hash.js"></script>
+
+
+</body>
+</html>
