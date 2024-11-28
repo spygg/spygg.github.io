@@ -6,7 +6,7 @@
   <link href="https://liusblog.top/atom.xml" rel="self"/>
   
   <link href="https://liusblog.top/"/>
-  <updated>2024-11-07T08:53:07.867Z</updated>
+  <updated>2024-11-28T15:46:21.201Z</updated>
   <id>https://liusblog.top/</id>
   
   <author>
@@ -15,6 +15,34 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Qt图片转ICON多尺寸小工具</title>
+    <link href="https://liusblog.top/2024/11/28/Qt%E5%9B%BE%E7%89%87%E8%BD%ACICON%E5%A4%9A%E5%B0%BA%E5%AF%B8%E5%B0%8F%E5%B7%A5%E5%85%B7/"/>
+    <id>https://liusblog.top/2024/11/28/Qt%E5%9B%BE%E7%89%87%E8%BD%ACICON%E5%A4%9A%E5%B0%BA%E5%AF%B8%E5%B0%8F%E5%B7%A5%E5%85%B7/</id>
+    <published>2024-11-28T15:41:58.000Z</published>
+    <updated>2024-11-28T15:46:21.201Z</updated>
+    
+    <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><blockquote><p>在逛吾爱破解论坛的时候，看到有个帖子，是关于图片转ICON的python版本，打包有点问题,于是我就自己写了一个支持多尺寸的Qt图片转ICON小工具，分享给大家。</p></blockquote><h2 id="软件界面"><a href="#软件界面" class="headerlink" title="软件界面"></a>软件界面</h2><p><img src="/photos/Qt%E5%9B%BE%E7%89%87%E8%BD%ACICON%E5%A4%9A%E5%B0%BA%E5%AF%B8%E5%B0%8F%E5%B7%A5%E5%85%B7/software.webp" alt="图片"></p><h2 id="结果验证"><a href="#结果验证" class="headerlink" title="结果验证"></a>结果验证</h2><p>支持多尺寸，支持png、jpg、bmp等格式,vs2019打开可以看到支持多尺寸</p><p><img src="/photos/Qt%E5%9B%BE%E7%89%87%E8%BD%ACICON%E5%A4%9A%E5%B0%BA%E5%AF%B8%E5%B0%8F%E5%B7%A5%E5%85%B7/result.webp" alt="图片"></p><h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p><a href="https://github.com/spygg/QtImgToIcon">我的github</a></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;link rel=&quot;stylesheet&quot; class=&quot;aplayer-secondary-style-marker&quot; href=&quot;\assets\css\APlayer.min.css&quot;&gt;&lt;script src=&quot;\assets\js\APlayer.min.js&quot; cla</summary>
+      
+    
+    
+    
+    <category term="Qt" scheme="https://liusblog.top/categories/Qt/"/>
+    
+    
+    <category term="Qt" scheme="https://liusblog.top/tags/Qt/"/>
+    
+    <category term="ICON" scheme="https://liusblog.top/tags/ICON/"/>
+    
+    <category term="多尺寸" scheme="https://liusblog.top/tags/%E5%A4%9A%E5%B0%BA%E5%AF%B8/"/>
+    
+  </entry>
   
   <entry>
     <title>Qt低版本组播的bug</title>
@@ -563,34 +591,6 @@
     <category term="404" scheme="https://liusblog.top/tags/404/"/>
     
     <category term="未找到" scheme="https://liusblog.top/tags/%E6%9C%AA%E6%89%BE%E5%88%B0/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>利用openssl自己发布ssl证书</title>
-    <link href="https://liusblog.top/2020/10/16/%E5%88%A9%E7%94%A8openssl%E8%87%AA%E5%B7%B1%E5%8F%91%E5%B8%83ssl%E8%AF%81%E4%B9%A6/"/>
-    <id>https://liusblog.top/2020/10/16/%E5%88%A9%E7%94%A8openssl%E8%87%AA%E5%B7%B1%E5%8F%91%E5%B8%83ssl%E8%AF%81%E4%B9%A6/</id>
-    <published>2020-10-16T14:31:44.000Z</published>
-    <updated>2020-10-16T14:51:59.592Z</updated>
-    
-    <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><blockquote><p>前几天编写ftp服务器时如果采用SSL加密的话需要证书于是就抄袭了下以记录</p></blockquote><h2 id="生成步骤"><a href="#生成步骤" class="headerlink" title="生成步骤"></a>生成步骤</h2><ol><li>创建服务器证书密钥文件 server.key：<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">openssl</span> genrsa -des<span class="number">3</span> -out server.key <span class="number">2048</span></span><br></pre></td></tr></table></figure>输入密码，确认密码，自己随便定义，但是要记住，后面会用到。</li></ol><ol start="2"><li>创建服务器证书的申请文件 server.csr<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl req -<span class="built_in">new</span> -key <span class="keyword">server</span>.key -<span class="keyword">out</span> <span class="keyword">server</span>.csr</span><br></pre></td></tr></table></figure>输出内容为：</li></ol><figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">Enter</span> <span class="selector-tag">pass</span> <span class="selector-tag">phrase</span> <span class="selector-tag">for</span> <span class="selector-tag">root</span><span class="selector-class">.key</span>: ← 输入前面创建的密码</span><br><span class="line"><span class="selector-tag">Country</span> <span class="selector-tag">Name</span> (<span class="number">2</span> letter code) <span class="selector-attr">[AU]</span>:<span class="selector-tag">CN</span> ← 国家代号，中国输入<span class="selector-tag">CN</span></span><br><span class="line"><span class="selector-tag">State</span> <span class="selector-tag">or</span> <span class="selector-tag">Province</span> <span class="selector-tag">Name</span> (full name) <span class="selector-attr">[Some-State]</span>:<span class="selector-tag">BeiJing</span> ← 省的全名，拼音</span><br><span class="line"><span class="selector-tag">Locality</span> <span class="selector-tag">Name</span> (eg, city) <span class="selector-attr">[]</span>:<span class="selector-tag">BeiJing</span> ← 市的全名，拼音</span><br><span class="line"><span class="selector-tag">Organization</span> <span class="selector-tag">Name</span> (eg, company) <span class="selector-attr">[Internet Widgits Pty Ltd]</span>:<span class="selector-tag">MyCompany</span> <span class="selector-tag">Corp</span>. ← 公司英文名</span><br><span class="line"><span class="selector-tag">Organizational</span> <span class="selector-tag">Unit</span> <span class="selector-tag">Name</span> (eg, section) <span class="selector-attr">[]</span>: ← 可以不输入</span><br><span class="line"><span class="selector-tag">Common</span> <span class="selector-tag">Name</span> (eg, YOUR name) <span class="selector-attr">[]</span>: ← 输入域名，如：<span class="selector-tag">iot</span><span class="selector-class">.conet</span><span class="selector-class">.com</span></span><br><span class="line"><span class="selector-tag">Email</span> <span class="selector-tag">Address</span> <span class="selector-attr">[]</span>:<span class="selector-tag">admin</span>@<span class="selector-tag">mycompany</span><span class="selector-class">.com</span> ← 电子邮箱，可随意填</span><br><span class="line"><span class="selector-tag">Please</span> <span class="selector-tag">enter</span> <span class="selector-tag">the</span> <span class="selector-tag">following</span> ‘<span class="selector-tag">extra</span>’ <span class="selector-tag">attributes</span></span><br><span class="line"><span class="selector-tag">to</span> <span class="selector-tag">be</span> <span class="selector-tag">sent</span> <span class="selector-tag">with</span> <span class="selector-tag">your</span> <span class="selector-tag">certificate</span> <span class="selector-tag">request</span></span><br><span class="line"><span class="selector-tag">A</span> <span class="selector-tag">challenge</span> <span class="selector-tag">password</span> <span class="selector-attr">[]</span>: ← 可以不输入</span><br><span class="line"><span class="selector-tag">An</span> <span class="selector-tag">optional</span> <span class="selector-tag">company</span> <span class="selector-tag">name</span> <span class="selector-attr">[]</span>: ← 可以不输入</span><br></pre></td></tr></table></figure><ol start="3"><li><p>备份一份服务器密钥文件</p><figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">cp</span> server.key server.key<span class="meta">.org</span></span><br></pre></td></tr></table></figure></li><li><p>去除文件口令</p><figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl rsa -<span class="keyword">in</span> <span class="keyword">server</span>.key.org -<span class="keyword">out</span> <span class="keyword">server</span>.key</span><br></pre></td></tr></table></figure></li><li><p>生成证书文件server.crt</p><figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl x509 -req -days <span class="number">18250</span> -<span class="keyword">in</span> <span class="keyword">server</span>.csr -signkey <span class="keyword">server</span>.key -<span class="keyword">out</span> <span class="keyword">server</span>.crt</span><br></pre></td></tr></table></figure><p>都自己说了算了,就先来个<strong>五十年</strong>的吧,哈哈</p></li></ol><h2 id="更多"><a href="#更多" class="headerlink" title="更多"></a>更多</h2><ul><li>触类旁通下应该也是可以用到自定义的HTTPS加密上</li><li>Windows 环境的<strong>openssl</strong>软件在安装了git后就有了,Linux下嘛随地都是</li></ul><h2 id="参-cao-考-xi-链接"><a href="#参-cao-考-xi-链接" class="headerlink" title="参(cao)考(xi)链接"></a>参(cao)考(xi)链接</h2><p><a href="https://www.cnblogs.com/dreasky/p/13497210.html">Nginx https证书生成</a></p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;link rel=&quot;stylesheet&quot; class=&quot;aplayer-secondary-style-marker&quot; href=&quot;\assets\css\APlayer.min.css&quot;&gt;&lt;script src=&quot;\assets\js\APlayer.min.js&quot; cla</summary>
-      
-    
-    
-    
-    <category term="杂谈" scheme="https://liusblog.top/categories/%E6%9D%82%E8%B0%88/"/>
-    
-    
-    <category term="openssl" scheme="https://liusblog.top/tags/openssl/"/>
-    
-    <category term="证书" scheme="https://liusblog.top/tags/%E8%AF%81%E4%B9%A6/"/>
-    
-    <category term="自己发布" scheme="https://liusblog.top/tags/%E8%87%AA%E5%B7%B1%E5%8F%91%E5%B8%83/"/>
     
   </entry>
   
