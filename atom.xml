@@ -6,7 +6,7 @@
   <link href="https://liusblog.top/atom.xml" rel="self"/>
   
   <link href="https://liusblog.top/"/>
-  <updated>2024-12-06T14:56:27.842Z</updated>
+  <updated>2025-01-24T01:40:49.582Z</updated>
   <id>https://liusblog.top/</id>
   
   <author>
@@ -15,6 +15,34 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Qt报错找不到插件windows</title>
+    <link href="https://liusblog.top/2025/01/24/Qt%E6%8A%A5%E9%94%99%E6%89%BE%E4%B8%8D%E5%88%B0%E6%8F%92%E4%BB%B6windows/"/>
+    <id>https://liusblog.top/2025/01/24/Qt%E6%8A%A5%E9%94%99%E6%89%BE%E4%B8%8D%E5%88%B0%E6%8F%92%E4%BB%B6windows/</id>
+    <published>2025-01-24T01:37:51.000Z</published>
+    <updated>2025-01-24T01:40:49.582Z</updated>
+    
+    <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><blockquote><p>This application failed to start because it could not find or load the Qt platform plugin “windows”<br>in “”.<br>Reinstalling the application may fix this problem.</p></blockquote><h2 id="问题提出"><a href="#问题提出" class="headerlink" title="问题提出"></a>问题提出</h2><p>在编译sqliteStudio时，报错找不到插件windows，导致程序无法运行的错误,一开始就怀疑是路径问题,但是不管如何配置都会报此错误,后来发现在生成路径下存在qt.conf文件,内容如下</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[Paths]</span><br><span class="line">Prefix = .</span><br></pre></td></tr></table></figure><h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><p>将qt.conf文件删除,重新编译,问题解决</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;link rel=&quot;stylesheet&quot; class=&quot;aplayer-secondary-style-marker&quot; href=&quot;\assets\css\APlayer.min.css&quot;&gt;&lt;script src=&quot;\assets\js\APlayer.min.js&quot; cla</summary>
+      
+    
+    
+    
+    <category term="Qt" scheme="https://liusblog.top/categories/Qt/"/>
+    
+    
+    <category term="Qt" scheme="https://liusblog.top/tags/Qt/"/>
+    
+    <category term="platform" scheme="https://liusblog.top/tags/platform/"/>
+    
+    <category term="plugin" scheme="https://liusblog.top/tags/plugin/"/>
+    
+  </entry>
   
   <entry>
     <title>Linux下Qt一键发布脚本</title>
@@ -561,34 +589,6 @@
     <category term="单例" scheme="https://liusblog.top/tags/%E5%8D%95%E4%BE%8B/"/>
     
     <category term="事务" scheme="https://liusblog.top/tags/%E4%BA%8B%E5%8A%A1/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>网站升级浏览器提示</title>
-    <link href="https://liusblog.top/2020/11/14/%E7%BD%91%E7%AB%99%E5%8D%87%E7%BA%A7%E6%B5%8F%E8%A7%88%E5%99%A8%E6%8F%90%E7%A4%BA/"/>
-    <id>https://liusblog.top/2020/11/14/%E7%BD%91%E7%AB%99%E5%8D%87%E7%BA%A7%E6%B5%8F%E8%A7%88%E5%99%A8%E6%8F%90%E7%A4%BA/</id>
-    <published>2020-11-14T13:49:03.000Z</published>
-    <updated>2020-11-14T14:31:45.957Z</updated>
-    
-    <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><blockquote><p>在做网站开发时,有些”执迷不悟”的用户还是用着IE,本文给出一种检测浏览器并给出升级提示的方法</p></blockquote><h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><ol><li>在index主页开始加入以下代码(IE10以上版本不管,否则跳转到升级页面)</li></ol><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&lt;script type=<span class="string">&quot;text/javascript&quot;</span>&gt;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">dectBrower</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">var</span> DEFAULT_VERSION = <span class="number">10.0</span>;  </span><br><span class="line">        <span class="keyword">var</span> ua = navigator.userAgent.toLowerCase();  </span><br><span class="line">        <span class="keyword">var</span> isIE = ua.indexOf(<span class="string">&quot;msie&quot;</span>)&gt;-<span class="number">1</span>;  </span><br><span class="line">        <span class="keyword">var</span> safariVersion;  </span><br><span class="line">        <span class="keyword">if</span>(isIE)&#123;  </span><br><span class="line">            safariVersion =  ua.match(<span class="regexp">/msie ([\d.]+)/</span>)[<span class="number">1</span>];  </span><br><span class="line">        &#125;  </span><br><span class="line">        <span class="keyword">if</span>(safariVersion &lt; DEFAULT_VERSION )&#123;  </span><br><span class="line">            alert(<span class="string">&#x27;请升级浏览器,马上跳转!&#x27;</span>);</span><br><span class="line"></span><br><span class="line">            <span class="built_in">window</span>.location.href = <span class="string">&quot;updateBrower.html&quot;</span></span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    dectBrower()</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure><ol start="2"><li>编写updateBrower.html页面,并谷歌和和火狐放到本地以供下载</li></ol><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;chrome.zip&quot;</span>&gt;</span>chrome浏览器<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;firefox.zip&quot;</span>&gt;</span>FireFox浏览器<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;link rel=&quot;stylesheet&quot; class=&quot;aplayer-secondary-style-marker&quot; href=&quot;\assets\css\APlayer.min.css&quot;&gt;&lt;script src=&quot;\assets\js\APlayer.min.js&quot; cla</summary>
-      
-    
-    
-    
-    <category term="网站开发" scheme="https://liusblog.top/categories/%E7%BD%91%E7%AB%99%E5%BC%80%E5%8F%91/"/>
-    
-    
-    <category term="浏览器" scheme="https://liusblog.top/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/"/>
-    
-    <category term="IE" scheme="https://liusblog.top/tags/IE/"/>
-    
-    <category term="升级" scheme="https://liusblog.top/tags/%E5%8D%87%E7%BA%A7/"/>
     
   </entry>
   
