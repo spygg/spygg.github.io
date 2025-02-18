@@ -119,6 +119,8 @@ LD_LIBRARY_PATH=\$dirname/libs:\$LD_LIBRARY_PATH
 export LD_LIBRARY_PATH
 cd \$dirname/
 
+export QT_LOGGING_RULES="*.debug=true"
+
 \$dirname/\$appname \"\$@\"
 "> $1.sh
 
