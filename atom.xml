@@ -6,7 +6,7 @@
   <link href="https://liusblog.top/atom.xml" rel="self"/>
   
   <link href="https://liusblog.top/"/>
-  <updated>2025-03-11T05:16:06.792Z</updated>
+  <updated>2025-03-11T05:34:18.100Z</updated>
   <id>https://liusblog.top/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="https://liusblog.top/2025/03/11/Qt%E7%9A%84mingw%E7%89%88%E6%9C%AC%E5%B4%A9%E6%BA%83%E7%9B%B8%E5%85%B3/"/>
     <id>https://liusblog.top/2025/03/11/Qt%E7%9A%84mingw%E7%89%88%E6%9C%AC%E5%B4%A9%E6%BA%83%E7%9B%B8%E5%85%B3/</id>
     <published>2025-03-11T04:45:54.000Z</published>
-    <updated>2025-03-11T05:16:06.792Z</updated>
+    <updated>2025-03-11T05:34:18.100Z</updated>
     
     <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><blockquote><p>msvc版本的Qt在崩溃时，会自动生成dmp文件，而mingw版本则不会，因此需要手动配置,同时最重要的是msvc具有pdb,这样既能保证c++的符号信息，又能保证崩溃时能定位到源码，于是想mingw版本肯定也可以,但是经过一番尝试，发现mingw版本生成的dmp文件中，符号信息是缺失的，因此无法定位到源码，因此只能定位到函数名，因此还是需要手动配置，以下是配置方法</p></blockquote><h2 id="效果图"><a href="#效果图" class="headerlink" title="效果图"></a>效果图</h2><p><img src="/photos/Qt%E7%9A%84mingw%E7%89%88%E6%9C%AC%E5%B4%A9%E6%BA%83%E7%9B%B8%E5%85%B3/%E5%B4%A9%E6%BA%83%E4%BB%A3%E7%A0%81%E8%8E%B7%E5%8F%96.webp" alt="效果"></p><h2 id="前置条件"><a href="#前置条件" class="headerlink" title="前置条件"></a>前置条件</h2><p>使用breakpad来获取崩溃信息参加我以前的文章 <a href="https://liusblog.top/2022/01/02/%E6%9C%89%E5%85%B3Qt%E7%9A%84%E4%B8%80%E4%BA%9B%E8%AE%B0%E5%BD%95/#%E5%B4%A9%E6%BA%83%E6%94%B6%E9%9B%86">崩溃收集</a></p><h2 id="存在问题"><a href="#存在问题" class="headerlink" title="存在问题"></a>存在问题</h2><p>release版本崩溃时，生成的dmp文件中，符号信息是缺失的, 如添加调试信息,基本上等同于开源代码(可能你还不知道debug版本的威力)</p><figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#使用下面这三句或底下三句可以在release下保留调试信息</span></span><br><span class="line"><span class="comment"># QMAKE_CFLAGS_RELEASE = $$QMAKE_CFLAGS_RELEASE_WITH_DEBUGINFO</span></span><br><span class="line"><span class="comment"># QMAKE_CXXFLAGS_RELEASE = $$QMAKE_CXXFLAGS_RELEASE_WITH_DEBUGINFO</span></span><br><span class="line"><span class="comment"># QMAKE_LFLAGS_RELEASE = $$QMAKE_LFLAGS_RELEASE_WITH_DEBUGINFO</span></span><br><span class="line"></span><br><span class="line">QMAKE_CXXFLAGS_RELEASE += -g</span><br><span class="line">QMAKE_CFLAGS_RELEASE += -g</span><br><span class="line">QMAKE_LFLAGS_RELEASE = -mthreads -Wl, </span><br></pre></td></tr></table></figure><h2 id="核心步骤"><a href="#核心步骤" class="headerlink" title="核心步骤"></a>核心步骤</h2><ol><li><p>执行 objcopy 分离 debug信息</p><figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">objcopy <span class="params">--only-keep-debug</span> 目标<span class="string">.exe</span> 调试信息<span class="string">.mypdb</span></span><br></pre></td></tr></table></figure></li><li><p>执行 strip 去掉调试信息</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">strip  --strip-debug --strip-unneeded 目标.exe</span><br></pre></td></tr></table></figure></li><li><p>执行 objcopy 将 debug<strong>文件名</strong>回填</p></li></ol><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">objcopy --add-gnu-debuglink=调试信息.mypdb 目标.exe</span><br></pre></td></tr></table></figure><ol start="4"><li><p>加密调试信息<br>将 ‘调试信息.mypdb’ 文件加密压缩后生成 ‘加密调试信息.mypdb’这里的加密算法可以自行设定</p></li><li><p>打包发布<br>将 ‘加密调试信息.mypdb’ 和 ‘目标.exe’ 打包发布,这样在崩溃时，就可以获取到崩溃信息了,只需要保存好对应版本的’加密调试信息.mypdb’甚至该文件不提供</p></li></ol><h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><ol><li>解密<br>对 ‘加密调试信息.mypdb’ 文件进行解密得到 ‘调试信息.mypdb’</li><li>崩溃收集<br>将 ‘调试信息.mypdb’ 和 ‘目标.exe’以及 收集到的 *.dmp的崩溃信息一起放到一个文件夹中</li><li>获取崩溃点<br>运行minidump_stackwalk.exe，addr2line.exe等获取崩溃代码行</li></ol><h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><p><a href="https://liusblog.top/2022/01/02/%E6%9C%89%E5%85%B3Qt%E7%9A%84%E4%B8%80%E4%BA%9B%E8%AE%B0%E5%BD%95/">有关Qt的一些记录</a></p><p><a href="https://chat.deepseek.com/">mingw如何分离debug信息(deepseek)</a></p>]]></content>
     
@@ -33,6 +33,20 @@
     
     
     
+    <category term="Qt" scheme="https://liusblog.top/categories/Qt/"/>
+    
+    
+    <category term="Qt" scheme="https://liusblog.top/tags/Qt/"/>
+    
+    <category term="MingW" scheme="https://liusblog.top/tags/MingW/"/>
+    
+    <category term="崩溃" scheme="https://liusblog.top/tags/%E5%B4%A9%E6%BA%83/"/>
+    
+    <category term="google-breakpad" scheme="https://liusblog.top/tags/google-breakpad/"/>
+    
+    <category term="dmp" scheme="https://liusblog.top/tags/dmp/"/>
+    
+    <category term="pdb" scheme="https://liusblog.top/tags/pdb/"/>
     
   </entry>
   
