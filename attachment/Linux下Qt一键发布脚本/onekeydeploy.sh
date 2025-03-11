@@ -124,6 +124,9 @@ export QT_LOGGING_RULES=\"*.debug=true\"
 \$dirname/\$appname \"\$@\"
 "> $1.sh
 
+
+chmod +x $1.sh
+
 echo ""
 echo "#################################################"
 echo " generate '${1}.sh'  start up script finshed"
