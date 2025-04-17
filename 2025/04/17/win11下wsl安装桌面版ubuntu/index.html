@@ -408,13 +408,10 @@
 <ol start="4">
 <li>安装xrdp<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install xrdp</span><br><span class="line">sudo systemctl <span class="built_in">enable</span> xrdp</span><br><span class="line">sudo systemctl start xrdp</span><br></pre></td></tr></table></figure></li>
 </ol>
-<p>将端口从3389改为3390，因为此前默认的3389端口已保留用于ubuntu shell</p>
+<p>将端口从<strong>3389改为3390</strong>，因为此前默认的3389端口已保留用于ubuntu shell</p>
 <figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo sed -i <span class="string">&#x27;s/3389/3390/g&#x27;</span> <span class="regexp">/etc/</span>xrdp/xrdp.ini</span><br></pre></td></tr></table></figure>
+
 <ol start="5">
-<li>配置启动session，否则远程桌面登录输入密码之后会直接闪退</li>
-</ol>
-<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">echo</span> <span class="string">&quot;gnome-session&quot;</span> &gt; ~<span class="string">/.xsession</span></span><br></pre></td></tr></table></figure>
-<ol start="6">
 <li><p>查看xrdp服务状态</p>
 <figure class="highlight maxima"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl <span class="built_in">restart</span> xrdp</span><br><span class="line">sudo systemctl <span class="built_in">status</span> xrdp</span><br></pre></td></tr></table></figure>
 <p>如图所示，有绿色的running代表服务成功运行。<br><img src="/photos/win11%E4%B8%8Bwsl%E5%AE%89%E8%A3%85%E6%A1%8C%E9%9D%A2%E7%89%88ubuntu/xrdp.webp" alt="xrdp"></p>
@@ -423,7 +420,10 @@
 </li>
 </ol>
 <p><img src="/photos/win11%E4%B8%8Bwsl%E5%AE%89%E8%A3%85%E6%A1%8C%E9%9D%A2%E7%89%88ubuntu/%E8%BF%9C%E7%A8%8B%E6%A1%8C%E9%9D%A2.webp" alt="远程桌面"></p>
-
+<ol start="7">
+<li>安装 extension-manager 进行美化</li>
+</ol>
+<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install gnome-<span class="built_in">shell</span>-<span class="built_in">extension</span>-manager</span><br></pre></td></tr></table></figure>
     </div>
     
         <div class="reward" ontouchstart>
