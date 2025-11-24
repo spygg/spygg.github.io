@@ -39,7 +39,7 @@ echo ""
 
 LibDir=$PWD"/libs"
 if [ ! -d "$LibDir" ]; then
-    $(mkdir $LibDir)
+    $(mkdir "$LibDir")
 fi
 
 
@@ -54,7 +54,7 @@ sql="Sql"
 needSql=0
 for Variable in ${lib_array[@]}
 do
-    cp "$Variable" $LibDir
+    cp "$Variable" "$LibDir"
 	if [[ $Variable == *$sql* ]]
 	then
 		needSql=1
@@ -70,9 +70,9 @@ echo "copy $1 libs finshed"
 echo "========================"
 
 xcb_array=($(ldd $qcxb | grep -o "/.*" | grep -o "/.*/[^[:space:]]*"))
-for Variable in ${lib_array[@]}
+for Variable in ${xcb_array[@]}
 do
-    cp "$Variable" $LibDir
+    cp "$Variable" "$LibDir"
 done
 
 
@@ -86,19 +86,19 @@ platforms="$(dirname "$qcxb")"
 echo "paltforms dir is : $platforms"
 
 
-cp -r $platforms  $PWD
+cp -r $platforms  "$PWD"
 
 if  [ "$needSql" -eq 1 ];
 then
 	sqldrivers="$(dirname "$platforms")/sqldrivers"
-	cp -r $sqldrivers $PWD
+	cp -r $sqldrivers "$PWD"
 	echo " "
 	echo "copy $sqldrivers finshed"
 	echo ">>>>>>>>>>>>>>>>>>>>>>>>>>>"
 fi
 
 redundancyLib=$PWD/platforms/libs
-rm -rf $redundancyLib
+rm -rf "$redundancyLib"
 
 # last part 
 
@@ -117,13 +117,12 @@ fi
 LD_LIBRARY_PATH=\$dirname/libs:\$LD_LIBRARY_PATH
 
 export LD_LIBRARY_PATH
-cd \$dirname/
+cd \"\$dirname/\"
 
 export QT_LOGGING_RULES=\"*.debug=true\"
 
-\$dirname/\$appname \"\$@\"
+\"\$dirname/\$appname\" \"\$@\"
 "> $1.sh
-
 
 chmod +x $1.sh
 
