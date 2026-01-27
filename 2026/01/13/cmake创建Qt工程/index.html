@@ -377,6 +377,8 @@
 <h2 id="CMake-编译"><a href="#CMake-编译" class="headerlink" title="CMake 编译"></a>CMake 编译</h2><p>这里是重点,要使用 Qt 的<code>qtenv2.bat</code>设置环境变量, 不然就要弄一堆 -DQt5_DIR=xxx -DQt6_DIR=xxx 之类的参数,很麻烦.</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cmake -S . -B build -G <span class="string">&quot;MinGW Makefiles&quot;</span> -DCMAKE_PREFIX_PATH=<span class="string">&quot;E:/programes/Qt/QtLegacy/5.7/mingw53_32&quot;</span> -DCMAKE_C_COMPILER=<span class="string">&quot;E:/programes/Qt/QtLegacy/Tools/mingw530_32/bin/gcc.exe&quot;</span> -DCMAKE_CXX_COMPILER=<span class="string">&quot;E:/programes/Qt/QtLegacy/Tools/mingw530_32/bin/g++.exe&quot;</span></span><br></pre></td></tr></table></figure>
 
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cmake -S . -B build  -DCMAKE_PREFIX_PATH=<span class="string">&quot;E:/programes/Qt/Qt/5.15.2/msvc2019&quot;</span></span><br></pre></td></tr></table></figure>
+
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">C:\Windows\System32\cmd.exe /A /Q /K E:\programes\Qt\Qt\6.10.1\mingw_64\bin\qtenv2.bat</span><br><span class="line">cmake -S . -B build/release -G <span class="string">&quot;MinGW Makefiles&quot;</span> -DCMAKE_BUILD_TYPE=Release</span><br><span class="line">cmake --build build/release</span><br></pre></td></tr></table></figure>
 
     </div>
